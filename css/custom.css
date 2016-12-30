@@ -1,0 +1,4 @@
+form#multiphase > #phase2, #phase3, #phase4, #summary {display: none;}
+/*#progressBar {
+    width: 400px;
+}*/

@@ -1,0 +1,198 @@
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+html, body {
+  margin:0;
+  padding: 0;
+  
+}
+
+nav ul a,
+nav .brand-logo {
+  color: #444;
+}
+
+nav {
+ position: fixed;
+ width: 100%;
+
+}
+
+
+
+
+
+.col {
+  position:relative;
+  //margin-top: 125px;
+
+}
+
+.row .col.s5 {
+  margin-left:0;
+  left:0;
+  right:0;
+  padding:0;
+}
+
+.row .col.offset-s5 {
+  padding:0;
+  height: auto;
+}
+
+.leftsection {
+  position: fixed;
+  z-index: -1;
+  margin-top: 50px;
+  padding:0;
+  overflow:hidden;
+  padding-left: 0;
+  padding-right: 0;
+
+}
+
+.rightsection {
+  position: relative;
+  z-index: -1;
+  margin-top: 50px;
+  padding:0;
+  overflow: hidden;
+  height: auto;
+
+
+
+}
+
+#section1 {
+  position:relative;
+  height: 400px;
+  width: 100%;
+  background-color:red;
+  overflow-y: scroll;
+  overflow: auto;
+  padding:0;
+}
+
+#section2 {
+  position:relative;
+  height: 400px;
+  width: 100%;
+  padding: 0;
+  overflow-y: scroll;
+  overflow: auto;
+/*    position:relative;
+  height: 400px;
+  width: 100%;
+  background-color:blue;
+  overflow-y: scroll;
+  overflow: auto;
+  padding:0;*/
+}
+
+#section3 {
+  position:relative;
+  height: 700px;
+  width: 100%;
+  padding:0;
+  background-color:blue;
+  z-index: -1;
+  overflow-y: scroll;
+  overflow: auto;
+}
+
+#section4 {
+  position:relative;
+  height: 700px;
+  width: 100%;
+  padding:0;
+  background-color:yellow;
+  z-index: -1;
+  overflow-y: scroll;
+  overflow: auto;
+}
+
+#section5 {
+  position:relative;
+  height: 700px;
+  width: 100%;
+  padding:0;
+  background-color:orange;
+  z-index: -1;
+  overflow-y: scroll;
+  overflow: auto;
+  padding-bottom: 0;
+}
+
+
+.mainlogo {
+  width: 100%;
+  margin-left: -50px;
+  margin-top: 40px;
+
+}
+
+.bigbuttoncta {
+  //margin-top: 5px;
+
+}
+
+.bigbuttoncta li {
+ // margin: 20px;
+}
+
+
+
+p {
+  line-height: 2rem;
+}
+
+.button-collapse {
+  color: #26a69a;
+}
+
+.parallax-container {
+  min-height: 780px;
+  line-height: 0;
+  height: auto;
+  color: rgba(255,255,255,.9);
+  z-index: -1;
+  }
+  .parallax-container .section {
+    width: 100%;
+  }
+
+@media only screen and (max-width : 992px) {
+  .parallax-container .section {
+    position: absolute;
+    top: 40%;
+  }
+  #index-banner .section {
+    top: 10%;
+  }
+}
+
+@media only screen and (max-width : 600px) {
+  #index-banner .section {
+    top: 0;
+  }
+}
+
+.icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+  font-size: inherit;
+}
+
+footer.page-footer {
+  //margin-top: 100%;
+  display:block;
+}
+
+#allcontentfields {
+    margin-top: 0;
+}

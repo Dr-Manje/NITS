@@ -1,0 +1,23 @@
+<th>Number of Containers</th>
+SELECT  sum([Number of Containers]) as total
+FROM TRRevenueSummary
+where CONVERT(CHAR(10),Date,120) >= '2016-05-01' and CONVERT(CHAR(10),Date,120) <= '2016-08-24'
+
+
+<th>Local Charges</th>
+
+<th>Atlas Freight (SBI)</th>
+
+<th>Total Income</th>
+
+<th>Intl Transport</th>
+
+<th>Lift (Container Depot)</th>
+
+<th>Cartage (Local Transporter)</th>
+
+<th>Total Expense</th>
+
+<th>Total Revenue</th>
+
+<th>Net/Container</th>
