@@ -45,7 +45,7 @@
                   </li>-->
                   <li class="user-footer">
                     <div class="pull-left">
-                      <a href="#" class="btn btn-default btn-flat">Profile</a>
+                      <a href="userprofile.php" class="btn btn-default btn-flat">My Profile</a>
                     </div>
                     <div class="pull-right">
                       <a class="btn btn-default btn-flat" onclick="logout()">Sign out</a>
