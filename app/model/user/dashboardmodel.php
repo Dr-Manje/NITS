@@ -12,25 +12,45 @@ class dashmodel{
     }
     
     //schools registered
-    function CheckYearExist($regyear){
-        $query = $this->link->query("SELECT count(*) FROM registrationyear where DATE_FORMAT(regYear,'%Y') = '$regyear' ");
+    function CheckYearExist($startdate,$enddate){
+        $query = $this->link->query("SELECT count(*) FROM registrationyear where DATE_FORMAT(startDate,'%Y') = '$startdate' and DATE_FORMAT(endDate,'%Y') = '$enddate' ");
         $result = $query->fetchColumn();
         return $result;
     }
     
-    function RegisterYear($regyear){
+    function CheckYearExist1($startdate,$enddate,$id){
+        $query = $this->link->query("SELECT count(*) FROM registrationyear "
+                . "where DATE_FORMAT(startDate,'%Y') = '$startdate' "
+                . "and DATE_FORMAT(endDate,'%Y') = '$enddate'  "
+                . "and regyearID <> '$id' ");
+        $result = $query->fetchColumn();
+        return $result;
+    }
+    
+    function RegisterYear($startdate,$enddate,$season){
         $status = 'INACTIVE';
         $query = $this->link->prepare("INSERT INTO registrationyear (regYear,status) VALUES (?,?)");        
-        $values = array($regyear,$status);        
+        $values = array($startdate,$enddate,$season,$status);        
         $query -> execute($values);        
         $counts = $query->rowCount();
         return $counts;        
     }
     
-    function RegisterRegYear($regyear,$season){
+    function updateseason($startdate,$enddate,$season,$pro,$id){
+        $query = $this->link->prepare("UPDATE registrationyear "
+                                    . "set startDate = '$startdate',endDate = '$enddate',season = '$season',procurementAmount = '$pro' "
+                                    . "where  regyearID = '$id' ");
+        if($query->execute()){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+    
+    function RegisterRegYear($startdate,$enddate,$season){
         $status = 'ACTIVE';
-        $query = $this->link->prepare("INSERT INTO registrationyear (regYear,status,season) VALUES (?,?,?)");        
-        $values = array($regyear,$status,$season);        
+        $query = $this->link->prepare("INSERT INTO registrationyear (startDate,endDate,status,season) VALUES (?,?,?,?)");        
+        $values = array($startdate,$enddate,$status,$season);        
         $query -> execute($values);        
         $counts = $query->rowCount();
         return $counts;        
@@ -44,9 +64,9 @@ class dashmodel{
     }
     
     function ListAllRegYear(){
-        $query = $this->link->query("SELECT regyearID ,DATE_FORMAT(regYear,'%M %Y') as regYear, status
+        $query = $this->link->query("SELECT regyearID,DATE_FORMAT(startDate,'%D %M %Y') as startDate,DATE_FORMAT(endDate,'%D %M %Y') as endDate, season as regYear, status
                                     FROM registrationyear
-                                    order by regyearID DESC");
+                                    order by regyearID ASC ");
         $result = $query->fetchAll();
         return $result;        
     }
@@ -60,9 +80,9 @@ class dashmodel{
     }
     
      function ListRegYear(){
-        $query = $this->link->query("SELECT regyearID ,DATE_FORMAT(regYear,'%M %Y') as regYear, status
+        $query = $this->link->query("SELECT regyearID ,season as regYear, status
                                     FROM registrationyear
-                                    order by regyearID ASC ");
+                                    order by regyearID DESC ");
         $result = $query->fetchAll();
         return $result;        
     }

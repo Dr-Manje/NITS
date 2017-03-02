@@ -166,6 +166,63 @@ class membersmodel{
     }
     
     //list members in district with specific reg year
+    function listMembershipByRegYear($regYear){
+        $query = $this->link->query("SELECT M.memberID as mid
+                                    , I.fieldname as ipcname
+                                    , D.fieldname as districtname
+                                    , M.ta as ta
+                                    , G.fieldname as gacname
+                                    , M.village as village
+                                    , A.fieldname as assocname
+                                    , C.fieldname as clubname
+                                    , M.tccregno as tccregno
+                                    , concat(M.names,' ',M.surname) as membername
+                                    , M.gender as gender
+                                    , DATE_FORMAT(M.dob,'%D %M %Y') as dob
+                                    , TIMESTAMPDIFF(YEAR, M.dob, CURDATE()) AS age
+                                    , M.hhSize as hh
+                                    , M.gendervcat as gvc
+                                    , M.rtype as rtype
+                                    , M.wtype as wtype
+                                    , M.ftype as ftype
+                                    , M.cropsales as cropsales
+                                    , M.othersources as othersources
+                                    , M.nomonthswithfood as nwf
+                                    , M.copingmechanism as cm
+                                    FROM members M 
+                                    join clubs C on M.club = clubsID
+                                    join gac G on G.GACid = C.fieldref
+                                    join associations A on A.associationsID = G.fieldref
+                                    join ipc I on I.IPCid = A.fieldref
+                                    join districtsregyear DY on DY.districtsregyearID = I.fieldref
+                                    join districts D on D.districtID = DY.district
+                                    join registrationyear RY on RY.regyearID = DY.regyear
+                                    where DY.regyear = '$regYear' ");
+        $result = $query->fetchAll();
+        return $result;
+    }
+    
+    //get all membercrop details
+    function GetmemberCropDetails($memberid){
+        $query = $this->link->query("select C.fieldname as cropname, M.acreage as acreage 
+                                    from membercrops M
+                                    join crops C on C.cropID = M.cropID
+                                    where M.memberID = '$memberid' ");
+        $result = $query->fetchAll();
+        return $result;
+    }
+    
+    //get all membercrop details
+    function GetmemberLivestockDetails($memberid){
+        $query = $this->link->query("SELECT L.fieldname as lvtname, M.qty as qty 
+                                    FROM memberlivestock M
+                                    join livestock L on L.livestockID = M.livestockID
+                                    where M.memberID = '$memberid' ");
+        $result = $query->fetchAll();
+        return $result;
+    }
+    
+    //list members in district with specific reg year
     function listMembersDistrictRegYear($district,$regYear){
         $query = $this->link->query("SELECT M.memberNumber, concat(M.names, ' ', M.surname) as membername
                                     , M.gender
@@ -200,14 +257,14 @@ class membersmodel{
     //list members in district with specific reg year dashboard male
     function listMembersAllRegYearMales($regYear){
         $query = $this->link->query("SELECT count(*) FROM members where yearRegistered = '$regYear' AND gender = 'MALE' ");
-        $result = $query->fetchAll();
+        $result = $query->fetchColumn();
         return $result;
     }
     
     //list members in district with specific reg year dashboard male
     function listMembersAllRegYearFemales($regYear){
         $query = $this->link->query("SELECT count(*) FROM members where yearRegistered = '$regYear' AND gender = 'FEMALE' ");
-        $result = $query->fetchAll();
+        $result = $query->fetchColumn();
         return $result;
     }
     
@@ -239,12 +296,12 @@ class membersmodel{
         $result = $query->fetchAll();
         return $result;
     }
-   
+
     //add member individual initial details
-    function RegisterMemberInitial($names,$lastname,$gender,$yearRegistered,$dateofbirth,$hhsize,$Mcount,$club,$district){
+    function RegisterMemberInitial($names,$lastname,$gender,$yearRegistered,$dateofbirth,$hhsize,$Mcount,$club,$district,$cropsales,$osources,$gvc,$mwf,$ftype,$rtype,$wtype){
         $status = 'ACTIVE';
-        $query = $this->link->prepare("INSERT INTO members (names,surname,gender,yearRegistered,dob,hhSize,memberNumber,club,district,status) VALUES (?,?,?,?,?,?,?,?,?,?)");        
-        $values = array($names,$lastname,$gender,$yearRegistered,$dateofbirth,$hhsize,$Mcount,$club,$district,$status);        
+        $query = $this->link->prepare("INSERT INTO members (names,surname,gender,yearRegistered,dob,hhSize,memberNumber,club,district,status,cropsales,othersources,gendervcat,nomonthswithfood,ftype,rtype,wtype) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");        
+        $values = array($names,$lastname,$gender,$yearRegistered,$dateofbirth,$hhsize,$Mcount,$club,$district,$status,$cropsales,$osources,$gvc,$mwf,$ftype,$rtype,$wtype);        
         $query -> execute($values);        
         $counts = $query->rowCount();
         return $counts;        
@@ -359,7 +416,7 @@ class membersmodel{
     
     //get annual info and food security
     function MemberAnnualAndFoodInfo($id){
-        $query = $this->link->query("SELECT cropsales, othersources, nomonthswithfood, copingmechanism 
+        $query = $this->link->query("SELECT cropsales, othersources, nomonthswithfood, copingmechanism, rtype, wtype, ftype
                                     FROM members
                                     WHERE memberID = '$id' ");
         $result = $query->fetchAll();
@@ -449,6 +506,16 @@ class membersmodel{
     //update food security
     function UpdateFoodSecurityInfo($memberID,$viewmonths,$viewmechanism){
         $query = $this->link->prepare("UPDATE members SET nomonthswithfood = '$viewmonths', copingmechanism = '$viewmechanism' WHERE memberID = '$memberID' ");
+        if($query -> execute()){
+            return 1;
+        }else {
+            return 0;
+        }        
+    }
+    
+    //update house info
+    function UpdateHouseInfo($memberID,$rtype,$wtype,$ftype){
+        $query = $this->link->prepare("UPDATE members SET rtype = '$rtype', wtype = '$wtype', ftype = '$ftype' WHERE memberID = '$memberID' ");
         if($query -> execute()){
             return 1;
         }else {

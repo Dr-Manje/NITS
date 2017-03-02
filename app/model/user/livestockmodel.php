@@ -11,6 +11,14 @@ class livestockmodel{
         return $this->link;
     }
     
+    //get cropID
+    function getLivestockID($code){
+        $query = $this->link->query("SELECT livestockID, fieldname "
+                                    . "FROM livestock WHERE fieldcode = '$code' LIMIT 1");
+        $result = $query->fetchAll();
+        return $result;
+    }
+    
     //delete member crop
     function deleteMemberLivestock($id){
         $query = $this->link->prepare("DELETE memberlivestock FROM memberlivestock WHERE memberslivestockID = '$id' ");

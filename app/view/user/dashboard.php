@@ -236,21 +236,25 @@ include_once ('../../controller/user/dashboardcontroller.php'); ?>
      
     </div><!-- ./wrapper -->
     <div id="myModal" class="modal fade" role="dialog">
-            <div class="modal-dialog modal-md">
+            <div class="modal-dialog modal-sm">
                 <!-- modal content -->
                 <div class="modal-content">
                     <div class="modal-header">                        
-                        <h4 class="modal-title">Add Registration Year</h4>
+                        <h4 class="modal-title">Add new Season</h4>
                     </div>
                     <div class="modal-body">
-                        <p>Welcome, There is no Registration year in the system, to proceed with the system please add a registration year in the text box below and Save when done.</p><hr>
+                        <p>Welcome, There is no Season registered in the system, to proceed with the system please add a registration year in the text box below and Save when done.</p><hr>
                         <form role="form" id="Addregyearform" onsubmit="return false">
                             <input type="hidden" id="Addregyear" name="Addregyear" >
                             <?php // echo 'Reg year ID: '.$_SESSION['regyearID'].'<br>' ?>
                             <?php // echo 'Reg year: '.$_SESSION['regyear'].'<br>' ?>
                             <div class="form-group">
-                                <label class="control-label" for="regyear">Start Date</label>
-                                <input type="text" class="form-control" name="regyear" id="regyear" />
+                                <label class="control-label" for="startdate">Start Date</label>
+                                <input type="text" class="form-control" name="startdate" id="startdate" />
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="enddate">End Date</label>
+                                <input type="text" class="form-control" name="enddate" id="enddate" />
                             </div>
                             <div class="form-group">
                                 <label class="control-label" for="seasonname">Season</label>
@@ -300,37 +304,20 @@ include_once ('../../controller/user/dashboardcontroller.php'); ?>
         $(function() {
             //$( "#dateitem" ).datepicker( { dateFormat: 'dd/mm/yy' }); 
             //revenue dates
-            $( "#regyear1" ).datepicker( { dateFormat: 'y-m-d' });
-            
-            $("#regyear2").datepicker( {
-                format: " yyyy",
-                viewMode: "years", 
-                minViewMode: "years"
-            });
-            
-            $('#regyear').datepicker( {
+            $('#startdate').datepicker( {
                 changeMonth: true,
                 changeYear: true,
                 showButtonPanel: true,
-                dateFormat: 'y-m-d',
-                onClose: function(dateText, inst) { 
-                    var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
-                    var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
-                    $(this).datepicker('setDate', new Date(year, month, 3));
-                }
+                dateFormat: 'y-m-d'
             });
             
-            $(".openModalLink").click(function(e) {
-                e.preventDefault();       
-                $("#myModalTitle").html('Activate school');
-                $("#schoolnameID").html($(this).data('school'));
-                $("#StatusAction").html($(this).data('name'));
-                $("#StatusAction1").html($(this).data('name'));
-                $("#schoolID").val($(this).data('id'));
-                $("#schoolStatus").val($(this).data('status'));
-
-                $('#ActivateModal').modal('show');
+            $('#enddate').datepicker( {
+                changeMonth: true,
+                changeYear: true,
+                showButtonPanel: true,
+                dateFormat: 'y-m-d'
             });
+            
             
             $(".openModalLink1").click(function(e) {
                 e.preventDefault();       
@@ -386,48 +373,12 @@ include_once ('../../controller/user/dashboardcontroller.php'); ?>
            // $("div.toolbar").html('<b>Custom tool bar! Text/images etc.</b>');
             
         } );
-        
-//      $(function () {
-//        $("#example1").DataTable();
-//        $('#example2').DataTable({
-//            buttons: [ 'copy', 'excel', 'pdf', 'colvis' ],
-//          "paging": true,
-//          "lengthChange": false,
-//          "searching": false,
-//          "ordering": true,
-//          "info": true,
-//          "autoWidth": false
-//          
-////          buttons: ['copy',
-////            {
-////                text: 'My button',
-////                action: function ( e, dt, node, config ) {
-////                    alert( 'Button activated' );
-////                }
-////            }
-////        ]
-//        });
-//      });
       
         function saveregyear(){
             _("Addregyear").value = "Addregyear";        
             _("Addregyearform").method = "post";
             _("Addregyearform").action = "dashboard.php";
             _("Addregyearform").submit();
-        }
-        
-        function assignSchool(){
-            _("AssignSchool").value = "AssignSchool";        
-            _("AssignSchoolform").method = "post";
-            _("AssignSchoolform").action = "superdash.php";
-            _("AssignSchoolform").submit();
-        }
-        
-        function activateSchool(){
-            _("activateSchool").value = "activateSchool";        
-            _("activateSchoolform").method = "post";
-            _("activateSchoolform").action = "superdash.php";
-            _("activateSchoolform").submit();
         }
       
         function AddAdmin(){
@@ -436,13 +387,7 @@ include_once ('../../controller/user/dashboardcontroller.php'); ?>
             _("addAdminform").action = "superdash.php";
             _("addAdminform").submit();
         }
-       
-       function AddSchool(){
-            _("addSchool").value = "addSchool";        
-            _("addSchoolform").method = "post";
-            _("addSchoolform").action = "superdash.php";
-            _("addSchoolform").submit();
-        }
+
     </script>
 
     <!-- Optionally, you can add Slimscroll and FastClick plugins.

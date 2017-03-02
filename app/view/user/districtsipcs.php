@@ -158,7 +158,9 @@ include_once ('../../controller/user/districtscontroller.php'); ?>
                         <td>Association</td>
                         <td>GAC</td>
                         <td>Clubs</td>
-                        <td>Members</td>
+                        <td>Males</td>
+                        <td>Females</td>
+                        <td>Total Members</td>
                         <td>Action</td>
                     </tr>
                 </thead>
@@ -173,7 +175,9 @@ include_once ('../../controller/user/districtscontroller.php'); ?>
                         <td>Association</td>
                         <td>GAC</td>
                         <td>Clubs</td>
-                        <td>Members</td>
+                        <td>Males</td>
+                        <td>Females</td>
+                        <td>Total Members</td>
                         <td>Action</td>
                          </tr>
                      <?php   }
@@ -182,16 +186,18 @@ include_once ('../../controller/user/districtscontroller.php'); ?>
                             foreach($IPCs as $value)
                                 { 
                                     $districtId = $value['0'];
+                                    $seasonid =  $value['4'];
                                     $getIpcsTotalsDistrict = $districts->getIpcsTotalsDistrict($districtId); //get total ipcs
                                     $getAssTotalsDistrict = $districts->getAssTotalsDistrict($districtId); //get total associations
                                     $getGacTotalsDistrict = $districts->getGacTotalsDistrict($districtId); //get total gacs
                                     $getClubTotalsDistrict = $districts->getClubTotalsDistrict($districtId); //get clubs total
-                                    $getMemberTotalsDistrict = $districts->getMemberTotalsDistrict($districtId); //get members total
                                     $ipcs = $getIpcsTotalsDistrict;
                                     $associations = $getAssTotalsDistrict;
                                     $gacs = $getGacTotalsDistrict;
                                     $clubs = $getClubTotalsDistrict;
-                                    $members = $getMemberTotalsDistrict;                                   
+                                    $males = $districts->getCompleteMemberTotalsDistrict($seasonid,'MALE',$districtId);
+                                    $females = $districts->getCompleteMemberTotalsDistrict($seasonid,'FEMALE',$districtId);
+                                    $members = $males + $females; 
                                ?>    
                         <tr> 
                         <td><?php echo $value['1']; ?></td>
@@ -200,6 +206,8 @@ include_once ('../../controller/user/districtscontroller.php'); ?>
                         <td><?php echo $associations; ?></td>
                         <td><?php echo $gacs; ?></td>
                         <td><?php echo $clubs; ?></td>
+                        <td><?php echo $males; ?></td>
+                        <td><?php echo $females; ?></td>
                         <td><?php echo $members; ?></td>
                         <td>
                             <?php if($ipcs > 0){ ?>
@@ -493,13 +501,9 @@ include_once ('../../controller/user/districtscontroller.php'); ?>
         data += "<td><input type='text' class='form-control' name='villageheadman[]' /></td></tr>";
             $('.tbladdVillage').append(data);
         });
-        
-        
-        
-        
+      
         //Addipcs
         function Addipcs(){
-            
         itemcheck =  _("Ipcitem").value;
         fileupload =  _("file").value;
         if(itemcheck === "NONE"){
@@ -658,6 +662,13 @@ include_once ('../../controller/user/districtscontroller.php'); ?>
                 dom: 'Bfrtip',
                 buttons: [
                     'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
+                    ,
+                    {
+                        text: 'Add Club(s)',
+                        action: function () {
+                            $('#AddIPCItemModal').modal('show');
+                        }
+                    }
                 ]
             } );
             <?php  }?>

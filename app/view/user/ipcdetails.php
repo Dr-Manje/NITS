@@ -441,6 +441,13 @@ include_once ('../../controller/user/districtscontroller.php'); ?>
                 dom: 'Bfrtip',
                 buttons: [
                     'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
+                    ,
+                    {
+                        text: 'Add Club(s)',
+                        action: function () {
+                            $('#AddIPCItemModal').modal('show');
+                        }
+                    }
                 ]
             } );
             <?php  }?>

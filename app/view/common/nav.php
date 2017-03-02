@@ -26,7 +26,7 @@
               <a href="#"><i class="fa fa-users"></i> <span>Members</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <li><a href="members.php"><i class="fa fa-users"></i> <span>Members</span></a></li>
-                <li><a href="membership.php"><i class="fa fa-list"></i> <span>Full Membership Details</span></a></li>
+                <li><a href="membership.php"><i class="fa fa-list"></i> <span>Membership Report</span></a></li>
               </ul>
             </li>
             <li class="treeview">
@@ -44,18 +44,6 @@
                 <li><a href="">Seed Distribution Summary</a></li>
               </ul>
             </li>
-            
-            <?php if($_SESSION['nasfam_usertype'] == '1'){ ?>            
-            <li class="treeview">
-              <a href="#"><i class="fa fa-gears"></i> <span>Configuration</span> <i class="fa fa-angle-left pull-right"></i></a>
-              <ul class="treeview-menu">
-                <li><a href="farmproduce.php"><i class="fa fa-leaf"></i> <span>Farm Produce</span></a></li>
-                <li><a href="users.php"><i class="fa fa-users"></i> <span>Users</span></a></li>
-                <li><a href="regyears.php"><i class="fa fa-calendar"></i> <span>Registration Years</span></a></li>
-                
-              </ul>
-            </li>
-            <?php }?>
             <li class="treeview">
               <a href="#"><i class="fa fa-link"></i> <span>Activities</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
@@ -70,13 +58,27 @@
                 <li><a href="treeplantingHQ.php">Tree Planting Summary</a></li> 
               </ul>
             </li>
+            <li><a href="regyears.php"><i class="fa fa-calendar"></i> <span>Seasons</span></a></li>
             <?php if($_SESSION['nasfam_usertype'] == '2'){ ?> 
             <li><a href="coderegister.php"><i class="fa fa-barcode"></i> <span>Code Register</span></a></li> 
             <?php }?>
             <!--<li class="header">SHELLING</li>-->
             <!--<li><a href=""><i class="fa fa-dashboard"></i> <span>Shelling Dashboard</span></a></li>-->
-            <!--<li><a href=""><i class="fa fa-calendar"></i> <span>Warehouse</span></a></li>-->
-            <!--<li><a href=""><i class="fa fa-calendar"></i> <span>Procurement</span></a></li>-->
+            <!--<li><a href="procurement.php"><i class="fa fa-calendar"></i> <span>Procurement</span></a></li>-->
+            <!--<li><a href="warehouse.php"><i class="fa fa-calendar"></i> <span>Warehouse</span></a></li>-->
+            <!--<li><a href="casualworkers.php"><i class="fa fa-calendar"></i> <span>Casual Workers</span></a></li>-->
+            <!--<li><a href="marketcenter.php"><i class="fa fa-calendar"></i> <span>Market Centers</span></a></li>-->
+            <?php if($_SESSION['nasfam_usertype'] == '1'){ ?>
+            <li class="header">ADMIN</li>           
+            <li class="treeview">
+              <a href="#"><i class="fa fa-gears"></i> <span>Configuration</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <ul class="treeview-menu">
+                <li><a href="farmproduce.php"><i class="fa fa-leaf"></i> <span>Farm Produce</span></a></li>
+                <li><a href="users.php"><i class="fa fa-users"></i> <span>Users</span></a></li>
+                
+              </ul>
+            </li>
+            <?php }?>
         </ul>
     </section>
     <!-- /.sidebar -->

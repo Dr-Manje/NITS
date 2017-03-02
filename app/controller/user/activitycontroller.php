@@ -76,7 +76,7 @@ if(isset($_POST['SearchDistrictReg'])){
             $checkActivity22 = $activities->checkMemberParticipation($memberID,22); //activity 1
             $checkActivity23 = $activities->checkMemberParticipation($memberID,23); //activity 1
             //$checkActivity24 = $activities->checkMemberParticipation($memberID,24); //activity 1
-            $checkActivity24 = $activities->getMemberNumberOfTreesPlanted($memberID,23);
+            $checkActivity24 = $activities->getMemberNumberOfTreesPlanted($memberID);
             
             $member = array();
             array_push($member,$ipcName); //1
@@ -165,7 +165,7 @@ if(isset($_POST['SearchDistrictReg'])){
             $checkActivity22 = $activities->checkMemberParticipation($memberID,22); //activity 1
             $checkActivity23 = $activities->checkMemberParticipation($memberID,23); //activity 1
             //$checkActivity24 = $activities->checkMemberParticipation($memberID,24); //activity 1
-            $checkActivity24 = $activities->getMemberNumberOfTreesPlanted($memberID,23);
+            $checkActivity24 = $activities->getMemberNumberOfTreesPlanted($memberID);
             
             $member = array();
             array_push($member,$ipcName); //1

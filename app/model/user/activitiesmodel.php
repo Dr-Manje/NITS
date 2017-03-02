@@ -326,10 +326,11 @@ class activitiesmodel{
         return $userattendance;
     }
     
-    function getMemberNumberOfTreesPlanted($memberid,$activity){
-        $query = $this->link->query("select sum(numberoftrees) as totaltrees 
-                                    from treeplantingitems
-                                    where (SELECT memberactivitiesID from memberactivities where activitiesID = '$activity' and memberID = '$memberid') ");
+    function getMemberNumberOfTreesPlanted($memberid){
+        $query = $this->link->query("select sum(TI.numberoftrees) as totaltrees 
+                                    from treeplantingitems TI
+                                    JOIN memberactivities MA ON MA.memberactivitiesID = TI.memberactivityid
+                                    where MA.memberID = '$memberid' ");
         $result = $query->fetchColumn();
         return $result;
     }

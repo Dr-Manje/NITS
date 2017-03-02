@@ -11,6 +11,20 @@ class usersmodel{
         return $this->link;
     }
     
+    //get user details
+    function getdistrict($userID){
+        $query = $this->link->query("select * from districts where districtID = '$userID' ");
+        $result = $query->fetchAll();
+        return $result;
+    }
+    
+    //get user details
+    function getuserprofile($userID){
+        $query = $this->link->query("select * from users where userID = '$userID' ");
+        $result = $query->fetchAll();
+        return $result;
+    }
+    
     //update activity
     function RestetUserPassword($userid){
         $query = $this->link->prepare("UPDATE users SET password = 'nasfam@2017' WHERE userID = '$userid'");
@@ -19,6 +33,24 @@ class usersmodel{
         }else {
             return 0;
         }        
+    }
+    
+    function updateUserpass($pass,$userid){
+        $query = $this->link->prepare("UPDATE users SET password = '$pass' where userID = '$userid' ");
+        if($query -> execute()){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+    
+    function updateUserDetails($fname,$lname,$email,$userid){
+        $query = $this->link->prepare("UPDATE users SET firstname = '$fname' , lastname = '$lname' , email = '$email' where userID = '$userid' ");
+        if($query -> execute()){
+            return 1;
+        }else{
+            return 0;
+        }
     }
     
     //update activity
@@ -65,7 +97,7 @@ class usersmodel{
     
     //get regyear details
     function getRegYearDetails($id){
-        $query1 = $this->link->query("SELECT regyearID, DATE_FORMAT(regYear,'%M %Y') as regYear
+        $query1 = $this->link->query("SELECT regyearID, season as regYear
                                     FROM registrationyear
                                     WHERE regyearID = '$id' limit 1");
         $result = $query1->fetchAll();
@@ -141,9 +173,9 @@ class usersmodel{
     }
     
     function selectRegYear(){
-        $query1 = $this->link->query("SELECT regyearID, DATE_FORMAT(regYear,'%Y') as regYear
+        $query1 = $this->link->query("SELECT regyearID, season as regYear
                                     FROM registrationyear
-                                    order by DATE_FORMAT(regYear,'%Y') desc limit 1");
+                                    order by DATE_FORMAT(startDate,'%Y') desc limit 1");
         $result = $query1->fetchAll();
         return $result;
     }
@@ -226,9 +258,9 @@ class usersmodel{
     }
     
     //create district targest for new regyear
-    function NewRegyearDistrictTargets($regyear){
-        $query = $this->link->prepare("insert into districtsregyear (district,target,regyear)
-                                        select districtID,'0','$regyear' from districts");
+    function NewRegyearDistrictTargets($regyear){ 
+        $query = $this->link->prepare("insert into districtsregyear (district,target,regyear,fieldcode)
+                                        select districtID,'0','$regyear',fieldcode from districts");
         if($query -> execute()){
             return 1;
         }else {
@@ -397,7 +429,11 @@ class usersmodel{
                     . "('CROP','CRP'),"
                     . "('SEED','SED'),"
                     . "('TREE','TRE'),"
-                    . "('VILLAGE','VGE')");    
+                    . "('VILLAGE','VGE'),"
+                    . "('MARKET CENTER','MKC'),"
+                    . "('CASUAL WORKER','CWK'),"
+                    . "('WAREHOUSE','WHS'),"
+                    . "('BUYER','BYR')");    
         if($query -> execute()){
             return 1;
         }else {

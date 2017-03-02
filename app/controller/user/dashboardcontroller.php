@@ -23,12 +23,13 @@ $listregYear = $dashboard->ListAllRegYear();
 
 if(isset($_POST['Addregyear'])){
     
-    $dateReg = $_POST['regyear'];
+    $startdate = $_POST['startdate']; //start date
+    $enddate = $_POST['enddate']; //end date
     $season = $_POST['seasonname'];
     
     //$regYear = date("Y-m-d H:i:s", $dateReg);
     //$regYear = date_format($dateReg, 'Y-m-d');
-    $RegisterRegYear = $dashboard->RegisterRegYear($dateReg,$season);
+    $RegisterRegYear = $dashboard->RegisterRegYear($startdate,$enddate,$season);
     if($RegisterRegYear == 1){
 
         $regYear = $login_users->selectRegYear();
@@ -113,20 +114,28 @@ if(isset($_POST['addYear'])){
     $rowCount = count($_POST['years']); //number of ipcs
    
     for($i=0;$i<$rowCount;$i++){
-        $regyear = $_POST['regyear'][$i];
-        $dateYEAR = date("Y", strtotime($regyear));
+        $startdate = $_POST['startdate'][$i]; //start date
+        $enddate = $_POST['enddate'][$i]; //end date
+        $season = $_POST['seasonname'][$i]; //season name
+        
+        $startdate1 = date("Y", strtotime($startdate));
+        $enddate1 = date("Y", strtotime($enddate));
+        
+        echo $startdate.' '.$enddate.'<br>';
+        echo $startdate1.' '.$enddate1.'<br>';
 
         //make sure year doesnt already exists
-        $CheckYearExist = $dashboard->CheckYearExist($dateYEAR);
-        if($CheckYearExist == 1){ //exists, notify user
-            //echo 'exists';
+        $CheckYearExist = $dashboard->CheckYearExist($startdate1,$enddate1);
+        if($CheckYearExist >= 1){ //exists, notify user
+            echo 'exists';
         }else{ //doesnt exist, create new reg year
-            $RegisterYear = $dashboard->RegisterYear($regyear);
+//            echo 'doesnt exist';
+            $RegisterYear = $dashboard->RegisterRegYear($startdate,$enddate,$season);
         
             $SelectRegYear = $dashboard->ListRegYear();//get created default year
             $regYearID = $SelectRegYear[0][0];
         
-            $createNewRegyearDistrictTargets = $login_users->NewRegyearDistrictTargets($regYearID); //add districts to year in reg district
+            $createNewRegyesarDistrictTargets = $login_users->NewRegyearDistrictTargets($regYearID); //add districts to year in reg district
         
             $createDefaultTargets = $login_users->createDefaultTargets($regYearID); //add activity targets
         }  

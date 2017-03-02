@@ -101,15 +101,17 @@ include_once ('../../controller/user/dashboardcontroller.php'); ?>
              <div class="box box-success">
             <div class="box-header with-border">
                 <?php if($_SESSION['nasfam_usertype'] == '1'){ ?>
-                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addRegYearModal">Add Reg Year</button>
+                <!--<button type="button" class="btn btn-info" data-toggle="modal" data-target="#addRegYearModal">Add Reg Year</button>-->
                 <?php } ?> 
             </div><!-- /.box-header -->
             <div class="box-body">
               <table id="example1" class="table table-striped table-bordered" cellspacing="0" width="100%">
                 <thead>
                     <tr>
-                        <td>Reg Year</td>
-                        <!--<td>Action</td>-->
+                        <th>Season</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -117,7 +119,7 @@ include_once ('../../controller/user/dashboardcontroller.php'); ?>
                       if ($listregYear == 0) {
                       ?>
                         <tr> 
-                        <td>Reg Year</td>
+                        <td>Season</td>
                         <!--<td>Action</td>-->
                          </tr>
                      <?php   }
@@ -128,9 +130,19 @@ include_once ('../../controller/user/dashboardcontroller.php'); ?>
                                ?>    
                          <tr> 
                             <td><?php echo $value['regYear']; ?></td>
-<!--                        <td>
-                            <a href="ipcdetails.php?ipcdid=<?php// echo $value['regyearID'];?>">View more</a>
-                        </td>-->
+                            <td><?php echo $value['startDate']; ?></td>
+                            <td><?php echo $value['endDate']; ?></td>
+                            <td>
+                                <a rel="tooltip" title="View more IPC details (GACs, ASSOCIATIONS etc)" class="btn btn-info btn-xs"  href="seasondetails.php?sid=<?php echo $value['regyearID'];?>">View more</a>
+                                <a rel="tooltip" title="Edit/Update district details" class="btn btn-warning btn-xs openEditIPCModal" href="/" 
+                                data-editid="<?php //echo $value['0'] ?>"
+                                data-editviewitem="1" 
+                                data-editviewname="<?php// echo $value['1'] ?>"
+                                data-returnpathid="districtsipcs"
+                                >
+                                <i class="fa fa-edit"> Edit</i>
+                            </a>
+                            </td>
                             </tr>
                          <?php  }
                         }
@@ -165,14 +177,12 @@ include_once ('../../controller/user/dashboardcontroller.php'); ?>
             <div class="modal-body">                                                                               
                 <form role="form" id="addYearform" enctype="multipart/form-data" onsubmit="return false">
                 <input type="hidden" id="addYear" name="addYear" >
-                <!--<input type="hidden" id="Gacid" name="Gacid" value="<?php // echo $id ?>" >-->
-                 <!--<input type="hidden" id="districtID" name="districtID" value="<?php // echo $districtID ?>" >-->
-
-
                 <table id="exampleLstActivities" class="table table-striped table-bordered tbladdYear" cellspacing="0" width="100%"> 
                     <tr>
-                        <th>SELECT</th> 
-                        <th>Reg Year</th>
+                        <th>Select</th> 
+                        <th>Season Name</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
                     </tr>
                 </table>                      
                 </form>                    
@@ -245,7 +255,9 @@ include_once ('../../controller/user/dashboardcontroller.php'); ?>
         //add ipc item
         $(".addmoreYear").on('click',function(){
         var data="<tr><td><input type='checkbox' class='form-control case' name='years[]' /></td>";
-        data += "<td><input type='text' class='form-control datepicker_recurring_start' name='regyear[]'  /></td></tr>";
+        data += "<td><input type='text' class='form-control' name='seasonname[]'  /></td>";
+        data += "<td><input type='text' class='form-control datepicker_recurring_start' name='startdate[]'  /></td>";
+        data += "<td><input type='text' class='form-control datepicker_recurring_start' name='enddate[]'  /></td></tr>";
             $('.tbladdYear').append(data);
         });
         
@@ -335,7 +347,13 @@ include_once ('../../controller/user/dashboardcontroller.php'); ?>
             $('#example1').DataTable( {
                 dom: 'Bfrtip',
                 buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
+                    'copy', 'csv', 'excel', 'pdf', 'print', 'colvis',
+                    {
+                        text: 'Register New Season(s)',
+                        action: function () {
+                            $('#addRegYearModal').modal('show');
+                        }
+                    }
                 ]
             } );
             

@@ -11,6 +11,13 @@ class districtsmodel{
     }
     
     //get club details with club code
+    function GetVillagebyID($code){
+        $query = $this->link->query("SELECT * FROM village where villageID = '$code' ");
+        $result = $query->fetchAll();
+        return $result;
+    }
+    
+    //get club details with club code
     function GetVillageDetailsClubCode($code){
         $query = $this->link->query("SELECT * FROM village where fieldcode = '$code' ");
         $result = $query->fetchAll();
@@ -206,6 +213,15 @@ class districtsmodel{
     }
     
     //list all livestock with selected
+    function getCompleteMemberTotalsDistrict($id,$gender,$district){
+        $query = $this->link->query("select count(memberID) as members 
+                                    from members
+                                    where yearRegistered = '$id' and Gender = '$gender' and district = '$district' ");
+        $result = $query->fetchColumn();
+        return $result;
+    }
+    
+    //list all livestock with selected
     function getClubTotalsDistrict($assid){
         $query = $this->link->query("select count(C.clubsID) as clubs 
                                     from clubs C
@@ -234,8 +250,8 @@ class districtsmodel{
     function getIpcsTotalsDistrict($id){
         $query = $this->link->query("select count(I.IPCid) as ipcs 
                                     from ipc I
-                                    join districtsregyear DY on DY.districtsregyearID = I.fieldref
-                                    where DY.districtsregyearID = '$id' ");
+                                    join districts DY on DY.districtID = I.fieldref 
+                                    where DY.districtID = '$id' ");
         $result = $query->fetchColumn();
         return $result;
     }

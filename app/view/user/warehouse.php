@@ -1,7 +1,7 @@
 <?php  
 session_start();
 error_reporting(0);
-include_once ('../../controller/user/membershipcontroller.php'); ?>
+include_once ('../../controller/user/warehousecontroller.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,18 +68,21 @@ include_once ('../../controller/user/membershipcontroller.php'); ?>
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Members
+            Warehouse
             <small>Registration Year: <?php echo $regYearName ?></small>
           </h1>
-          <ol class="breadcrumb">
+<!--          <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Members</a></li>
             <li class="active">Member listing</li>
-          </ol>
+          </ol>-->
         </section>
 
         <!-- Main content -->
         <section class="content">
 
+          <!-- Your Page Content Here -->
+          
+          
        <!-- /.row -->
             <div class="row">
               <div class="col-xs-12">
@@ -108,54 +111,24 @@ include_once ('../../controller/user/membershipcontroller.php'); ?>
                             </form>
                 </div><!-- /.box-header -->
                 <div class="box-body">
-                    
-                  <table id="tblmembership" class="display table table-striped" width="100%" cellspacing="0">
+                   
+                  <table id="example2" class="table table-striped table-bordered" cellspacing="0" width="100%">
                     <thead>
                       <tr>
-                        <th>IPC</th>
-                        <th>DISTRICT</th>
-                        <th>T/A</th>
-                        <th>GAC</th>
-                        <th>GVH</th>
-                        <th>VILLAGE</th>
-                        <th>ASSOCIATION</th>
-                        <th>CLUB NAME</th>
-                        <th>TCC REG. #</th>
-                        
-                        <th>MEMBER NAME</th>
-                        <th>GENDER</th>
-                        <th>YEAR OF BIRTH</th>
-                        <th>AGE</th>
-                        <th>HH SIZE</th>
-                        
-                        <th>CROP</th>
-                        <th>ACREAGE</th>
-                        <th>CROP</th>
-                        <th>ACREAGE</th>
-                        <th>CROP</th>
-                        <th>ACREAGE</th>
-                        
-                        <th>GVC</th>
-                        
-                        <th>ROOF TYPE</th>
-                        <th>WALL TYPE</th>
-                        <th>FLOOR TYPE</th>
-                        
-                        <th>CROP SALES</th>
-                        <th>OTHER SOURCES</th>
-                        
-                        <th>LVT</th>
+                        <th>NAME</th>
                         <th>QTY</th>
-                        <th>LVT</th>
-                        <th>QTY</th>
-                        <th>LVT</th>
-                        <th>QTY</th>
-                        
-                        <th>MWF</th>
-                        <th>COPING MECHANISM</th>
+                        <th>CHALIM</th>
+                        <th>CG7</th>
+                        <th>OTHER VARIETIES</th>
+                        <th>GRADE OUTS</th>
+                        <th>SHELLS</th>
+                        <th>TOTAL</th>
+                        <th>LOSS</th>
+                        <th>NOTES</th>
+                        <th>ACTION</th>
                       </tr>
-                    </thead>
-                  </table>
+                    </thead>                 
+                  </table>                   
                  </div><!-- /.box-body -->
               </div><!-- /.box -->                   
               </div>
@@ -170,6 +143,52 @@ include_once ('../../controller/user/membershipcontroller.php'); ?>
 
      
     </div><!-- ./wrapper -->
+    
+    <!-- MODALS -->
+    <!-- Revenue budget Modal -->
+        <div id="addMembersModal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+            <!-- modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3>Add Warehouse Data</h3><hr>
+                    <form method="post" action="warehouse.php" enctype="multipart/form-data" class="form-inline center-block">                       
+                        <div class="row">
+                            <div class="col-sm-4">                          
+                                 <div class="form-group">
+                                     <label for="regyearBulk">Registration Year:</label>
+                                     <select class="form-control" id="regyearBulk" name="regyearBulk">
+                                         <?php foreach ($listregYear as $optionMemberList) { ;?>
+                                 <option value="<?php echo $optionMemberList['regyearID']; ?>"><?php echo $optionMemberList['regYear']; ?></option>
+                             <?php  } ;?>
+                                     </select>
+                                 </div>
+                            </div>
+                        <div class="col-sm-4"> 
+                            <div class="form-group">
+                            <input class="form-group" type="file" name="file" />
+                            </div> 
+                        </div>
+                            <div class="col-sm-4">
+                               <input class="btn btn-default" type="submit" name="uploadBulkWarehouse" value="upload" /> 
+                            </div>
+                        </div>
+                        
+                    </form>
+                </div>
+
+                <div class="modal-footer">                   
+<!--                    <button type="button" class='btn btn-danger deletemember'>- Delete</button>
+                    <button type="button" class='btn btn-success addmoremember'>+ Add More</button> 
+                    <button class="btn btn-success" onclick="AddMember()">Save</button>-->
+                    <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+                </div>
+                </div>            
+            </div>
+        </div>
+        <!-- end Revenue budget Modal -->
+    <!-- END MODALS -->
     
     <!-- REQUIRED JS SCRIPTS -->
 
@@ -200,9 +219,12 @@ include_once ('../../controller/user/membershipcontroller.php'); ?>
         }
         
          $(document).ready(function() {
-            var data = <?php echo json_encode($lstMembership); ?>;
+            var data = <?php echo json_encode($TRs); ?>;
+//           
+//            $('#myModal').modal({backdrop: 'static', keyboard: false});
+//            $('#myModal').modal('show');
         
-            $('#tblmembership').DataTable( {
+            $('#example2').DataTable( {
                 data:           data,
                 deferRender:    true,
                 scrollY:        350,
@@ -211,17 +233,38 @@ include_once ('../../controller/user/membershipcontroller.php'); ?>
                 scroller:       true,
                 dom: 'Bfrtip',
                 buttons: [
-                    'copy', 'excel', 'print', 'colvis'
+                    'copy', 'excel', 'pdf', 'print', 'colvis',
+                    {
+                        text: 'Add Warehouse Data',
+                        action: function () {
+                            $('#addMembersModal').modal('show');
+                        }
+                    }
                 ]
             } );
+            
+            $('#example3').DataTable( {
+                data:           data,
+                deferRender:    true,
+                scrollY:        400,
+                scrollX:        true,
+                scrollCollapse: true,
+                scroller:       true,
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
+                ]
+            } );
+            
 
+            
         } );
         
         function SearchDistrictReg1(){
 //            alert('Boom');
             _("SearchDistrictReg").value = "SearchDistrictReg";        
             _("frmSearchDistrictReg").method = "post";
-            _("frmSearchDistrictReg").action = "membership.php";
+            _("frmSearchDistrictReg").action = "warehouse.php";
             _("frmSearchDistrictReg").submit();
         }
         
@@ -353,3 +396,4 @@ include_once ('../../controller/user/membershipcontroller.php'); ?>
 
 
 </html>
+

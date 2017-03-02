@@ -41,53 +41,11 @@ $listTrees = $trees->listTrees();
 $listVillages = $districts->listVillages();
 
 $listVillagesDistrict = $districts->listVillagesDistrict();
-//
-//list districts
-//$lstDistricts = $districts->listDistricts();
 
 
 if(isset($_POST['SearchDistrictReg'])){ //search button clicked
-    echo 'search districts';
     $regYear = $_POST['regyearDS'];
 
-    //get reg year display details
-    $getRegYearDetails = $common->getRegYearDetails($regYear);
-    $regYearName = $getRegYearDetails[0][1];
-
-    $lstDistricts = $districts->listDistrictsYear($regYear);
-
-    $i = 0;
-    $IPCs = array();
-
-    foreach($lstDistricts as $value){
-        $districtid = $value['did'];
-        $districtName = $value['dname'];
-
-        $listDistrictIPCs = $districts->listDistrictIPCs($districtid); //get number of ipcs
-        $totalipcs = count($listDistrictIPCs);
-        //get association details
-        //$rowCount1 = count($_POST['treeplantings']);
-
-        //use another function
-        $getAssociations = getAssociation($listDistrictIPCs);
-        $totalAss = $getAssociations[0];
-        $totalGac = $getAssociations[1];
-        $totalClubs = $getAssociations[2];
-
-        $ipc = array();
-        array_push($ipc,$districtid);
-        array_push($ipc,$districtName);
-        array_push($ipc,$totalipcs);
-        array_push($ipc,$totalAss);
-        array_push($ipc,$totalGac);
-        array_push($ipc,$totalClubs);
-
-        array_push($IPCs,$ipc);
-        $i++;
-    }
-
-}else{ //default display
-    $regYear = $_SESSION['nasfam_regyearID']; //reg year id
     //get reg year display details
     $getRegYearDetails = $common->getRegYearDetails($regYear);
     $regYearName = $getRegYearDetails[0][1];
@@ -104,22 +62,46 @@ if(isset($_POST['SearchDistrictReg'])){ //search button clicked
 
         $listDistrictIPCs = $districts->listDistrictIPCs($districtid); //get number of ipcs
         $totalipcs = count($listDistrictIPCs);
-        //get association details
-        //$rowCount1 = count($_POST['treeplantings']);
-
-        //use another function
-//        $getAssociations = getAssociation($listDistrictIPCs);
-//        $totalAss = $getAssociations[0];
-//        $totalGac = $getAssociations[1];
-//        $totalClubs = $getAssociations[2];
 
         $ipc = array();
         array_push($ipc,$districtid);
         array_push($ipc,$districtName);
         array_push($ipc,$totalipcs);
         array_push($ipc,$code);
-//        array_push($ipc,$totalGac);
-//        array_push($ipc,$totalClubs);
+
+        array_push($IPCs,$ipc);
+        $i++;
+    }
+
+}else{ //default display
+    $regYear = $_SESSION['nasfam_regyearID']; //reg year id
+    //get reg year display details
+    $getRegYearDetails = $common->getRegYearDetails($regYear);
+    $regYearName = $getRegYearDetails[0][1];
+    
+    
+
+    $lstDistricts = $districts->listDistricts();
+
+    $i = 0;
+    $IPCs = array();
+
+    foreach($lstDistricts as $value){
+        $districtid = $value['districtID'];
+        $districtName = $value['fieldname'];
+        $code = $value['fieldcode'];
+
+        $listDistrictIPCs = $districts->listDistrictIPCs($districtid); //get number of ipcs
+        $totalipcs = count($listDistrictIPCs);
+        
+
+        $ipc = array();
+        array_push($ipc,$districtid);
+        array_push($ipc,$districtName);
+        array_push($ipc,$totalipcs);
+        array_push($ipc,$code);
+        
+        array_push($ipc,$regYear);
 
         array_push($IPCs,$ipc);
         $i++;
@@ -590,7 +572,7 @@ if(isset($_POST['addIPCItemsBulk'])){
         case "2":
             //ipc
             $itemtable = 'ipc';
-            $itemtableref = 'districtsregyear';
+            $itemtableref = 'districts';
             break;
         case "3":
             //association
@@ -647,13 +629,16 @@ if(isset($_POST['addIPCItemsBulk'])){
             }
             //execute the items
             $updateCodeTable = $districts->InsertIntoItemA($itemtable,$itemname,$newNumber,$refitem);
+//            if($updateCodeTable == 1){
+//                echo 'all good';
+//            }else{
+//                echo 'something went wrong';
+//            }
         }
         fclose($handle);  //close file handler
     }
     
     header("Location: $ReturnPath"); 
-    
-
 }
 
 if(isset($_POST['updateIPCItem'])){

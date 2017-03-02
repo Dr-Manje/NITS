@@ -1,6 +1,6 @@
 <script type="text/javascript"> 
     function logout() {
-        var r = confirm("Do you really want to log out?");
+        var r = confirm("Are you sure you wish to log out?");
         if (r) {
            window.location.href = '../common/logout.php';
         }
@@ -11,7 +11,7 @@
         <!-- Logo -->
         <a href="" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>N</b></span>
+          <span class="logo-mini"><b>NFM</b></span>
           <!-- logo for regular state and mobile devices -->
           <span class="logo-lg"><b>NASFAM</b></span>
         </a>
@@ -45,6 +45,7 @@
                   </li>-->
                   <li class="user-footer">
                     <div class="pull-left">
+                        <!--<button type="button" class="btn btn-info" data-toggle="modal" data-target="#addactivityModal">Add Activity Category</button>-->
                       <a href="userprofile.php" class="btn btn-default btn-flat">My Profile</a>
                     </div>
                     <div class="pull-right">

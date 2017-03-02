@@ -187,19 +187,36 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
                       <strong># months with food:</strong> <?php echo $AnnualFoodinfo['nomonthswithfood']; ?><br>
                       <strong>Coping mechanism:</strong> <?php echo $AnnualFoodinfo['copingmechanism']; ?>
                   </p>
-                    <?php } ?>
+                    
+                  <strong>Type of House</strong>
+                  <?php if($_SESSION['nasfam_usertype'] == '2') { ?>
+                  <a rel="tooltip" title="Edit/Update House Details" class="btn btn-info btn-simple btn-xs openModalLinkHouseInfo" href="/" 
+                       data-id="<?php echo $id; ?>" 
+                       data-viewrtype="<?php echo $AnnualFoodinfo['rtype'] ?>" 
+                       data-viewwtype="<?php echo $AnnualFoodinfo['wtype'] ?>"
+                       data-viewftype="<?php echo $AnnualFoodinfo['ftype'] ?>"                     
+                       >
+                        <i class="fa fa-edit"></i>
+                    </a>
+                  <?php } ?>
+                  <p class="text-muted">
+                      <strong>Roof Type:</strong> <?php echo $AnnualFoodinfo['rtype']; ?><br>
+                      <strong>Wall Type:</strong> <?php echo $AnnualFoodinfo['wtype']; ?><br>
+                      <strong>Floor Type:</strong> <?php echo $AnnualFoodinfo['ftype']; ?>
+                  </p>
+                  <?php } ?>
                 </div><!-- /.box-body -->
               </div>
                 
                  <!--About Me Box--> 
-              <div class="box box-success">
+<!--              <div class="box box-success">
                 <div class="box-header with-border">
                   <h3 class="box-title">Comments</h3>
-                </div> <!--/.box-header -->
+                </div> /.box-header 
                 <div class="box-body">
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
-                </div> <!--/.box-body -->
-              </div> <!--/.box -->
+                </div> /.box-body 
+              </div> /.box -->
               
 
             </div><!-- /.col -->
@@ -220,6 +237,7 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
                 <div class="tab-content">
                   <div class="tab-pane active" id="crops">                  
                       <table id="cropstbl" class="table table-bordered table-striped">
+                          <?php // echo 'number of crops added for user: '.$NoCrops; ?>
                                     <thead>
                                       <tr>
                                         <th>Crop Name</th>
@@ -268,6 +286,7 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
                   </div><!-- /.tab-pane -->
                   <div class="tab-pane" id="livestock">
                        <table id="livestocktbl" class="table table-bordered table-striped">
+                           <?php // echo 'number of livestock added for user: '.$NoLivestock; ?> 
                                         <thead>
                                           <tr>
                                             <th>Livestock</th>
@@ -587,6 +606,7 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
                    <form role="form" id="AddCropmemberform" enctype="multipart/form-data" onsubmit="return false">                        
                         <input type="hidden" id="AddCropID" name="AddCropID" value="<?php echo $memberProfID ?>" >
                         <input type="hidden" id="AddCropmember" name="AddCropmember" >
+                        <input type="hidden" id="crop_cnt" name="crop_cnt" >
                         <table id="exampleLstActivities" class="table table-striped table-bordered tblAddCrop" cellspacing="0" width="100%"> 
                             <tr>
                                 <th>Select</th>
@@ -597,8 +617,8 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
                     </form>                                  
                 </div>                            
                 <div class="modal-footer">                   
-                    <button type="button" class='btn btn-danger deleteAddCrop'>- Delete</button>
-                    <button type="button" class='btn btn-success addmoreAddCrop'>+ Add More</button> 
+                    <button type="button" id="deletecropbtn" class='btn btn-danger deleteAddCrop'>- Delete</button>
+                    <button type="button" id="addcropbtn" class='btn btn-success addmoreAddCrop'>+ Add More</button> 
                     <button class="btn btn-success" onclick="AddCropMember()">Save</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
                 </div>
@@ -676,12 +696,16 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h3>Add Livestock</h3>                    
+                    <h3>Add Livestock</h3> 
+<!--                    <p>
+                        livestock counter<span id="livestock_cnt"></span>
+                    </p>-->
                 </div>
                 <div class="modal-body">                                        
                    <form role="form" id="AddLivestockmemberform" enctype="multipart/form-data" onsubmit="return false">                        
                         <input type="hidden" id="AddLivestockID" name="AddLivestockID" value="<?php echo $memberProfID ?>" >
                         <input type="hidden" id="AddLivestockmember" name="AddLivestockmember" >
+                        <input type="hidden" id="livestock_cnt" name="livestock_cnt" >
                         <table id="exampleLstActivities" class="table table-striped table-bordered tblAddLivestock" cellspacing="0" width="100%"> 
                             <tr>
                                 <th>Select</th>
@@ -692,8 +716,8 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
                     </form>                                  
                 </div>                            
                 <div class="modal-footer">                   
-                    <button type="button" class='btn btn-danger deleteAddLivestock'>- Delete</button>
-                    <button type="button" class='btn btn-success addmoreAddLivestock'>+ Add More</button> 
+                    <button type="button" id="deletelvstockbtn" class='btn btn-danger deleteAddLivestock'>- Delete</button>
+                    <button type="button" id="addmorelvstockbtn" class='btn btn-success addmoreAddLivestock'>+ Add More</button> 
                     <button class="btn btn-success" onclick="AddLivestockMember()">Save</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
                 </div>
@@ -1532,7 +1556,6 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
     <!-- END Edit Annual Income Info -->
     
     <!-- Edit Annual Income Info -->
-    
     <div class="modal fade" id="ModalLinkFoodSecurity" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
           <div class="modal-dialog ">
             <div class="modal-content">
@@ -1569,6 +1592,81 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
           </div>
         </div>
     <!-- END Edit Annual Income Info -->
+    
+    <!-- edit house type -->
+    <div class="modal fade" id="ModalLinkHouseInfo" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
+          <div class="modal-dialog ">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="HouseInfoTitle"></h4>
+              </div>
+              <div class="modal-body">                
+                    <form role="form" id="updateHouseInfoform" enctype="multipart/form-data" onsubmit="return false">                        
+                        <input type="hidden" id="updateHouseInfo" name="updateHouseInfo" >
+                        <input type="hidden" id="HouseInfomemberID" name="HouseInfomemberID" >
+                        <?php foreach($AnnualAndFoodInfo as $AnnualFoodinfo){ 
+                            $given_arrayRtype = array ("GRASS","IRONSHEETS","TILES");                          
+                            $given_arrayWtype = array ("MUD","UNBURNT BRICKS","BRICKS");
+                            $given_arrayFtype = array ("MUD","CEMENT","TILES");
+                            
+                            $selected_arrayRtype = array($AnnualFoodinfo['rtype']);
+                            $selected_arrayWtype = array($AnnualFoodinfo['ftype']);
+                            $selected_arrayFtype = array($AnnualFoodinfo['wtype']);
+                            
+                            $array_Rtype = array_diff($given_arrayRtype,$selected_arrayRtype);
+                            $array_Wtype = array_diff($given_arrayWtype,$selected_arrayWtype);
+                            $array_Ftype = array_diff($given_arrayFtype,$selected_arrayFtype);
+                        
+                         ?>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="rtype">Roof Type:</label>
+                                    <select class="form-control" id="rtype" name="rtype">
+                                        <?php echo '<option value="'.$AnnualFoodinfo['rtype'].'">'.$AnnualFoodinfo['rtype'].'</option>';                                        
+                                        foreach ($array_Rtype as $ar) { 
+                                        echo '<option value="'.$ar.'">'.$ar.'</option>';
+                                        } ;?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="wtype">Wall Type:</label>
+                                    <select class="form-control" id="wtype" name="wtype">
+                                        <?php echo '<option value="'.$AnnualFoodinfo['wtype'].'">'.$AnnualFoodinfo['wtype'].'</option>';                                        
+                                        foreach ($array_Wtype as $ar) { 
+                                        echo '<option value="'.$ar.'">'.$ar.'</option>';
+                                        } ;?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="ftype">Floor Type:</label>
+                                    <select class="form-control" id="ftype" name="ftype">
+                                        <?php echo '<option value="'.$AnnualFoodinfo['ftype'].'">'.$AnnualFoodinfo['ftype'].'</option>';                                        
+                                        foreach ($array_Ftype as $ar) { 
+                                        echo '<option value="'.$ar.'">'.$ar.'</option>';
+                                        } ;?>
+                                    </select>
+                                </div>
+                            </div>                            
+                        </div> 
+                        <?php } ?>
+                    </form>
+                  </div>
+             
+              <div class="modal-footer">
+                    <button class="btn btn-success" id="savebtn" onclick="updateMemberHouseInfo()">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+    <!-- end edit house type -->
     
     <!-- END MODALS -->
     
@@ -1610,6 +1708,8 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
                 buttons: [
                     'copy', 'excel', 'pdf', 'print', 'colvis'
                     <?php if($_SESSION['nasfam_usertype'] == '2') { ?>
+                    <?php if($NoCrops == 3) { }else{ ?>                
+                                    
                     ,
                     {
                         text: 'Add Crop(s)',
@@ -1617,7 +1717,7 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
                             $('#addCropModal').modal('show');
                         }
                     }
-                     <?php } ?>
+                    <?php } } ?>
                 ]
             } ); 
 
@@ -1628,6 +1728,7 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
                 buttons: [
                     'copy', 'excel', 'pdf', 'print', 'colvis'
                     <?php if($_SESSION['nasfam_usertype'] == '2') { ?>
+                        <?php if($NoLivestock == 3) { }else{ ?>  
                     ,
                     {
                         text: 'Add Livestock',
@@ -1635,7 +1736,7 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
                             $('#addLivestockModal').modal('show');
                         }
                     }
-                     <?php } ?>
+                    <?php } } ?>
                 ]
             } );
             
@@ -1719,6 +1820,12 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
                 max: 12,
                 step: 1
             });
+            
+            $('.seeddistro').spinner({
+                min: 0,
+                max: 12,
+                step: 1
+            });
         });
         
         // ACTIVITIES --------------------------------------------------------------------------------------------------------------
@@ -1769,19 +1876,66 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
         
         
         // CROPS --------------------------------------------------------------------------------------------------------------
+        var Nocrop = _("crop_cnt").value;
+        _("crop_cnt").style.display = 'none';
+        
         //remove add crop items
         $(".deleteAddCrop").on('click', function() {
-	$('.case:checkbox:checked').parents("tr").remove();
-	$('.check_all').prop("checked", false); 
-	check();
+            if (!$('.cropselect').is(':checked')) {
+                alert('Please select items that you wish to delete');               
+            }else{               
+                $('.case:checkbox:checked').parents("tr").remove();
+                $('.check_all').prop("checked", false);
+                currentcrop = <?php echo $NoCrops ?>;
+                maxcrop = 3 - currentcrop;
+                Nocrop--;
+
+                if(Nocrop === 0){
+                    $('#deletecropbtn').hide();
+                    if(maxcrop > Nocrop){
+                        $('#addcropbtn').show();
+                        //alert(Nocrop);
+                    }else{
+                        
+                    }
+                    
+                }else{
+                    $('#deletecropbtn').show();
+                    alert(Nocrop);
+                    if(Nocrop < maxcrop){                   
+                        $('#addcropbtn').show();
+                        alert(Nocrop);
+                    }else{
+                        alert(Nocrop);
+                    }
+                    $('#deletecropbtn').show();
+                    alert(Nocrop);
+                }               
+                check();  
+            }
+	
         });
         
         //add more crop items
         $(".addmoreAddCrop").on('click',function(){
-        var data="<tr><td><input type='checkbox' class='form-control case' name='crops[]' /></td>";
+        var data="<tr><td><input type='checkbox' class='form-control case cropselect' name='crops[]' /></td>";
         data += "<td><select class='form-control' name='crop[]'><?php foreach ($lstcrops as $optionSeedList) { ;?><option value='<?php echo $optionSeedList['cropID']; ?>'><?php echo $optionSeedList['fieldname']; ?></option><?php  } ;?></select></td>";
         data += "<td><input type='text' class='form-control' name='acreage[]' /></td></tr>";
             $('.tblAddCrop').append(data);
+            currentcrop = <?php echo $NoCrops ?>;
+            maxcrop = 3 - currentcrop;
+            Nocrop++;
+
+            if(Nocrop > 0){
+                //alert('max reached');
+                $('#deletecropbtn').show();
+                if(Nocrop === maxcrop){
+                    $('#addcropbtn').hide();
+                }else{
+                    $('#addcropbtn').show();
+                }
+            }else{                   
+            }
         });
         
         //add crops
@@ -1835,11 +1989,38 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
         
         
         // LIVESTOCK --------------------------------------------------------------------------------------------------------------
-        //remove add LIVESTOCK items
+        var Nolivestock = _("livestock_cnt").value;
+        _("deletelvstockbtn").style.display = 'none';
+
         $(".deleteAddLivestock").on('click', function() {
-	$('.case:checkbox:checked').parents("tr").remove();
-	$('.check_all').prop("checked", false); 
-	check();
+            if (!$('.livestockselect').is(':checked')) {
+                alert('Please select items that you wish to delete');               
+            }else{
+                $('.case:checkbox:checked').parents("tr").remove();
+                $('.check_all').prop("checked", false); 
+                currentlivestock = <?php echo $NoLivestock ?>;
+                maxlivestock = 3 - currentlivestock;
+                Nolivestock--;
+
+                if(Nolivestock === 0){
+                    $('#deletelvstockbtn').hide();
+                    if(maxlivestock > Nolivestock){
+                        $('#addmorelvstockbtn').show();
+                        //alert(Nocrop);
+                    }else{
+                        
+                    }
+                }else{
+                    $('#deletelvstockbtn').show();
+                    if(Nolivestock < maxlivestock){                   
+                        $('#addmorelvstockbtn').show();
+                    }else{
+
+                    }
+                    $('#deletelvstockbtn').show();
+                }
+                check();
+            }
         });
         
         //add more LIVESTOCK items
@@ -1848,6 +2029,20 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
         data += "<td><select class='form-control' name='livestock[]'><?php foreach ($lstLivestock as $optionSeedList) { ;?><option value='<?php echo $optionSeedList['livestockID']; ?>'><?php echo $optionSeedList['fieldname']; ?></option><?php  } ;?></select></td>";
         data += "<td><input type='text' class='form-control' name='quantity[]' /></td></tr>";
             $('.tblAddLivestock').append(data);
+            currentlivestock = <?php echo $NoLivestock ?>;
+            maxlivestock = 3 - currentlivestock;
+            Nolivestock++;
+
+            if(Nolivestock > 0){
+                //alert('max reached');
+                $('#deletelvstockbtn').show();
+                if(Nolivestock === maxlivestock){
+                    $('#addmorelvstockbtn').hide();
+                }else{
+                    $('#addmorelvstockbtn').show();
+                }
+            }else{                   
+            }            
         });
         
         
@@ -1921,7 +2116,7 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
         $(".addmoreSeedDistribution").on('click',function(){
         var data="<tr><td><input type='checkbox' class='form-control case seeddistributionselect' name='seeddees[]' /></td>";
         data += "<td><select class='form-control' name='seedsdee[]'><?php foreach ($lstSeeds as $optionSeedList) { ;?><option value='<?php echo $optionSeedList['seedID']; ?>'><?php echo $optionSeedList['fieldname']; ?></option><?php  } ;?></select></td>";
-        data += "<td><input type='text' class='form-control' name='seedskgs[]' /></td></tr>";
+        data += "<td><input type='number' min='0' max='200'  value='0' step='5' onkeydown='return false' class='form-control seeddistro' id='seeddistro' name='seedskgs[]' /></td></tr>";
             $('.tblAddSeedDistribution').append(data);
         });
         
@@ -2378,6 +2573,17 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
                 $('#ModalLinkFoodSecurity').modal('show');
             });
             
+            //House type
+            $(".openModalLinkHouseInfo").click(function(e) {
+                e.preventDefault();       
+                $("#HouseInfoTitle").html('Type of House Details');
+                $("#HouseInfomemberID").val($(this).data('id'));
+                $("#viewrtype").val($(this).data('viewrtype'));
+                $("#viewwtype").val($(this).data('viewwtype'));
+                $("#viewftype").val($(this).data('viewftype'));
+                $('#ModalLinkHouseInfo').modal('show');
+            });
+            
        });
        
        function ShowHideDiv(){
@@ -2485,6 +2691,17 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
                 _("updateFoodSecurityform").method = "post";
                 _("updateFoodSecurityform").action = "memberprofile.php";
                 _("updateFoodSecurityform").submit();
+            }
+        }
+        
+        //update house info
+        function updateMemberHouseInfo(){
+            var r = confirm("Are you sure you want to update House details?");
+            if (r) {
+                _("updateHouseInfo").value = "updateHouseInfo";        
+                _("updateHouseInfoform").method = "post";
+                _("updateHouseInfoform").action = "memberprofile.php";
+                _("updateHouseInfoform").submit();
             }
         }
         

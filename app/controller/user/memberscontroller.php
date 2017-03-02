@@ -419,11 +419,19 @@ if(isset($_POST['uploadBulkMembers']))
             $hhsize = $data[4];            
             $getclub = $data[5];
             
+            $cropsales = $data[6]; //crop sales 6
+            $osources = $data[7]; //other sources 7
+            $gvc = $data[8]; //gvc 8
+            $mwf = $data[9]; //mwf 9
+            $ftype = strtoupper($data[22]); //ftype 22
+            $rtype = strtoupper($data[23]); //rtype 23
+            $wtype = strtoupper($data[24]); //wtype 24
+                        
             //get club id
             $GetClubDetailsClubCode = $districts->GetClubDetailsClubCode($getclub);
             $club = $GetClubDetailsClubCode[0][0];
             $clubname = $GetClubDetailsClubCode[0][1];
-
+            
             $dateofbirth = date("Y-m-d H:i:s", strtotime($dob));
             //get member number
             
@@ -446,7 +454,7 @@ if(isset($_POST['uploadBulkMembers']))
                 $AddMemberNumber = $members->AddMemberNumber($newMemberNumber,$district,$dateCreated,$Mcount);
             }
             
-            $addMember = $members->RegisterMemberInitial($names,$lastname,$gender,$yearRegistered,$dateofbirth,$hhsize,$newMemberNumber,$club,$district);
+            $addMember = $members->RegisterMemberInitial($names,$lastname,$gender,$yearRegistered,$dateofbirth,$hhsize,$newMemberNumber,$club,$district,$cropsales,$osources,$gvc,$mwf,$ftype,$rtype,$wtype);
             if($addMember == 1){
             //get recent entered member
             $getMemberDetails = $members->RecentMemberDetails();
@@ -454,6 +462,74 @@ if(isset($_POST['uploadBulkMembers']))
             $memberNumber1 = $getMemberDetails[0][1];
 
             $RegisterMemberToRegYear = $members->RegisterMemberToRegYear($yearRegistered,$memberID,$memberNumber1);
+            
+            //add crop details
+            $crop1 = $data[10]; //get crop 1
+            $crop1Acreage = $data[11];
+            $getCrop1 = $crops->getCropID($crop1);
+            $crop1id = $getCrop1[0][0];
+            if($crop1id == NULL){ //if doesnt don't add
+              
+            }else{ //if crop exists add
+                $addCropMembers = $crops->addMemberCrop($memberID, $crop1id, $crop1Acreage);
+            }
+            
+            //get crop 2
+            $crop2 = $data[12]; //get crop 1
+            $crop2Acreage = $data[13];
+            $getCrop2 = $crops->getCropID($crop2);
+            $crop2id = $getCrop2[0][0];
+            if($crop2id == NULL){ //if doesnt don't add
+              
+            }else{ //if crop exists add
+                $addCropMembers = $crops->addMemberCrop($memberID, $crop2id, $crop2Acreage);
+            }
+            
+            //get crop 3
+            $crop3 = $data[14]; //get crop 1
+            $crop3Acreage = $data[15];
+            $getCrop3 = $crops->getCropID($crop3);
+            $crop3id = $getCrop3[0][0];
+            if($crop3id == NULL){ //if doesnt don't add
+              
+            }else{ //if crop exists add
+                $addCropMembers = $crops->addMemberCrop($memberID, $crop3id, $crop3Acreage);
+            }
+            
+            //add livestock details
+            //livestock 1
+            $lvt1 = $data[16]; //get crop 1
+            $lvt1qty = $data[17];
+            $getlvt1 = $livestock->getLivestockID($lvt1);
+            $lvt1id = $getlvt1[0][0];
+            if($lvt1id == NULL){ //if doesnt don't add
+              
+            }else{ //if crop exists add
+                $addMemberLivestock = $livestock->addMemberLivestock($memberID, $lvt1id, $lvt1qty);
+            }
+            
+            //livestock 2
+            $lvt2 = $data[18]; //get crop 1
+            $lvt2qty = $data[19];
+            $getlvt2 = $livestock->getLivestockID($lvt2);
+            $lvt2id = $getlvt2[0][0];
+            if($lvt2id == NULL){ //if doesnt don't add
+              
+            }else{ //if crop exists add
+                $addMemberLivestock = $livestock->addMemberLivestock($memberID, $lvt2id, $lvt2qty);
+            }
+            
+            //livestock 3
+            $lvt3 = $data[20]; //get crop 1
+            $lvt3qty = $data[21];
+            $getlvt3 = $livestock->getLivestockID($lvt3);
+            $lvt3id = $getlvt3[0][0];
+            if($lvt3id == NULL){ //if doesnt don't add
+              
+            }else{ //if crop exists add
+                $addMemberLivestock = $livestock->addMemberLivestock($memberID, $lvt3id, $lvt3qty);
+            }
+            
             } 
         }
         fclose($handle);
@@ -470,8 +546,7 @@ if(Isset($_GET['Sid'])){
     $id = $_GET['Sid'];
     
     //get member season
-    
-    
+
     //list seeds
     $lstSeeds = $seeds->listSeeds();
     
@@ -510,14 +585,18 @@ if(Isset($_GET['Sid'])){
     //get annual info and food security
     $AnnualAndFoodInfo = $members->MemberAnnualAndFoodInfo($id);
     
+    //type of house
+    
     //get member crop info
     $memberCropInfo = $members->MemberCropDetails($id);
+    $NoCrops = count($memberCropInfo);
     
     //select crop list
     $lstcrops = $crops->listCrops();
     
     //get member livestock info
     $memberLivestock = $members->MemberLivestockDetails($id);
+    $NoLivestock = count($memberLivestock);
     
     //select livestock list
     $lstLivestock = $livestock->listLivestock();
@@ -536,6 +615,8 @@ if(Isset($_GET['Sid'])){
     
     //list tree planting info
     $listMemberTreePlantingItems = $activities->listMemberTreePlantingItems($id);
+    
+    
     
 }
 
@@ -598,12 +679,15 @@ if(isset($_POST['updateGeneralInfo'])){
                 header("Location: memberprofile.php?Sid=$memberID ");
             }else{
                 echo 'something went wrong';
+                header("Location: memberprofile.php?Sid=$memberID ");
             }
         }else{ //update failed
             echo 'village update failed';
+            header("Location: memberprofile.php?Sid=$memberID ");
         }
     }else{ //update failed
         echo 'club update failed<br>';
+        header("Location: memberprofile.php?Sid=$memberID ");
     }
 }
 
@@ -629,6 +713,19 @@ if(isset($_POST['updateFoodSecurity'])){
     if($update == 1){
         header("Location: memberprofile.php?Sid=$memberID ");
     } 
+}
+
+//update house info
+if(isset($_POST['updateHouseInfo'])){
+    $memberID = $_POST['HouseInfomemberID'];
+    $rtype = $_POST['rtype'];
+    $wtype = $_POST['wtype'];
+    $ftype = $_POST['ftype'];
+    
+    $update = $members->UpdateHouseInfo($memberID,$rtype,$wtype,$ftype);
+    if($update == 1){
+        header("Location: memberprofile.php?Sid=$memberID ");
+    }
 }
 
 //member profile crops ---------------------------------------------------------------

@@ -1,7 +1,7 @@
 <?php  
 session_start();
 error_reporting(0);
-include_once ('../../controller/user/membershipcontroller.php'); ?>
+include_once ('../../controller/user/procurementcontroller.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,18 +68,65 @@ include_once ('../../controller/user/membershipcontroller.php'); ?>
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Members
+            Procurement
             <small>Registration Year: <?php echo $regYearName ?></small>
           </h1>
-          <ol class="breadcrumb">
+<!--          <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Members</a></li>
             <li class="active">Member listing</li>
-          </ol>
+          </ol>-->
         </section>
 
         <!-- Main content -->
         <section class="content">
 
+          <!-- Your Page Content Here -->
+          <div class="row">
+              <div class="col-md-6">
+                  <!-- Widget: user widget style 1 -->
+              <div class="box box-widget widget-user-2">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="widget-user-header bg-green">
+                  <!--<div class="widget-user-image">-->
+                    <!--<img class="img-circle" src="../dist/img/user7-128x128.jpg" alt="User Avatar">-->
+                  <!--</div> /.widget-user-image -->
+                  <h3 class="widget-user-username">Non Members</h3>
+                  <!--<h5 class="widget-user-desc">Lead Developer</h5>-->
+                </div>
+                <div class="box-footer no-padding">
+                  <ul class="nav nav-stacked">
+                    <li><a href="#">% female sellers <span class="pull-right badge bg-blue">31</span></a></li>
+                    <li><a href="#">% male sellers <span class="pull-right badge bg-aqua">5</span></a></li>
+                    <li><a href="#">Total Sales KGs <span class="pull-right badge bg-green">12</span></a></li>
+                    <li><a href="#">Total Sales MK <span class="pull-right badge bg-red">842</span></a></li>
+                  </ul>
+                </div>
+              </div><!-- /.widget-user -->
+              </div>
+              <div class="col-md-6">
+                  <!-- Widget: user widget style 1 -->
+              <div class="box box-widget widget-user-2">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="widget-user-header bg-green">
+                  <!--<div class="widget-user-image">-->
+                    <!--<img class="img-circle" src="../dist/img/user7-128x128.jpg" alt="User Avatar">-->
+                  <!--</div> /.widget-user-image -->
+                  <h3 class="widget-user-username">Members</h3>
+                  <!--<h5 class="widget-user-desc">Lead Developer</h5>-->
+                </div>
+                <div class="box-footer no-padding">
+                  <ul class="nav nav-stacked">
+                    <li><a href="#">% female sellers <span class="pull-right badge bg-blue">31</span></a></li>
+                    <li><a href="#">% male sellers <span class="pull-right badge bg-aqua">5</span></a></li>
+                    <li><a href="#">Total Sales KGs <span class="pull-right badge bg-green">12</span></a></li>
+                    <li><a href="#">Total Sales MK <span class="pull-right badge bg-red">842</span></a></li>
+                  </ul>
+                </div>
+              </div><!-- /.widget-user -->
+              </div>
+          </div>
+          
+          
        <!-- /.row -->
             <div class="row">
               <div class="col-xs-12">
@@ -108,54 +155,21 @@ include_once ('../../controller/user/membershipcontroller.php'); ?>
                             </form>
                 </div><!-- /.box-header -->
                 <div class="box-body">
-                    
-                  <table id="tblmembership" class="display table table-striped" width="100%" cellspacing="0">
+                  <table id="example2" class="table table-striped table-bordered" cellspacing="0" width="100%">
                     <thead>
                       <tr>
-                        <th>IPC</th>
-                        <th>DISTRICT</th>
-                        <th>T/A</th>
-                        <th>GAC</th>
-                        <th>GVH</th>
-                        <th>VILLAGE</th>
-                        <th>ASSOCIATION</th>
-                        <th>CLUB NAME</th>
-                        <th>TCC REG. #</th>
-                        
-                        <th>MEMBER NAME</th>
+                        <th>NAME</th>
+                        <th>STATUS</th>
+                        <th>RECEIPT NO.</th>
                         <th>GENDER</th>
-                        <th>YEAR OF BIRTH</th>
-                        <th>AGE</th>
-                        <th>HH SIZE</th>
-                        
-                        <th>CROP</th>
-                        <th>ACREAGE</th>
-                        <th>CROP</th>
-                        <th>ACREAGE</th>
-                        <th>CROP</th>
-                        <th>ACREAGE</th>
-                        
-                        <th>GVC</th>
-                        
-                        <th>ROOF TYPE</th>
-                        <th>WALL TYPE</th>
-                        <th>FLOOR TYPE</th>
-                        
-                        <th>CROP SALES</th>
-                        <th>OTHER SOURCES</th>
-                        
-                        <th>LVT</th>
+                        <th>MOISTURE</th>
                         <th>QTY</th>
-                        <th>LVT</th>
-                        <th>QTY</th>
-                        <th>LVT</th>
-                        <th>QTY</th>
-                        
-                        <th>MWF</th>
-                        <th>COPING MECHANISM</th>
+                        <th>MWK</th>
+                        <th>MARKET CENTER</th>
+                        <th>ACTION</th>
                       </tr>
-                    </thead>
-                  </table>
+                    </thead>                 
+                  </table>                   
                  </div><!-- /.box-body -->
               </div><!-- /.box -->                   
               </div>
@@ -170,6 +184,52 @@ include_once ('../../controller/user/membershipcontroller.php'); ?>
 
      
     </div><!-- ./wrapper -->
+    
+    <!-- MODALS -->
+    <!-- Revenue budget Modal -->
+        <div id="addMembersModal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+            <!-- modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3>Add Procurement Data</h3><hr>
+                    <form method="post" action="procurement.php" enctype="multipart/form-data" class="form-inline center-block">                       
+                        <div class="row">
+                            <div class="col-sm-4">                          
+                                 <div class="form-group">
+                                     <label for="regyearBulk">Registration Year:</label>
+                                     <select class="form-control" id="regyearBulk" name="regyearBulk">
+                                         <?php foreach ($listregYear as $optionMemberList) { ;?>
+                                 <option value="<?php echo $optionMemberList['regyearID']; ?>"><?php echo $optionMemberList['regYear']; ?></option>
+                             <?php  } ;?>
+                                     </select>
+                                 </div>
+                            </div>
+                        <div class="col-sm-4"> 
+                            <div class="form-group">
+                            <input class="form-group" type="file" name="file" />
+                            </div> 
+                        </div>
+                            <div class="col-sm-4">
+                               <input class="btn btn-default" type="submit" name="uploadBulkProcurement" value="upload" /> 
+                            </div>
+                        </div>
+                        
+                    </form>
+                </div>
+
+                <div class="modal-footer">                   
+<!--                    <button type="button" class='btn btn-danger deletemember'>- Delete</button>
+                    <button type="button" class='btn btn-success addmoremember'>+ Add More</button> 
+                    <button class="btn btn-success" onclick="AddMember()">Save</button>-->
+                    <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+                </div>
+                </div>            
+            </div>
+        </div>
+        <!-- end Revenue budget Modal -->
+    <!-- END MODALS -->
     
     <!-- REQUIRED JS SCRIPTS -->
 
@@ -200,9 +260,12 @@ include_once ('../../controller/user/membershipcontroller.php'); ?>
         }
         
          $(document).ready(function() {
-            var data = <?php echo json_encode($lstMembership); ?>;
+            var data = <?php echo json_encode($TRs); ?>;
+//           
+//            $('#myModal').modal({backdrop: 'static', keyboard: false});
+//            $('#myModal').modal('show');
         
-            $('#tblmembership').DataTable( {
+            $('#example2').DataTable( {
                 data:           data,
                 deferRender:    true,
                 scrollY:        350,
@@ -211,17 +274,38 @@ include_once ('../../controller/user/membershipcontroller.php'); ?>
                 scroller:       true,
                 dom: 'Bfrtip',
                 buttons: [
-                    'copy', 'excel', 'print', 'colvis'
+                    'copy', 'excel', 'pdf', 'print', 'colvis',
+                    {
+                        text: 'Add Procurement Data',
+                        action: function () {
+                            $('#addMembersModal').modal('show');
+                        }
+                    }
                 ]
             } );
+            
+            $('#example3').DataTable( {
+                data:           data,
+                deferRender:    true,
+                scrollY:        400,
+                scrollX:        true,
+                scrollCollapse: true,
+                scroller:       true,
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
+                ]
+            } );
+            
 
+            
         } );
         
         function SearchDistrictReg1(){
 //            alert('Boom');
             _("SearchDistrictReg").value = "SearchDistrictReg";        
             _("frmSearchDistrictReg").method = "post";
-            _("frmSearchDistrictReg").action = "membership.php";
+            _("frmSearchDistrictReg").action = "procurement.php";
             _("frmSearchDistrictReg").submit();
         }
         
@@ -353,3 +437,4 @@ include_once ('../../controller/user/membershipcontroller.php'); ?>
 
 
 </html>
+

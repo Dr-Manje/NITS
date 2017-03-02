@@ -1,7 +1,7 @@
 <?php  
 session_start();
 error_reporting(0);
-include_once ('../../controller/user/membershipcontroller.php'); ?>
+include_once ('../../controller/user/marketcentercontroller.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,94 +68,40 @@ include_once ('../../controller/user/membershipcontroller.php'); ?>
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Members
-            <small>Registration Year: <?php echo $regYearName ?></small>
+            Market Center Details
+            <small>Registration Year: <?php// echo $regYearName ?></small>
           </h1>
-          <ol class="breadcrumb">
+<!--          <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Members</a></li>
             <li class="active">Member listing</li>
-          </ol>
+          </ol>-->
         </section>
 
         <!-- Main content -->
         <section class="content">
 
+          <!-- Your Page Content Here -->
+          
+          
        <!-- /.row -->
             <div class="row">
               <div class="col-xs-12">
                  <div class="box">
                 <div class="box-header">
                     
-                        <form class="form-inline" method="post" id="frmSearchDistrictReg">
-                                <input type="hidden" id="SearchDistrictReg" name="SearchDistrictReg" >
-                                <table class="table">
-                                    <tr>
-                                        <td>
-                                           <label>Select registered Year: </label>
-                                            <select class="form-control" id="regyearDS" name="regyearDS">
-                                             <?php foreach ($listregYear as $optionMemberList) { ;?>
-                                                <option value="<?php echo $optionMemberList['regyearID']; ?>"><?php echo $optionMemberList['regYear']; ?></option>
-                                            <?php  } ;?>
-                                            </select> 
-                                        <!--<button type="button" class="btn btn-info" onclick="SearchDistrictReg()">Display</button>-->
-                                        <button type="button" class="btn btn-info" onclick="SearchDistrictReg1()">Display</button>
-                                        <?php // if($_SESSION['nasfam_usertype'] == '2'){ ?>
-                                       <!--<button type="button" class="btn btn-info" data-toggle="modal" data-target="#addMembersModal">Register New Member(s)</button>-->   
-                                       <?php // } ?> 
-                                        </td>                                       
-                                </tr>                               
-                            </table>
-                            </form>
                 </div><!-- /.box-header -->
                 <div class="box-body">
-                    
-                  <table id="tblmembership" class="display table table-striped" width="100%" cellspacing="0">
+                   
+                  <table id="example2" class="table table-striped table-bordered" cellspacing="0" width="100%">
                     <thead>
                       <tr>
-                        <th>IPC</th>
-                        <th>DISTRICT</th>
-                        <th>T/A</th>
-                        <th>GAC</th>
-                        <th>GVH</th>
-                        <th>VILLAGE</th>
-                        <th>ASSOCIATION</th>
-                        <th>CLUB NAME</th>
-                        <th>TCC REG. #</th>
-                        
-                        <th>MEMBER NAME</th>
-                        <th>GENDER</th>
-                        <th>YEAR OF BIRTH</th>
-                        <th>AGE</th>
-                        <th>HH SIZE</th>
-                        
-                        <th>CROP</th>
-                        <th>ACREAGE</th>
-                        <th>CROP</th>
-                        <th>ACREAGE</th>
-                        <th>CROP</th>
-                        <th>ACREAGE</th>
-                        
-                        <th>GVC</th>
-                        
-                        <th>ROOF TYPE</th>
-                        <th>WALL TYPE</th>
-                        <th>FLOOR TYPE</th>
-                        
-                        <th>CROP SALES</th>
-                        <th>OTHER SOURCES</th>
-                        
-                        <th>LVT</th>
-                        <th>QTY</th>
-                        <th>LVT</th>
-                        <th>QTY</th>
-                        <th>LVT</th>
-                        <th>QTY</th>
-                        
-                        <th>MWF</th>
-                        <th>COPING MECHANISM</th>
+                        <th>NAME</th>
+                        <th>CODE</th>
                       </tr>
                     </thead>
+                  
                   </table>
+                    
                  </div><!-- /.box-body -->
               </div><!-- /.box -->                   
               </div>
@@ -170,6 +116,53 @@ include_once ('../../controller/user/membershipcontroller.php'); ?>
 
      
     </div><!-- ./wrapper -->
+    
+    <!-- MODALS -->
+    <!-- Revenue budget Modal -->
+        <div id="addMembersModal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+            <!-- modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3>Enter New Market Centers</h3><hr>
+                    <form method="post" action="marketcenter.php" enctype="multipart/form-data" class="form-inline center-block">
+                        
+                        <div class="row">
+                            <div class="col-sm-4">                          
+                                 <div class="form-group">
+                                     <label for="regyearBulk">Registration Year:</label>
+                                     <select class="form-control" id="regyearBulk" name="regyearBulk">
+                                         <?php foreach ($listregYear as $optionMemberList) { ;?>
+                                 <option value="<?php echo $optionMemberList['regyearID']; ?>"><?php echo $optionMemberList['regYear']; ?></option>
+                             <?php  } ;?>
+                                     </select>
+                                 </div>
+                            </div>
+                        <div class="col-sm-4"> 
+                            <div class="form-group">
+                            <input class="form-group" type="file" name="file" />
+                            </div> 
+                        </div>
+                            <div class="col-sm-4">
+                               <input class="btn btn-default" type="submit" name="uploadBulkMarketCenters" value="upload" /> 
+                            </div>
+                        </div>
+                        
+                    </form>
+                </div>
+
+                <div class="modal-footer">                   
+<!--                    <button type="button" class='btn btn-danger deletemember'>- Delete</button>
+                    <button type="button" class='btn btn-success addmoremember'>+ Add More</button> 
+                    <button class="btn btn-success" onclick="AddMember()">Save</button>-->
+                    <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+                </div>
+                </div>            
+            </div>
+        </div>
+        <!-- end Revenue budget Modal -->
+    <!-- END MODALS -->
     
     <!-- REQUIRED JS SCRIPTS -->
 
@@ -193,16 +186,18 @@ include_once ('../../controller/user/membershipcontroller.php'); ?>
 <script src="../../../rpt/buttons.print.min.js" type="text/javascript"></script>
 <script src="../../../rpt/buttons.colVis.min.js" type="text/javascript"></script>
 <script src="../../../rpt/dataTables.scroller.min.js" type="text/javascript"></script>
-    <script>
-        
+    <script>  
         function _(x) {
             return document.getElementById(x);
         }
         
          $(document).ready(function() {
-            var data = <?php echo json_encode($lstMembership); ?>;
+            var data = <?php echo json_encode($lstMarketcenters); ?>;
+//           
+//            $('#myModal').modal({backdrop: 'static', keyboard: false});
+//            $('#myModal').modal('show');
         
-            $('#tblmembership').DataTable( {
+            $('#example2').DataTable( {
                 data:           data,
                 deferRender:    true,
                 scrollY:        350,
@@ -211,17 +206,38 @@ include_once ('../../controller/user/membershipcontroller.php'); ?>
                 scroller:       true,
                 dom: 'Bfrtip',
                 buttons: [
-                    'copy', 'excel', 'print', 'colvis'
+                    'copy', 'excel', 'pdf', 'print', 'colvis',
+                    {
+                        text: 'Add New Market Center(s)',
+                        action: function () {
+                            $('#addMembersModal').modal('show');
+                        }
+                    }
                 ]
             } );
+            
+            $('#example3').DataTable( {
+                data:           data,
+                deferRender:    true,
+                scrollY:        400,
+                scrollX:        true,
+                scrollCollapse: true,
+                scroller:       true,
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
+                ]
+            } );
+            
 
+            
         } );
         
         function SearchDistrictReg1(){
 //            alert('Boom');
             _("SearchDistrictReg").value = "SearchDistrictReg";        
             _("frmSearchDistrictReg").method = "post";
-            _("frmSearchDistrictReg").action = "membership.php";
+            _("frmSearchDistrictReg").action = "casualworkers.php";
             _("frmSearchDistrictReg").submit();
         }
         
@@ -353,3 +369,4 @@ include_once ('../../controller/user/membershipcontroller.php'); ?>
 
 
 </html>
+

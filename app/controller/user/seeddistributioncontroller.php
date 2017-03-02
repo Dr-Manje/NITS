@@ -181,12 +181,34 @@ if(isset($_POST['addSDBulk'])){
             //check if member or non member
             $memberNumber = $data[0];
             $seedCode = $data[1];
-            $acquiredseedamount = $data[2];
+            $acquiredseedamount1 = $data[2];
+            //check amount of seed
+            if($acquiredseedamount1 > 200){
+                $acquiredseedamount = 200;
+            }else{
+                $acquiredseedamount = $acquiredseedamount1;
+            }
+            
             $repayment = $data[3];
             $repaidseedcode = $data[4];
-            $repaidseedamount = $data[5];
+            $repaidseedamount1 = $data[5];
+            
+            //check amount of seed
+            if($repaidseedamount1 > 200){
+                $repaidseedamount = 200;
+            }else{
+                $repaidseedamount = $repaidseedamount1;
+            }
+            
             $repaidcropcode = $data[6];
-            $repaidcropamount = $data[7];
+            $repaidcropamount1 = $data[7];
+            
+            //check amount of seed
+            if($repaidcropamount1 > 200){
+                $repaidcropamount = 200;
+            }else{
+                $repaidcropamount = $repaidcropamount1;
+            }
             
             $checkMemberExistence = $members->MemberExists($memberNumber);
             $CheckMembership = $checkMemberExistence[0][6];
