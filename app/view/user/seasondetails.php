@@ -157,8 +157,7 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                             <p class="text-muted">
                                 <strong>Season:</strong> <?php echo $seasonheader['regYear']; ?><br>
                                 <strong>Start Date:</strong> <?php echo $seasonheader['startDate']; ?><br>
-                                <strong>End Date:</strong> <?php echo $seasonheader['endDate']; ?><br>
-                                
+                                <strong>End Date:</strong> <?php echo $seasonheader['endDate']; ?><br>                                
                             </p>
                             
                            
@@ -169,11 +168,9 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                     <div class="box box-success">
                     <div class="box-body box-profile">
                         <strong>Procurement Details</strong><hr>
-                        <strong>Procurement Amount:</strong> <?php echo $seasonheader['procurement']; ?><br>
-                        <strong>Market Procurement Amount:</strong><br>
-                        
-                        <strong>Total CG7:</strong><br>
-                        <strong>Total CHALIM:</strong><br>
+                        <strong>Procurement Amount: </strong> <?php echo $seasonheader['procurement']; ?><br>
+                        <strong>Market Procurement Amount: </strong> <?php echo $totalAmountSpent; ?><br>
+                        <strong>Balance: </strong> <?php $balance =  $seasonheader['procurement'] - $totalAmountSpent; echo $balance; ?><br>
                     <?php } ?> 
                     </div>
                     </div>
@@ -184,15 +181,15 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                             <strong>Participation</strong><hr>
                             <div class="col-md-6">
                                 <strong>NON MEMBERS</strong><br>
-                                <strong>Male:</strong><br>
-                                <strong>Female:</strong><br>
-                                <strong>Male:</strong>
+                                <strong>Male: </strong> <?php echo $nonemembermale ?><br>
+                                <strong>Female: </strong> <?php echo $nonememberfemale ?><br>
+                                <strong>Total: </strong> <?php echo $nonemembers ?>
                             </div>
                             <div class="col-md-6">
                                 <strong>MEMBERS</strong><br>
-                                <strong>Male:</strong><br>
-                                <strong>Female:</strong><br>
-                                <strong>Male:</strong>
+                                <strong>Male: </strong> <?php echo $countMales ?><br>
+                                <strong>Female: </strong> <?php echo $countFemales ?><br>
+                                <strong>Total: </strong> <?php echo $members ?>
                             </div>
                         </div>
                         </div>
@@ -203,133 +200,37 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                 <div class="col-lg-12">
                     <div class="nav-tabs-custom nav-pills-success">
                         <ul class="nav nav-tabs nav-pills-success">
-                            <li class="active"><a href="#marketcenter" data-toggle="tab"><strong>Seasonal Summary</strong></a></li>
+                            <li class="active"><a href="#summaries" data-toggle="tab"><strong>Seasonal Summary</strong></a></li>
                             <!--<li><a href="#buyer" data-toggle="tab"><strong>Buying</strong></a></li>-->
-                            <li><a href="#purchases" data-toggle="tab"><strong>Purchases</strong></a></li>
-                            <li><a href="#warehouse" data-toggle="tab"><strong>Warehouse</strong></a></li>
-                            <!--<li><a href="#sorting" data-toggle="tab"><strong>Sorting/Grading</strong></a></li>-->
+                            
+                            
 
                             <li><a href="#marketcenters" data-toggle="tab"><strong>Market Center</strong></a></li>
                             <li><a href="#buyers" data-toggle="tab"><strong>Buyers</strong></a></li>
-                            <li><a href="#casualworkers" data-toggle="tab"><strong>Casual Workers</strong></a></li>
+                            <li><a href="#purchases" data-toggle="tab"><strong>Purchases</strong></a></li>
+                            
+                            
+                            <li><a href="#warehouse" data-toggle="tab"><strong>Warehouse</strong></a></li>
+                            <li><a href="#sorting" data-toggle="tab"><strong>Sorting</strong></a></li>
+                            <li><a href="#grading" data-toggle="tab"><strong>Grading</strong></a></li>
+                            
+                            <li><a href="#dispatch" data-toggle="tab"><strong>Dispatch</strong></a></li>
                         </ul>
                         <div class="tab-content">                           
-                            <div class="tab-pane active" id="marketcenter">
-                                <table id="marketcentertbl" class="table table-bordered table-striped" width="100%" cellspacing="0">
+                            <div class="tab-pane active" id="summaries"><!-- Summaries -->
+                                <h3>Seasonal Totals</h3>
+                                <table id="summary1" class="table table-bordered table-striped" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                           <th>Market Center</th>
-                                          <th>CG7 - Grade 1</th>
-                                          <th>CG7 - Grade 2</th>
-                                          <th>CG7 - Grade 3</th>
-                                          <th>CG7 - Grade 4</th>
-                                          <th>CG7 - Grade 5</th>
-                                          <th>CG7 - Receipt Total</th>
-                                          <th>CG7 - Total QTY (KGs)</th>
-                                          <th>CHALIM - Grade 1</th>
-                                          <th>CHALIM - Grade 2</th>
-                                          <th>CHALIM - Grade 3</th>
-                                          <th>CHALIM - Grade 4</th>
-                                          <th>CHALIM - Grade 5</th>
-                                          <th>CHALIM - Receipt Total</th>
-                                          <th>CHALIM - Total QTY (KGs)</th>
-                                          <th>Receipt Total</th>
                                           <th>Total QTY (KGs)</th>
+                                          <th>Receipt Total (MWk)</th>
                                         </tr>
                                     </thead>                                   
-                                </table>
-                            </div>
-                            <div class="tab-pane" id="buyer">
-                                <table id="buyersummarytbl" class="table table-bordered table-striped" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                          <th>Buyer</th>
-                                          <th>Date</th>
-                                          <th>Market Center</th>                                          
-                                          <th>QTY Total Amount</th>
-                                          <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    
-                                </table>                               
-                            </div>
-                            <div class="tab-pane" id="purchases">
-                                <table id="purchasestbl" class="table table-bordered table-striped" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                          <th>Receipt</th>
-                                          <th>Date</th>
-                                          <th>Buyer</th>
-                                          <th>Market Center</th>
-                                          
-                                          <th>Membership</th>
-                                          <th>Farmer</th>
-                                          <th>Gender</th>
-                                          <th>Club</th>
-                                          <th>GAC</th>
-                                          
-                                          <th>QTY</th>
-                                          <th>Type</th>
-                                          <th>Cum</th>
-                                          <th>Price</th>
-                                          <th>Mkw</th>
-                                          
-                                          <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    
-                                </table>
-                            </div>
-                            <div class="tab-pane" id="warehouse">
-                                <table id="warehousetbl" class="table table-bordered table-striped" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>Warehouse</th>
-                                            <th>Code</th>
-                                            <th>IPC</th>
-                                            <th>Status</th>
-                                            <th>CG 7 Total</th>
-                                            <th>CHALIM Total</th>
-                                            <th>Total QTY (KGs)</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                            <div class="tab-pane" id="sorting">
-                                <table id="sortingtbl" class="table table-bordered table-striped" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                          <th>Casual Worker</th>
-                                          <th>Date</th>
-                                          
-                                          <th>CG7 - Total QTY (KGs)</th>
-                                          <th>CG7 - Gradeouts</th>
-                                          <th>CG7 - Shells</th>
-                                          <th>CG7 - Grade 1</th>
-                                          <th>CG7 - Grade 2</th>
-                                          <th>CG7 - Grade 3</th>
-                                          <th>CG7 - Grade 4</th>
-                                          <th>CG7 - Grade 5</th>
-                                          
-                                          <th>CHALIM - Total QTY (KGs)</th>
-                                          <th>CHALIM - Gradeouts</th>
-                                          <th>CHALIM - Shells</th>
-                                          <th>CHALIM - Grade 1</th>
-                                          <th>CHALIM - Grade 2</th>
-                                          <th>CHALIM - Grade 3</th>
-                                          <th>CHALIM - Grade 4</th>
-                                          <th>CHALIM - Grade 5</th>
-                                          
-                                          <th>Total QTY (KGs)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="tab-pane" id="marketcenters">
+                                </table><hr>                             
+                            </div>                            
+                            <div class="tab-pane" id="marketcenters"> <!-- Market Centres -->
+                                <h3>Market Centres</h3>
                                 <table id="marketcenterstbl" class="table table-bordered table-striped" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -346,9 +247,11 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                                     <tbody>
                                         
                                     </tbody>
-                                </table>
+                                </table>                                
                             </div>
-                            <div class="tab-pane" id="buyers">
+                            
+                            <div class="tab-pane" id="buyers"><!-- Buyers -->
+                                <h3>Buyers</h3>
                                 <table id="buyerstbl" class="table table-bordered table-striped" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -356,10 +259,124 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                                             <th>Buyer Code</th>
                                             <th>Gender</th>
                                             <th>Contacts</th>
-                                            <th>Market Center</th>
+                                            <th>Market Centre</th>
                                             <th>Receipt Total</th>
-                                            <th>Total (Kgs)</th>
+                                            <th>Total (KGs)</th>
                                             <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                       
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <div class="tab-pane" id="purchases"><!-- Purchases -->
+                                <h3>Purchases</h3>
+                                <table id="purchasestbl" class="table table-bordered table-striped" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                          <th>Receipt</th>
+                                          <th>Date</th>
+                                          <th>Buyer</th>
+                                          <th>Market Center</th>
+                                          
+                                          <th>Membership</th>
+                                          <th>Farmer</th>
+                                          <th>Gender</th>
+                                          <th>Club</th>
+                                          <th>GAC</th>
+                                          
+                                          <th>QTY</th>
+                                          <th>Type</th>
+                                          <!--<th>Cum</th>-->
+                                          <th>Price</th>
+                                          <th>Mkw</th>
+                                          
+                                          <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    
+                                </table>
+                            </div>
+                                                        
+                            <div class="tab-pane" id="buyer">
+                                <table id="buyersummarytbl" class="table table-bordered table-striped" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                          <th>Buyer</th>
+                                          <th>Date</th>
+                                          <th>Market Center</th>                                          
+                                          <th>QTY Total Amount</th>
+                                          <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    
+                                </table>                               
+                            </div>
+                            
+                            <div class="tab-pane" id="warehouse"><!-- Warehouse -->
+                                <h3>Warehouse</h3><hr>
+                                <table id="warehousetbl" class="table table-bordered table-striped" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Warehouse</th>
+                                            <th>Code</th>
+                                            <th>IPC</th>
+                                            <th>Status</th>
+                                            <th>Casual Workers</th>
+                                            <th>CG 7 Total</th>
+                                            <th>CHALIM Total</th>
+                                            <th>Total QTY (KGs)</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <div class="tab-pane" id="sorting"><!-- Sorting -->
+                                <h3>Sorting</h3>
+                                <table id="sortingtbl" class="table table-bordered table-striped" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                          <th>Casual Worker</th>
+                                          
+                                          <th>CG7 - Total QTY (KGs)</th>
+                                          <th>CG7 - Gradeouts</th>
+                                          <th>CG7 - Shells</th>
+                                          
+                                          <th>CHALIM - Total QTY (KGs)</th>
+                                          <th>CHALIM - Gradeouts</th>
+                                          <th>CHALIM - Shells</th>
+                                          
+                                          <th>Total QTY (KGs)</th>
+                                          <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane" id="grading"><!-- Grading -->
+                                <h3>Grading</h3>
+                                <table id="gradingtbl" class="table table-bordered table-striped" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Warehouse</th>
+                                            <th>CG7 - Grade 1</th>
+                                            <th>CG7 - Grade 2</th>
+                                            <th>CG7 - Grade 3</th>
+                                            <th>CG7 - Grade 4</th>
+                                            <th>CG7 - Grade 5</th>
+                                            <th>CG7 Total</th>
+                                            <th>CHALIM - Grade 1</th>
+                                            <th>CHALIM - Grade 2</th>
+                                            <th>CHALIM - Grade 3</th>
+                                            <th>CHALIM - Grade 4</th>
+                                            <th>CHALIM - Grade 5</th>
+                                            <th>CHALIM Total</th>
+                                            <th>Total</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -368,23 +385,53 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="tab-pane" id="casualworkers">
-                                 <table id="casualworkerstbl" class="table table-bordered table-striped" width="100%" cellspacing="0">
+                            <div class="tab-pane" id="dispatch">
+                                <h3>Dispatch</h3><hr>
+                                 <table id="dispatchtbl" class="table table-bordered table-striped" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Code</th>
-                                            <th>Gender</th>
-                                            <th>Warehouse</th>
-                                            <th>Status</th>
-                                            <th>CG7 Total</th>
-                                            <th>CHALIM Total</th>
+                                            <th>Date</th>
+                                            <th>Departure</th>
+                                            <th>Destination</th>
+                                            <th>CG7</th>
+                                            <th>CHALIM</th>
                                             <th>Total</th>
+                                            <th>Confirmed</th>
+                                            <th>Confirmed By</th>
+                                            <th>Confirmed Date</th>
+                                            <th>Status</th>
+                                            <th>Notes</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
+                                        <?php foreach($lstDispatchList as $value){ 
+                                            $total = $value['cg7'] + $value['chalim'];
+                                            if($value['confirmed'] == '1'){
+                                                $confirmation = 'YES';
+                                            }else{
+                                                $confirmation = 'NO';
+                                            }
+                                            
+                                            ?>
+                                        <tr>
+                                            <td><?php echo $value['departuredate'] ?></td>
+                                            <td><?php echo $value['departure'] ?></td>
+                                            <td><?php echo $value['destination'] ?></td>
+                                            <td><?php echo $value['cg7'] ?></td>
+                                            <td><?php echo $value['chalim'] ?></td>
+                                            <td><?php echo $total ?></td>
+                                            <td><?php echo $confirmation ?></td>
+                                            <td><?php echo $value['confirmedby'] ?></td>
+                                            <td><?php echo $value['confirmeddate'] ?></td>
+                                            <td><?php echo $value['notes'] ?></td>
+                                            <td><?php echo $value['status'] ?></td>
+                                            <td> 
+                                                <button onclick="editDispatch(<?php echo $value['did'] ?>,<?php echo '\''.$value['departuredate'].'\'' ?>,<?php echo $value['cg7'] ?>,<?php echo $value['chalim'] ?>,<?php echo '\''.$value['confirmedby'].'\'' ?>,<?php echo '\''.$value['confirmeddate'].'\'' ?>,<?php echo '\''.$value['status'].'\'' ?>,<?php echo '\''.$value['notes'].'\'' ?>)" rel="tooltip" title="Edit/update Dispatch" class="btn btn-success btn-xs" ><i class="fa fa-edit"></i> Edit</button>
+                                                <button onclick="deleteDispatch(<?php echo $value['did'] ?>,<?php echo $value['season'] ?>)" rel="tooltip" title="Delete Dispatch" class="btn btn-danger btn-xs" ><i class="fa fa-trash"></i> DELETE</button>
+                                            </td>
+                                        </tr>                                        
+                                        <?php } ?>                                       
                                     </tbody>
                                 </table>
                             </div>
@@ -457,6 +504,30 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
             
         }
         
+        //delete dispatch
+        function deleteDispatch(item,item2){
+            if (window.confirm('are you sure you want to Delete this Dispatch Record?'))
+                {
+                    window.location.href = "seasondetails.php?delDID="+item+"&delSID="+item2;
+                }else{
+                    
+                }
+        }
+        
+        //dispatch details
+        function editDispatch(item,item1,cg7,chalim,confirmedby,confirmeddate,status,notes){
+            $("#editDispatchID").val(item); //dispatch id
+            $("#dateDispatch").val(item1);//date
+            $("#cg7Dispatch").val(cg7);//cg7
+            $("#chalimDispatch").val(chalim);//chalim
+            $("#confirmedbyDispatch").val(confirmedby);//confirmedby
+            $("#confirmeddateDispatch").val(confirmeddate);//confirmeddate
+            $("#statusDispatch").val(status);//status
+            $("#notesDispatch").val(notes);//notes
+            $('#editDispatchModal').modal('show'); //editDispatchModal
+        }
+        
+        
         function editCasualWorker(item2,item,item3){
             $("#editfname").val(item2);
             $("#editlname").val(item);
@@ -470,7 +541,7 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
             $('#CasualWorkerWHSModal').modal('show');
         }
         
-        function editBuyerMKC(item){
+        function editBuyerMKCs(item){
             $("#editMKCBuyersID").val(item); 
             $('#BuyerMKCModal').modal('show');
         }
@@ -480,21 +551,24 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
             $('#WarehouseIPCModal').modal('show');
         }
         
-        function editPurchase(item,item2,item3,item4,item5,item6,item7,item8,item9){
-            $("#cum").val(item2);
-            $("#qty").val(item);
-            $("#price").val(item3);
-            $("#mwk").val(item4);
+        function editWarehouse(item,item2){
+            $("#editWarehouseNameID").val(item); //editWarehouseIPCID
+            $("#warehouseName").val(item2); //editWarehouseIPCID
+            $('#editWarehouseModal').modal('show');
+        }
+        
+        function editMarketPurchase(item,item2,item3,item4,item5,item6,item7,item8){
+            $("#editpurchaseid").val(item);
+            $("#mkc").val(item2);
+            $("#mnumber").val(item3);
+            $("#editfarmer").val(item3);
             
-            $("#receipt").val(item5);
-            $("#mkc").val(item6);
-            $("#rdate").val(item7);
+            $("#receipt").val(item4);
+            $("#rdate").val(item5);
             
-            $("#mnumber").val(item8);
-            $("#editfarmer").val(item8);
-            
-            $("#editpurchaseid").val(item9);
-            //alert(item9);
+            $("#qty").val(item6);
+            $("#price").val(item7);
+            $("#mwk").val(item8);
             
             $('#PurchaseEditModal').modal('show');
         }
@@ -517,6 +591,23 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                 dateFormat: 'dd-mm-yy'
             });
             
+            //confirmeddateDispatch
+            $('#confirmeddateDispatch').datepicker( {
+                changeMonth: true,
+                changeYear: true,
+                showButtonPanel: true,
+                dateFormat: 'dd-mm-yy'
+            });
+            
+            $('#dateDispatch').datepicker( {
+                changeMonth: true,
+                changeYear: true,
+                showButtonPanel: true,
+                dateFormat: 'dd-mm-yy'
+            });
+            
+            //dateDispatch
+            
             $( "#daterequested" ).datepicker( {
                 changeMonth: true,
                 changeYear: true,
@@ -535,6 +626,85 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
        });
        
        $(document).ready(function() {
+           //summary1
+           var summary1 = <?php echo json_encode($seasonSummaryMarketCentre); ?>;
+           $('#summary1').DataTable( {
+                data:           summary1,
+//                deferRender:    true,
+//                scrollY:        350,
+                //scrollX:        true,
+//                scrollCollapse: true,
+//                scroller:       true,
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'excel', 'print', 'colvis'
+                ]
+            } );
+            
+           //summary2
+           $('#summary2').DataTable( {
+                //data:           gradinglist,
+//                deferRender:    true,
+//                scrollY:        350,
+                //scrollX:        true,
+//                scrollCollapse: true,
+//                scroller:       true,
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'excel', 'print', 'colvis'
+                ]
+            } );
+           
+           //dispatchtbl
+           //var gradinglist = <?php // echo json_encode($lstDispatchList); ?>;
+           $('#dispatchtbl').DataTable( {
+                //data:           gradinglist,
+//                deferRender:    true,
+//                scrollY:        350,
+                scrollX:        true,
+//                scrollCollapse: true,
+//                scroller:       true,
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'excel', 'print', 'colvis'
+                     <?php if($_SESSION['nasfam_usertype'] == '1') { ?>                             
+                    ,
+                    {
+                        text: 'Add Dispatch data',
+                        action: function () {
+                            $('#addDispatchModal').modal('show');
+                        }
+                    }
+                    <?php  } ?>
+                ]
+            } );
+           
+           
+           //gradingtbl
+           var gradinglist = <?php  echo json_encode($lstGrading); ?>;
+           $('#gradingtbl').DataTable( {
+                data:           gradinglist,
+//                deferRender:    true,
+//                scrollY:        350,
+                scrollX:        true,
+//                scrollCollapse: true,
+//                scroller:       true,
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'excel', 'print', 'colvis'
+                     <?php if($_SESSION['nasfam_usertype'] == '1') { ?>                             
+                    ,
+                    {
+                        text: 'Add Grading data',
+                        action: function () {
+                            $('#addGradingModal').modal('show');
+                        }
+                    }
+                    <?php  } ?>
+                ]
+            } );
+           
+           
            //warehouse
             var warehouselist = <?php  echo json_encode($lstwarehouseData); ?>;
            $('#warehousetbl').DataTable( {
@@ -595,7 +765,7 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
            var data2 = <?php echo json_encode($lstPurchases); ?>;
            
            $('#purchasestbl').DataTable( {
-                //data:           data2,
+                data:           data2,
                 deferRender:    true,
                 scrollY:        400,
                 scrollX:        true,
@@ -617,15 +787,15 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
             } );
             
             //sortingtbl
-            var sortingdata = <?php echo json_encode($lstSorting); ?>;
+            var sortingdata = <?php echo json_encode($lstCasualWorkers); ?>;
            
            $('#sortingtbl').DataTable( {
-                //data:           sortingdata,
-                deferRender:    true,
-                scrollY:        400,
+                data:           sortingdata,
+                //deferRender:    true,
+                //scrollY:        600,
                 scrollX:        true,
 //                scrollCollapse: true,
-                scroller:       true,
+               // scroller:       true,
                 dom: 'Bfrtip',
                 buttons: [
                     'copy', 'excel', 'pdf', 'print', 'colvis'
@@ -637,16 +807,11 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                             $('#addSortingModal').modal('show');
                         }
                     }
+                    <?php  } ?>
+                        <?php if($_SESSION['nasfam_usertype'] == '1') { ?>                             
                     ,
                     {
-                        text: 'Add Grading Data',
-                        action: function () {
-                            $('#addCasualWorkerModal').modal('show');
-                        }
-                    }
-                    ,
-                    {
-                        text: 'Add Casual Worker(s)',
+                        text: 'Add Casual Workers',
                         action: function () {
                             $('#addCasualWorkerModal').modal('show');
                         }
@@ -732,9 +897,60 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                     }
                     <?php  } ?>
                 ]
-            } );
-           
+            } );          
        });
+       
+       //update dispatch
+        function editDispatchTing(){
+            if (window.confirm('Are you sure you want to Update Dispatch Data?'))
+                    {
+                        _("editDispatch").value = "editDispatch";        
+                        _("editDispatchform").method = "post";
+                        _("editDispatchform").action = "seasondetails.php";
+                        _("editDispatchform").submit();
+                    }else{
+
+                    }
+        }
+       
+       //add dispatch data
+       function addnewDispatchDatas(){
+            if (window.confirm('Are you sure you want to add Dispatch Data?'))
+                {
+                    _("addnewDispatchData").value = "addnewDispatchData";        
+                    _("addnewDispatchDataform").method = "post";
+                    _("addnewDispatchDataform").action = "seasondetails.php";
+                    _("addnewDispatchDataform").submit();
+                }else{
+
+                }
+        }
+       
+       //add grading
+        function addnewGradingDatas(){
+            if (window.confirm('Are you sure you want to add Grading Data?'))
+                {
+                    _("addnewGradingData").value = "addnewGradingData";        
+                    _("addnewGradingDataform").method = "post";
+                    _("addnewGradingDataform").action = "seasondetails.php";
+                    _("addnewGradingDataform").submit();
+                }else{
+
+                }
+        }
+       
+       //edit warehouse name
+        function editWarehouseName(){
+            if (window.confirm('Are you sure you want to edit warehouse Name?'))
+                {
+                    _("editWarehouseName").value = "editWarehouseName";        
+                    _("editWarehouseNameform").method = "post";
+                    _("editWarehouseNameform").action = "seasondetails.php";
+                    _("editWarehouseNameform").submit();
+                }else{
+
+                }
+        }
        
        //addnewWarehouseSeason
         function addnewWarehouseSeason(){

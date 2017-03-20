@@ -440,6 +440,12 @@ class districtsmodel{
         return $result;
     }
     
+    function listDonors(){
+        $query = $this->link->query("SELECT * FROM donors ");
+        $result = $query->fetchAll();
+        return $result;
+    }
+    
     //list all livestock with selected
     function listDistrictsYear($regYear){
         $query = $this->link->query("select DY.districtsregyearID as did, D.fieldname as dname, DY.fieldcode as code  

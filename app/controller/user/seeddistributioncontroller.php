@@ -11,6 +11,10 @@ include_once ('../../model/user/seedsmodel.php');
 include_once ('../../model/user/membersmodel.php');
 include_once ('../../model/user/cropsmodel.php');
 
+include_once ('../../model/user/seasonsmodel.php');
+
+$seasons = new seasonsmodel();
+
 $common = new usersmodel();
 $dashboard = new dashmodel();
 $seeds = new seedsmodel();
@@ -48,13 +52,14 @@ if(isset($_POST['SearchDistrictReg'])){
         $SDID = $value['SDID']; //SDID
         $memberNumber = $value['memberNumber']; //member number
         $memberName = $value['memberName']; //member name
-        $district = $value['memberNumber']; //district
+        $district = $value['district']; //district
         
         $seedname = $value['seedname']; //member name
         $acquiredseedkgs = $value['acquiredseedkgs']; //district
         $repaymode = $value['repaymentMode']; //district
         
         $status = $value['status']; //district
+        $donor = $value['donor']; //donor
         
         if($repaymode == 'SEED'){
             //$SDID = $value['SDID'];
@@ -91,12 +96,47 @@ if(isset($_POST['SearchDistrictReg'])){
         array_push($member,$rapidKgs); //seed acquired amount
         array_push($member,$status); //seed acquired amount
         
-        //array_push($member,$action); //seed acquired amount
+        array_push($member,$donor); //seed acquired amount
         
         array_push($lstSeedDistro,$member);
         
         $i++;
     }
+    
+    //summary
+    //get seeds distributed
+    $lstSeed = $seeds->lstDistributedSeed($regYear);
+    $lstSummary = array();
+//    
+    foreach($lstSeed as $values){
+        $member = array();
+        $id = $values['acquiredseedID'];
+        
+        $crop = $seeds->getSeedByID($id);
+        $female = $seeds->getGenderTotals($regYear,$id,'FEMALE');
+        $male = $seeds->getGenderTotals($regYear,$id,'MALE');
+        
+        $getSeedTotals = $seeds->getSeedTotals($regYear,$id);
+        $seeddistributed = $getSeedTotals[0][0];
+        $seedrecovered = $getSeedTotals[0][1] + $getSeedTotals[0][2];
+
+        $donor = $seeds->getSeedDonor($regYear,$id);
+        $clubs = $seeds->getClubTotal($regYear,$id);
+        
+        $association = $seeds->getAssocSummary($regYear,$id);
+        
+        array_push($member,$crop); //crop
+        array_push($member,$association); //association
+        array_push($member,$clubs); //total clubs received
+        array_push($member,$male); //male
+        array_push($member,$female); //female
+        array_push($member,$seeddistributed); //seeddistributed
+        array_push($member,$seedrecovered); //seedrecovered
+        array_push($member,$donor); //donor
+        
+        array_push($lstSummary,$member);
+    }
+    
 }else{ //list seed distribution for current year
     $regYear = $_SESSION['nasfam_regyearID']; //reg year id
     //get reg year display details
@@ -112,13 +152,14 @@ if(isset($_POST['SearchDistrictReg'])){
         $SDID = $value['SDID']; //SDID
         $memberNumber = $value['memberNumber']; //member number
         $memberName = $value['memberName']; //member name
-        $district = $value['memberNumber']; //district
+        $district = $value['district']; //district
         
         $seedname = $value['seedname']; //member name
         $acquiredseedkgs = $value['acquiredseedkgs']; //district
         $repaymode = $value['repaymentMode']; //district
         
         $status = $value['status']; //district
+        $donor = $value['donor']; //donor
         
         if($repaymode == 'SEED'){
             //$SDID = $value['SDID'];
@@ -155,11 +196,45 @@ if(isset($_POST['SearchDistrictReg'])){
         array_push($member,$rapidKgs); //seed acquired amount
         array_push($member,$status); //seed acquired amount
         
-        //array_push($member,$action); //seed acquired amount
+        array_push($member,$donor); //seed acquired amount
         
         array_push($lstSeedDistro,$member);
         
         $i++;
+    }
+    
+    //summary
+    //get seeds distributed
+    $lstSeed = $seeds->lstDistributedSeed($regYear);
+    $lstSummary = array();
+//    
+    foreach($lstSeed as $values){
+        $member = array();
+        $id = $values['acquiredseedID'];
+        
+        $crop = $seeds->getSeedByID($id);
+        $female = $seeds->getGenderTotals($regYear,$id,'FEMALE');
+        $male = $seeds->getGenderTotals($regYear,$id,'MALE');
+        
+        $getSeedTotals = $seeds->getSeedTotals($regYear,$id);
+        $seeddistributed = $getSeedTotals[0][0];
+        $seedrecovered = $getSeedTotals[0][1] + $getSeedTotals[0][2];
+
+        $donor = $seeds->getSeedDonor($regYear,$id);
+        $clubs = $seeds->getClubTotal($regYear,$id);
+        
+        $association = $seeds->getAssocSummary($regYear,$id);
+        
+        array_push($member,$crop); //crop
+        array_push($member,$association); //association
+        array_push($member,$clubs); //total clubs received
+        array_push($member,$male); //male
+        array_push($member,$female); //female
+        array_push($member,$seeddistributed); //seeddistributed
+        array_push($member,$seedrecovered); //seedrecovered
+        array_push($member,$donor); //donor
+        
+        array_push($lstSummary,$member);
     }
 }
 
@@ -210,6 +285,11 @@ if(isset($_POST['addSDBulk'])){
                 $repaidcropamount = $repaidcropamount1;
             }
             
+            //get donor id
+            $donor = $data[8];
+            $getDonorDetails = $seasons->getDonorDetails($donor);
+            $donorID = $getDonorDetails[0][0];
+            
             $checkMemberExistence = $members->MemberExists($memberNumber);
             $CheckMembership = $checkMemberExistence[0][6];
             //echo $CheckMembership;
@@ -233,21 +313,21 @@ if(isset($_POST['addSDBulk'])){
                         case "none":
                             echo 'No repayment<br>'; 
                             //GET SEED CODE
-                            $addSingleSeedDistribution = $seeds->addSingleSeedDistribution($regYear,$memberID,$acquiredseedID,$acquiredseedamount);   
+                            $addSingleSeedDistribution = $seeds->addSingleSeedDistribution($regYear,$memberID,$acquiredseedID,$acquiredseedamount,$donorID);   
                             break;
                         case "seed":
                             echo 'seed repayment<br>';
                             $getSeedCode = $seeds->getSeedID($repaidseedcode);
                             $seedID2 = $getSeedCode[0][0];
                             echo 'Seed ID: '.$seedID2.'<br>';
-                            $addSingleSeedDistribution = $seeds->addSingleSeedDistributionWithRepayment($regYear,$memberID,$acquiredseedID,$acquiredseedamount,$seedID2,$repaidseedamount);
+                            $addSingleSeedDistribution = $seeds->addSingleSeedDistributionWithRepayment($regYear,$memberID,$acquiredseedID,$acquiredseedamount,$seedID2,$repaidseedamount,$donorID);
                             break;
                         case "crop":
                             echo 'crop repayment<br>';
                             $getCropID = $crops->getCropID($repaidcropcode);
                             $cropID = $getCropID[0][0];
                             echo 'Crop ID: '.$cropID.'<br>';
-                            $addSingleSeedDistribution = $seeds->addSingleSeedDistributionWithRepaymentCrop($regYear,$memberID,$acquiredseedID,$acquiredseedamount,$cropID,$repaidcropamount);
+                            $addSingleSeedDistribution = $seeds->addSingleSeedDistributionWithRepaymentCrop($regYear,$memberID,$acquiredseedID,$acquiredseedamount,$cropID,$repaidcropamount,$donorID);
                             break;
                         default:
                             echo "charge is neither processing fee or disturbance fee!";

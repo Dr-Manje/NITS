@@ -43,6 +43,9 @@ $listTrees = $trees->listTrees();
 //list districts
 $lstDistricts = $districts->listDistricts();
 
+//list donors
+$lstDonors = $districts->listDonors();
+
 
 //list district members of reg year listMembersDistrictRegYear($district,$regYear)
 if(isset($_POST['SearchDistrictReg'])){ //search button clicked
@@ -578,9 +581,16 @@ if(Isset($_GET['Sid'])){
     
     //village info
     $villageInfo = $members->MemberVillageInfo($id);
-    $villageName = $villageInfo[0][0];
-    $villagehead = $villageInfo[0][1];
-    $villagecode = $villageInfo[0][2];
+    if(empty($villageInfo)){
+        $villageName = 'N/A';
+        $villagehead = 'N/A';
+        $villagecode = 'N/A';
+    }else{
+       $villageName = $villageInfo[0][0];
+        $villagehead = $villageInfo[0][1];
+        $villagecode = $villageInfo[0][2]; 
+    }
+    
     
     //get annual info and food security
     $AnnualAndFoodInfo = $members->MemberAnnualAndFoodInfo($id);
@@ -845,9 +855,10 @@ if(isset($_POST['AddSeedDistributionmember'])){
     for($i=0;$i<$rowCount;$i++){
         $seedsdee = $_POST['seedsdee'][$i]; //tree type
         $seedskgs = $_POST['seedskgs'][$i]; //number of trees
+        $donor = $_POST['donor'][$i]; //number of trees
        
         //check if entry exists
-        $addMemberSeedDistro = $seeds->addMemberSeedDistro($memberID,$seedsdee,$seedskgs);
+        $addMemberSeedDistro = $seeds->addMemberSeedDistro($memberID,$seedsdee,$seedskgs,$donor);
     }
     header("Location: memberprofile.php?Sid=$memberID ");
 }
@@ -857,11 +868,13 @@ if(isset($_POST['Updateacquisitionmember'])){
     $memberID = $_POST['memberID'];//memberID
     $acquisitioneditID = $_POST['acquisitioneditID'];//cropeditID where clause
     
+    
     //new data
     //$cropedit = $_POST['cropedit'];//cropedit
     $acquisitionamountedit = $_POST['acquisitionamountedit'];//acreageedit livestockeditID
+    $donoredit = $_POST['donoredit']; //donoredit
     
-    $UpdateMemberSeedDistroAcquisition = $seeds->UpdateMemberSeedDistroAcquisition($acquisitioneditID,$acquisitionamountedit);
+    $UpdateMemberSeedDistroAcquisition = $seeds->UpdateMemberSeedDistroAcquisition($acquisitioneditID,$acquisitionamountedit,$donoredit);
     header("Location: memberprofile.php?Sid=$memberID ");   
 }
 

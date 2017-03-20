@@ -29,19 +29,20 @@
                 <li><a href="membership.php"><i class="fa fa-list"></i> <span>Membership Report</span></a></li>
               </ul>
             </li>
-            <li class="treeview">
+            <li><a href="cropmarketing.php"><i class="fa fa-dashboard"></i> <span>Crop Marketing</span></a></li>
+<!--            <li class="treeview">
               <a href="#"><i class="fa fa-link"></i> <span>Crop Marketing</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <li><a href="cropmarketing.php">Crop Marketing</a></li>
                 <li><a href="">Crop Marketing Summary</a></li>
               </ul>
-            </li>
+            </li>-->
             
             <li class="treeview">
               <a href="#"><i class="fa fa-link"></i> <span>Seed Distribution</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <li><a href="seeddistribution.php">Seed Distribution</a></li>
-                <li><a href="">Seed Distribution Summary</a></li>
+                <li><a href="seeddistributionsummary.php">Seed Distribution Summary</a></li>
               </ul>
             </li>
             <li class="treeview">
@@ -74,6 +75,8 @@
               <a href="#"><i class="fa fa-gears"></i> <span>Configuration</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <li><a href="farmproduce.php"><i class="fa fa-leaf"></i> <span>Farm Produce</span></a></li>
+                <li><a href="dispatchlocations.php"><i class="fa fa-users"></i> <span>Dispatch Locations</span></a></li>
+                <li><a href="donors.php"><i class="fa fa-users"></i> <span>Donors</span></a></li>
                 <li><a href="users.php"><i class="fa fa-users"></i> <span>Users</span></a></li>
                 
               </ul>

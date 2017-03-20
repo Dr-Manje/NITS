@@ -9,7 +9,12 @@ if (empty($_SESSION['nasfam_userid'])) {
         
 include_once ('../../model/user/dashboardmodel.php');
 include_once ('../../model/common/commonmodel.php');
-
+include_once ('../../model/user/membersmodel.php');
+include_once ('../../model/common/commonmodel.php');
+include_once ('../../model/user/seasonsmodel.php');
+$seasons = new seasonsmodel();
+$common = new usersmodel();
+$members = new membersmodel();
 $login_users = new usersmodel();
 
 
@@ -143,6 +148,130 @@ if(isset($_POST['addYear'])){
     header("Location: regyears.php");
 }
 
-if(isset($_POST[''])){
+if(isset($_POST['SearchDistrictReg'])){
+    $regYear = $_POST['regyearDS'];
+    //$regYear = $_SESSION['nasfam_regyearID'];
+            //membership ----------------------------------------
+    $lstMembers = $members->listAllMembersForYear($regYear);
+    $tMales = $members->listMembersAllRegYearMales($regYear);
+    //$tMales = $countMales[0][0];
+    $tFemales = $members->listMembersAllRegYearFemales($regYear);
+    //$tFemales = $countFemales[0][0];
+    $tmembers = $tMales + $tFemales;
+    
+    //get target amount for district for that year
+    $getItemTargetForYear = $members->getMemberTargetForYear($regYear);
+    $membetTarget = $getItemTargetForYear[0][0];
+    if($tmembers > 0){
+        $Getmalepercentage = $tMales/$tmembers * 100;
+         $Getfemalepercentage = $tFemales/$tmembers * 100;
+         $malepercentage = round($Getmalepercentage);
+         $femalepercentage = round($Getfemalepercentage);
+         if($membetTarget > 0){
+            $Getachievement = $tmembers / $membetTarget * 100;
+             $achievement = round($Getachievement); 
+         }else{
+           $achievement = 0;  
+         }
+     }else{
+        $malepercentage = 0;
+         $femalepercentage = 0; 
+         $achievement = 0;  
+     }
+    
+    //districts IPCs ----------------------------------------------------
+    $districts = $seasons->countDistricts('districts');//districts
+    $ipcs = $seasons->countDistricts('ipc'); //ipcs
+    $gacs = $seasons->countDistricts('gac'); //gacs
+    $clubs = $seasons->countDistricts('clubs'); //clubs
+    
+    //shelling participation
+    //none members
+    $nonemembermale = $seasons->nonememberPartipation($regYear,'MALE'); //male
+    $nonememberfemale = $seasons->nonememberPartipation($regYear,'FEMALE');//female
+    $nonemembers = $nonememberfemale + $nonemembermale; //total none members
+    
+    //members
+    $membermale = $seasons->memberPartipation($regYear,'MALE');
+    $countMales = count($membermale);
+    $memberfemale = $seasons->memberPartipation($regYear,'FEMALE');
+    $countFemales = count($memberfemale);
+    $members = $countMales + $countFemales;
+    
+    $participation = $members + $nonemembers;
+    
+    //shelling total summary
+    $getSeasonHeader = $seasons->SeasonDetails($regYear);
+    $procurement = $getSeasonHeader[0][5];
+    $totalAmountSpent = $seasons->totalAmountSpent($regYear);
+    $balancee = $procurement - $totalAmountSpent;
+
+    //get reg year display details
+    $getRegYearDetails = $common->getRegYearDetails($regYear);
+    $regYearName = $getRegYearDetails[0][1];
+}else{
+    $regYear = $_SESSION['nasfam_regyearID'];
+    //season --------------------------------------------
+    //$getSeasonHeader = $seasons->SeasonDetails($regYear); 
+    
+    //membership ----------------------------------------
+    $lstMembers = $members->listAllMembersForYear($regYear);
+    $tMales = $members->listMembersAllRegYearMales($regYear);
+    //$tMales = $countMales[0][0];
+    $tFemales = $members->listMembersAllRegYearFemales($regYear);
+    //$tFemales = $countFemales[0][0];
+    $tmembers = $tMales + $tFemales;
+    
+    //get target amount for district for that year
+    $getItemTargetForYear = $members->getMemberTargetForYear($regYear);
+    $membetTarget = $getItemTargetForYear[0][0];
+    if($tmembers > 0){
+        $Getmalepercentage = $tMales/$tmembers * 100;
+         $Getfemalepercentage = $tFemales/$tmembers * 100;
+         $malepercentage = round($Getmalepercentage);
+         $femalepercentage = round($Getfemalepercentage);
+         if($membetTarget > 0){
+            $Getachievement = $tmembers / $membetTarget * 100;
+             $achievement = round($Getachievement); 
+         }else{
+           $achievement = 0;  
+         }
+     }else{
+        $malepercentage = 0;
+         $femalepercentage = 0; 
+         $achievement = 0;  
+     }
+    
+    //districts IPCs ----------------------------------------------------
+    $districts = $seasons->countDistricts('districts');//districts
+    $ipcs = $seasons->countDistricts('ipc'); //ipcs
+    $gacs = $seasons->countDistricts('gac'); //gacs
+    $clubs = $seasons->countDistricts('clubs'); //clubs
+    
+    //shelling participation
+    //none members
+    $nonemembermale = $seasons->nonememberPartipation($regYear,'MALE'); //male
+    $nonememberfemale = $seasons->nonememberPartipation($regYear,'FEMALE');//female
+    $nonemembers = $nonememberfemale + $nonemembermale; //total none members
+    
+    //members
+    $membermale = $seasons->memberPartipation($regYear,'MALE');
+    $countMales = count($membermale);
+    $memberfemale = $seasons->memberPartipation($regYear,'FEMALE');
+    $countFemales = count($memberfemale);
+    $members = $countMales + $countFemales;
+    
+    $participation = $members + $nonemembers;
+    
+    //shelling total summary
+    $getSeasonHeader = $seasons->SeasonDetails($regYear);
+    $procurement = $getSeasonHeader[0][5];
+    $totalAmountSpent = $seasons->totalAmountSpent($regYear);
+    $balancee = $procurement - $totalAmountSpent;
+
+    //get reg year display details
+    $getRegYearDetails = $common->getRegYearDetails($regYear);
+    $regYearName = $getRegYearDetails[0][1];
+    
     
 }

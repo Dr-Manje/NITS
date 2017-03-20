@@ -72,7 +72,7 @@ class dashmodel{
     }
     
     function FullListRegYear(){
-        $query = $this->link->query("SELECT regyearID ,DATE_FORMAT(regYear,'%M %Y') as regYear, status
+        $query = $this->link->query("SELECT regyearID ,season as regYear, status
                                     FROM registrationyear
                                     order by regyearID DESC");
         $result = $query->fetchAll();

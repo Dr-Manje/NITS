@@ -4,5 +4,5 @@
           Powered by SmartMW Inc.
         </div>
         <!-- Default to the left -->
-        <strong>Copyright &copy; 2016 <a href="#">NASFAM</a>.</strong> All rights reserved.
+        <strong>Copyright &copy; 2017 <a href="#">NASFAM</a>.</strong> All rights reserved.
 </footer>

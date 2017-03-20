@@ -433,7 +433,9 @@ class usersmodel{
                     . "('MARKET CENTER','MKC'),"
                     . "('CASUAL WORKER','CWK'),"
                     . "('WAREHOUSE','WHS'),"
-                    . "('BUYER','BYR')");    
+                    . "('BUYER','BYR'),"
+                    . "('DISPATCH LOCATION','DPL'),"
+                    . "('DONORS','DON')");
         if($query -> execute()){
             return 1;
         }else {

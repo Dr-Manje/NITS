@@ -1,6 +1,6 @@
 <?php  
 session_start();
-error_reporting(0);
+//error_reporting(0);
 include_once ('../../controller/user/memberscontroller.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -343,6 +343,7 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
                                             <th>Repayment Type</th>
                                             <th>Repayment Amount</th>
                                             <th>Status</th>
+                                            <th>Donor</th>
                                             <th>Action</th>
                                           </tr>
                                         </thead>
@@ -357,6 +358,7 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
                                           <td>Repayment Type</td>
                                           <td>Repayment Amount</td>
                                           <td>Status</td>
+                                          <td>Donor</td>
                                             <td>Action</td>
                                           </tr> 
                                           <?php   }
@@ -403,7 +405,9 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
                                                   </td>
                                                   <td><?php  echo $value['repaymentMode'];?></td>
                                                   <td><?php echo $rapidKgs; ?></td>
+                                                  
                                                   <td><?php  echo $value['status'];?></td>
+                                                  <td><?php echo $value['donor'] ; ?></td>
                                               <td>
                                                   <?php if($_SESSION['nasfam_usertype'] == '2') { ?>
                                                   <?php if($value['status'] == 'PAID'){?>
@@ -805,6 +809,7 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
                             <tr>
                                 <th>Select</th>
                                 <th>Seed</th>
+                                <th>Donor</th>
                                 <th>Quantity (Kgs)</th>  
                             </tr>
                         </table> 
@@ -838,7 +843,15 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
                         <div class="form-group">
                             <label for="acquisitionamountedit">Quantity (Kgs)</label>
                             <input type="text" class="form-control" id="acquisitionamountedit" name="acquisitionamountedit" placeholder="" />
-                        </div> 
+                        </div>
+                        <div class="form-group">
+                            <label for="donoredit">Donor</label>
+                            <select class="form-control" id="donoredit" name="donoredit">
+                            <?php foreach ($lstDonors as $optionMemberList) { ;?>
+                               <option value="<?php echo $optionMemberList['donorsid']; ?>"><?php echo $optionMemberList['fieldname']; ?></option>
+                            <?php  } ;?>
+                            </select>
+                        </div>
                     </form>
                   </div>                 
               </div>
@@ -2112,10 +2125,11 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
 	check();
         });
         
-        //add more SEED DISTRIBUTION items
+        //add more SEED DISTRIBUTION items $lstDonors
         $(".addmoreSeedDistribution").on('click',function(){
         var data="<tr><td><input type='checkbox' class='form-control case seeddistributionselect' name='seeddees[]' /></td>";
         data += "<td><select class='form-control' name='seedsdee[]'><?php foreach ($lstSeeds as $optionSeedList) { ;?><option value='<?php echo $optionSeedList['seedID']; ?>'><?php echo $optionSeedList['fieldname']; ?></option><?php  } ;?></select></td>";
+        data += "<td><select class='form-control' name='donor[]'><?php foreach ($lstDonors as $optionSeedList) { ;?><option value='<?php echo $optionSeedList['donorsid']; ?>'><?php echo $optionSeedList['fieldname']; ?></option><?php  } ;?></select></td>";
         data += "<td><input type='number' min='0' max='200'  value='0' step='5' onkeydown='return false' class='form-control seeddistro' id='seeddistro' name='seedskgs[]' /></td></tr>";
             $('.tblAddSeedDistribution').append(data);
         });

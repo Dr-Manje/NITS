@@ -3,7 +3,7 @@
 class dbConnection{
     protected $db_conn;
     //public $db_name = 'sms_v1'; //database name
-    public $db_name = 'nancy'; //database name
+    public $db_name = 'nancys'; //database name
     public $db_user = 'sa'; //database user
     public $db_host = 'localhost'; //database host machine
     public $db_pass = 'Manje@2014'; //database user password

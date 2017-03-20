@@ -1,5 +1,6 @@
 <?php  
 session_start();
+error_reporting(0);
 include_once ('../../controller/user/dashboardcontroller.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -83,8 +84,8 @@ include_once ('../../controller/user/dashboardcontroller.php'); ?>
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Admin
-            <small>Control Panel</small>
+            Dashboard
+            <!--<small>Control Panel</small>-->
           </h1>
             <h1>
             <form class="form-inline" method="post" id="frmSearchDistrictReg">
@@ -112,72 +113,114 @@ include_once ('../../controller/user/dashboardcontroller.php'); ?>
            <!-- Small boxes (Stat box) -->
            
           <div class="row">
-            <div class="col-lg-3 col-xs-6">
+            <div class="col-md-4">
               <!-- small box -->
-              <div class="small-box bg-aqua">
-                <div class="inner">
-                  <h3>1</h3>
-                  <p>Members Registered</p>
+              <!-- Widget: user widget style 1 -->
+              <div class="box box-widget widget-user-2">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="widget-user-header bg-green">
+                  <h3 class="widget-user-username">Season</h3>
+                  <!--<h5 class="widget-user-desc">Lead Developer</h5>-->
                 </div>
-                <div class="icon">
-                  <i class="ion ion-person-add"></i>
+                <div class="box-footer no-padding">
+                  <ul class="nav nav-stacked">
+                      <?php foreach($getSeasonHeader as $seasonheader){?>
+                    <li><a href="#">Season <span class="pull-right badge bg-blue"><?php echo $seasonheader['regYear']; ?></span></a></li>
+                    <li><a href="#">Start Date <span class="pull-right badge bg-aqua"><?php echo $seasonheader['startDate']; ?></span></a></li>
+                    <li><a href="#">End Date <span class="pull-right badge bg-green"><?php echo $seasonheader['endDate']; ?></span></a></li>
+                    <!--<li><a href="#">More info <i class="fa fa-arrow-circle-right"></i></a></li>-->
+                    <?php } ?> 
+                  </ul>
                 </div>
-                <!--<a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>-->
-              </div>
+              </div><!-- /.widget-user -->
             </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-              <div class="small-box bg-green">
-                <div class="inner">
-                  <h3>1</h3>
-                  <p>Male</p>
+            <div class="col-md-4">
+                <div class="box box-widget widget-user-2">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="widget-user-header bg-green">
+                  <h3 class="widget-user-username">Membership</h3>
+                  <!--<h5 class="widget-user-desc">Lead Developer</h5>-->
                 </div>
-                <div class="icon">
-                  <i class="ion ion-man"></i>
+                <div class="box-footer no-padding">
+                  <ul class="nav nav-stacked">
+                    <li><a href="#">Male <span class="pull-right badge bg-blue"><?php echo $tMales ?></span></a></li>
+                    <li><a href="#">Female <span class="pull-right badge bg-aqua"><?php echo $tFemales ?></span></a></li>
+                    <li><a href="#">Total <span class="pull-right badge bg-green"><?php echo $tmembers ?></span></a></li>
+                    <li><a href="#">Target <span class="pull-right badge bg-aqua"><?php echo $membetTarget ?></span></a></li>
+                    <li><a href="#">Achievement <span class="pull-right badge bg-green"><?php echo $achievement ?></span></a></li>
+                    <!--<li><a href="#">More info <i class="fa fa-arrow-circle-right"></i></a></li>-->
+                  </ul>
                 </div>
-                <!--<a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>-->
-              </div>
+                </div><!-- /.widget-user -->
             </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
+            <div class="col-md-4">
               <!-- small box -->
-              <div class="small-box bg-aqua">
-                <div class="inner">
-                  <h3>1</h3>
-                  <p>Female</p>
+              <div class="box box-widget widget-user-2">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="widget-user-header bg-green">
+                  <h3 class="widget-user-username">Districts IPCs</h3>
+                  <!--<h5 class="widget-user-desc">Lead Developer</h5>-->
                 </div>
-                <div class="icon">
-                  <i class="ion ion-woman"></i>
+                <div class="box-footer no-padding">
+                  <ul class="nav nav-stacked">
+                    <li><a href="#">Districts <span class="pull-right badge bg-blue"><?php echo $districts ?></span></a></li>
+                    <li><a href="#">IPCs <span class="pull-right badge bg-aqua"><?php echo $ipcs ?></span></a></li>
+                    <li><a href="#">GACs <span class="pull-right badge bg-green"><?php echo $gacs ?></span></a></li>
+                    <li><a href="#">CLUBs <span class="pull-right badge bg-green"><?php echo $clubs ?></span></a></li>
+                    <!--<li><a href="#">More info <i class="fa fa-arrow-circle-right"></i></a></li>-->
+                  </ul>
                 </div>
-                <!--<a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>-->
-              </div>
+              </div><!-- /.widget-user -->
             </div><!-- ./col -->
-           <div class="col-lg-3 col-xs-6">
-              <div class="small-box bg-yellow">
-                <div class="inner">
-                  <h3>1</h3>
-                  <p>Member Target</p>
-                </div>
-                <div class="icon">
-                  <i class="ion ion-ios-people"></i>
-                </div>
-                <!--<a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>-->
-              </div>
-            </div><!-- ./col -->
-            <!--
-            <div class="col-lg-3 col-xs-6">
-               small box 
-              <div class="small-box bg-red">
-                <div class="inner">
-                  <h3>65</h3>
-                  <p>Unique Visitors</p>
-                </div>
-                <div class="icon">
-                  <i class="ion ion-pie-graph"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div> ./col -->
-          </div><!-- /.row -->
           
+            
+          </div><!-- /.row -->
+          <div class="row">
+            <div class="col-md-4">
+              <!-- small box -->
+              <!-- Widget: user widget style 1 -->
+              <div class="box box-widget widget-user-2">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="widget-user-header bg-green">
+                  <h3 class="widget-user-username">Shelling</h3>
+                  <h5 class="widget-user-desc">Participation</h5>
+                </div>
+                <div class="box-footer no-padding">
+                  <ul class="nav nav-stacked">
+                    <li><a href="#">Female - Members <span class="pull-right badge bg-blue"><?php echo $countFemales ?></span></a></li>
+                    <li><a href="#">Male - Members <span class="pull-right badge bg-aqua"><?php echo $countMales ?></span></a></li>
+                    <li><a href="#">Total Members <span class="pull-right badge bg-green"><?php echo $members ?></span></a></li>
+                    <li><a href="#">Female - None Members <span class="pull-right badge bg-blue"><?php echo $nonememberfemale ?></span></a></li>
+                    <li><a href="#">Male - None Members <span class="pull-right badge bg-aqua"><?php echo $nonemembermale ?></span></a></li>
+                    <li><a href="#">Total None Members <span class="pull-right badge bg-green"><?php echo $nonemembers ?></span></a></li>
+                    <li><a href="#">Total Participation <span class="pull-right badge bg-green"><?php echo $participation ?></span></a></li>
+                    <!--<li><a href="#">More info <i class="fa fa-arrow-circle-right"></i></a></li>-->
+                  </ul>
+                </div>
+              </div><!-- /.widget-user -->
+            </div><!-- ./col -->
+            <div class="col-md-4">
+                <div class="box box-widget widget-user-2">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="widget-user-header bg-green">
+                  <h3 class="widget-user-username">Shelling</h3>
+                  <h5 class="widget-user-desc">Summary Totals</h5>
+                </div>
+                <div class="box-footer no-padding">
+                  <ul class="nav nav-stacked">
+                    <li><a href="#">Procurement Amount <span class="pull-right badge bg-blue"><?php echo $procurement ?></span></a></li>
+                    <li><a href="#">Market Procurement Amount <span class="pull-right badge bg-aqua"><?php echo $totalAmountSpent ?></span></a></li>
+                    <li><a href="#">Balance <span class="pull-right badge bg-green"><?php echo $balancee ?></span></a></li>
+                    <!--<li><a href="#">Total Chalim <span class="pull-right badge bg-green">12</span></a></li>-->
+                    <!--<li><a href="#">More info <i class="fa fa-arrow-circle-right"></i></a></li>-->
+                  </ul>
+                </div>
+                </div><!-- /.widget-user -->
+            </div><!-- ./col -->
+            
+          
+            
+          </div><!-- /.row -->
          
        <!-- /.row -->
           
@@ -373,6 +416,14 @@ include_once ('../../controller/user/dashboardcontroller.php'); ?>
            // $("div.toolbar").html('<b>Custom tool bar! Text/images etc.</b>');
             
         } );
+        
+        function SearchDistrictReg1(){
+//            alert('Boom');
+            _("SearchDistrictReg").value = "SearchDistrictReg";        
+            _("frmSearchDistrictReg").method = "post";
+            _("frmSearchDistrictReg").action = "dashboard.php";
+            _("frmSearchDistrictReg").submit();
+        }
       
         function saveregyear(){
             _("Addregyear").value = "Addregyear";        

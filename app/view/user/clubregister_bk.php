@@ -1,6 +1,6 @@
 <?php  
 session_start();
-error_reporting(1);
+error_reporting(0);
 require "../../config/appconfig.php";
 include_once ('../../controller/user/clubscontroller.php'); ?>
 <!DOCTYPE html>
@@ -82,40 +82,40 @@ include_once ('../../controller/user/clubscontroller.php'); ?>
     
     function reload3(form)
     {
-    //var val=form.cat.options[form.cat.options.selectedIndex].value; 
+    var val=form.cat.options[form.cat.options.selectedIndex].value; 
     var val2=form.subcat.options[form.subcat.options.selectedIndex].value;
     
-    self.location='clubregister.php?cat3=' + val2;
+    self.location='clubregister.php?cat=' + val + '&cat3=' + val2;
     }
     
     function reload4(form)
     {
-    //var val=form.cat.options[form.cat.options.selectedIndex].value; 
+    var val=form.cat.options[form.cat.options.selectedIndex].value; 
     var val2=form.subcat.options[form.subcat.options.selectedIndex].value;
     var val3=form.subcat1.options[form.subcat1.options.selectedIndex].value;
     
-    self.location='clubregister.php?cat3=' + val2 + '&cat4=' + val3;
+    self.location='clubregister.php?cat=' + val + '&cat3=' + val2 + '&cat4=' + val3;
     }
     
     function reload5(form)
     {
-    //var val=form.cat.options[form.cat.options.selectedIndex].value; 
+    var val=form.cat.options[form.cat.options.selectedIndex].value; 
     var val2=form.subcat.options[form.subcat.options.selectedIndex].value;
     var val3=form.subcat1.options[form.subcat1.options.selectedIndex].value;
     var val4=form.subcat2.options[form.subcat2.options.selectedIndex].value;
     
-    self.location='clubregister.php?cat3=' + val2 + '&cat4=' + val3 + '&cat5=' + val4;
+    self.location='clubregister.php?cat=' + val + '&cat3=' + val2 + '&cat4=' + val3 + '&cat5=' + val4;
     }
     
     function reload6(form)
     {
-    //var val=form.cat.options[form.cat.options.selectedIndex].value; 
+    var val=form.cat.options[form.cat.options.selectedIndex].value; 
     var val2=form.subcat.options[form.subcat.options.selectedIndex].value;
     var val3=form.subcat1.options[form.subcat1.options.selectedIndex].value;
     var val4=form.subcat2.options[form.subcat2.options.selectedIndex].value;
     var val5=form.subcat3.options[form.subcat3.options.selectedIndex].value;
     
-    self.location='clubregister.php?cat3=' + val2 + '&cat4=' + val3 + '&cat5=' + val4 + '&cat6=' + val5;
+    self.location='clubregister.php?cat=' + val + '&cat3=' + val2 + '&cat4=' + val3 + '&cat5=' + val4 + '&cat6=' + val5;
     }
 </script>
 </head>
@@ -182,13 +182,12 @@ include_once ('../../controller/user/clubscontroller.php'); ?>
                 /////// for second drop down list we will check if category is selected else we will display all the subcategory///// 
                 $cat=$_GET['cat']; // This line is added to take care if your global variable is off
                 
-//                if(isset($cat) and strlen($cat) > 0){
-//                    $quer="select DY.districtsregyearID as did, D.fieldname as dname
-//                            from districtsregyear DY
-//                            join districts D on D.districtID = DY.district
-//                            where regyear = $cat "; 
-//                    }
-                    $quer="select * from districts "; 
+                if(isset($cat) and strlen($cat) > 0){
+                    $quer="select DY.districtsregyearID as did, D.fieldname as dname
+                            from districtsregyear DY
+                            join districts D on D.districtID = DY.district
+                            where regyear = $cat "; 
+                    }
                 ////////// end of query for second subcategory drop down list box ///////////////////////////
                 
                 /////// for Third drop down list we will check if sub category is selected else we will display all the subcategory3///// 
@@ -196,9 +195,9 @@ include_once ('../../controller/user/clubscontroller.php'); ?>
                 
                 if(isset($cat3) and strlen($cat3) > 0){
                     $quer1="select I.IPCid as ipcid, I.fieldname as ipcname
-                            from ipc I
-                            join districts DY ON DY.districtID = I.fieldref
-                            where DY.districtID = $cat3 "; 
+                    from ipc I
+                    join districtsregyear DY ON DY.districtsregyearID = I.fieldref
+                    where DY.districtsregyearID = $cat3 "; 
                     }
                 
                 ////////// end of query for third subcategory drop down list box ///////////////////////////
@@ -246,15 +245,30 @@ include_once ('../../controller/user/clubscontroller.php'); ?>
                     <table class="table table-hover">
                         <tr>
                             <td>
+                                <label for="cat">Reg Year:</label>
+                            </td>
+                            <td>
+                                <?php
+                                    //////////        Starting of first drop downlist /////////
+                                    echo "<select class='form-control' name='cat' id='cat' onchange=\"reload(this.form)\"><option value=''>Select one</option>";
+                                    foreach ($dbo->query($quer2) as $noticia2) {    
+                                    if($noticia2['regyearID']==@$cat){echo "<option selected value='$noticia2[regyearID]'>$noticia2[regYear]</option>"."<BR>";}
+                                    else{echo  "<option value='$noticia2[regyearID]'>$noticia2[regYear]</option>";}
+                                    }
+                                    echo "</select>";
+                                    //////////////////  This will end the first drop down list ///////////
+                                    ?>
+                            </td>
+                            <td>
                                 <label for="cat">District:</label>
                             </td>
                             <td>
                                 <?php
                                     //////////  Starting of second drop downlist /////////
-                                    echo "<select class='form-control' name='subcat' id='subcat' onchange=\"reload3(this.form)\">";
+                                    echo "<select class='form-control' name='subcat' id='subcat' onchange=\"reload3(this.form)\"><option value=''>Select Reg Year First</option>";
                                     foreach ($dbo->query($quer) as $noticia) {
-                                        if($noticia['districtID']==@$cat3){echo "<option selected value='$noticia[districtID]'>$noticia[fieldname]</option>"."<BR>";}
-                                        else{echo  "<option value='$noticia[districtID]'>$noticia[fieldname]</option>";}
+                                        if($noticia['did']==@$cat3){echo "<option selected value='$noticia[did]'>$noticia[dname]</option>"."<BR>";}
+                                        else{echo  "<option value='$noticia[did]'>$noticia[dname]</option>";}
                                         }
                                     echo "</select>";
                                     //////////////////  This will end the second drop down list ///////////

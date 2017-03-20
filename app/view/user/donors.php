@@ -1,6 +1,6 @@
 <?php  
 session_start();
-include_once ('../../controller/user/dashboardcontroller.php'); ?>
+include_once ('../../controller/user/seasonscontroller.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,6 +48,32 @@ include_once ('../../controller/user/dashboardcontroller.php'); ?>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style type="text/css">
+        table.dataTable tbody th,
+        table.dataTable tbody td {
+            white-space: nowrap;
+        }
+        #option2{
+        display: none;
+        }
+        .modal-header {
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    background-color: #00a65a;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+     color: white;
+ }
+/* tfoot input {
+        width: 100%;
+        padding: 3px;
+        box-sizing: border-box;
+    }*/
+    </style>
     
 </head>
     <!--
@@ -80,16 +106,37 @@ include_once ('../../controller/user/dashboardcontroller.php'); ?>
        
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
+          
+          <?php
+       if(isset($_SESSION['notification'])){ 
+          // echo '<div class="alert alert-error">'.$error.'</div>';
+           if($_SESSION['notification']['title'] == 'FAILED!'){
+               echo '
+           <div class="alert alert-danger alert-dismissable">';
+           }else{
+               echo '
+           <div class="alert alert-success alert-dismissable">';
+           }
+           echo '
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <h4> '.$_SESSION['notification']['title'].'</h4>
+        '.$_SESSION['notification']['message'].'
+            
+        </div>';
+           unset($_SESSION['notification']);
+       }
+       ?>
+          
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Registration Year 
-            <small>Listing</small>
+            Donors  
+            <!--<small>Locations</small>-->
           </h1>
-          <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Registration</a></li>
-            <li class="active"> Listing</li>
-          </ol>
+<!--          <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Dispatch</a></li>
+            <li class="active"> Locations</li>
+          </ol>-->
         </section>
 
         <!-- Main content -->
@@ -100,53 +147,46 @@ include_once ('../../controller/user/dashboardcontroller.php'); ?>
           <div class="col-xs-12">
              <div class="box box-success">
             <div class="box-header with-border">
-                <?php if($_SESSION['nasfam_usertype'] == '1'){ ?>
-                <!--<button type="button" class="btn btn-info" data-toggle="modal" data-target="#addRegYearModal">Add Reg Year</button>-->
-                <?php } ?> 
             </div><!-- /.box-header -->
             <div class="box-body">
               <table id="example1" class="table table-striped table-bordered" cellspacing="0" width="100%">
                 <thead>
                     <tr>
-                        <th>Season</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
+                        <th>Donor Name</th>
+                        <th>Donor Code</th>
+                        <th>Donor Contact</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                     <?php
-                      if ($listregYear == 0) {
-                      ?>
-                        <tr> 
-                        <td>Season</td>
-                        <!--<td>Action</td>-->
-                         </tr>
-                     <?php   }
-                        else 
-                        {
-                           foreach($listregYear as $value)
-                                {                                   
-                               ?>    
-                         <tr> 
-                            <td><?php echo $value['regYear']; ?></td>
-                            <td><?php echo $value['startDate']; ?></td>
-                            <td><?php echo $value['endDate']; ?></td>
-                            <td>
-                                <a rel="tooltip" title="View more IPC details (GACs, ASSOCIATIONS etc)" class="btn btn-info btn-xs"  href="seasondetails.php?sid=<?php echo $value['regyearID'];?>">View more</a>
-<!--                                <a rel="tooltip" title="Edit/Update district details" class="btn btn-warning btn-xs openEditIPCModal" href="/" 
-                                data-editid="<?php //echo $value['0'] ?>"
-                                data-editviewitem="1" 
-                                data-editviewname="<?php// echo $value['1'] ?>"
-                                data-returnpathid="districtsipcs"
+                    <?php foreach($LstDonors as $value){ ?>
+                    <tr>
+                        <td><?php echo $value['fieldname'] ?></td>
+                        <td><?php echo $value['fieldcode'] ?></td>
+                        <td><?php echo $value['contacts'] ?></td>
+                        <th><?php echo $value['status'] ?></th>
+                        <td>
+                            <a rel="tooltip" title="Edit/Update Donors Location Details" class="btn btn-info btn-simple btn-xs openModalLinkDonorsDetails" href="/" 
+                                    data-id="<?php echo $value['donorsid'] ?>"
+                                    data-viewfieldname="<?php echo $value['fieldname'] ?>" 
+                                    data-viewcontacts="<?php echo $value['contacts'] ?>"
                                 >
-                                <i class="fa fa-edit"> Edit</i>
-                            </a>-->
-                            </td>
-                            </tr>
-                         <?php  }
-                        }
-                        ?> 
+                                 <i class="fa fa-edit"></i>
+                            </a>
+                            <?php if($value['status'] == 'INACTIVE'){ ?>
+                                <a rel="tooltip" title="Activate Donor" class="btn btn-info btn-xs" href="donors.php?donorstat=<?php echo $value['donorsid'];?>&donstat=<?php echo $value['status'] ?>" >
+                                    <i class="fa fa-play"></i>
+                                </a><?php }else{ ?>
+                                <a rel="tooltip" title="Deactivate Donor" class="btn btn-warning btn-xs" href="donors.php?donorstat=<?php echo $value['donorsid'];?>&donstat=<?php echo $value['status'] ?>" >
+                                    <i class="fa fa-pause"></i>
+                                </a>
+                            <?php } ?>
+                        </td>
+                    </tr>
+                    
+                    
+                    <?php } ?>
                 </tbody>
               </table>
              </div><!-- /.box-body -->
@@ -166,31 +206,55 @@ include_once ('../../controller/user/dashboardcontroller.php'); ?>
     </div><!-- ./wrapper -->
     
     <!-- MODALS -->
-    <div id="addRegYearModal" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-lg">
+    <div id="addDonorsModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-md">
         <!-- modal content -->
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h3>ADD Club</h3>               
+                <h3>ADD Donors</h3>               
             </div>
             <div class="modal-body">                                                                               
-                <form role="form" id="addYearform" enctype="multipart/form-data" onsubmit="return false">
-                <input type="hidden" id="addYear" name="addYear" >
-                <table id="exampleLstActivities" class="table table-striped table-bordered tbladdYear" cellspacing="0" width="100%"> 
-                    <tr>
-                        <th>Select</th> 
-                        <th>Season Name</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                    </tr>
-                </table>                      
+                <form role="form" id="addDonorsform" enctype="multipart/form-data" onsubmit="return false">
+                <input type="hidden" id="addDonors" name="addDonors" >
+                    <div class="form-group">
+                        <label for="editseason">Upload Donors</label>
+                        <input class="form-group" type="file" name="file" />
+                    </div>              
                 </form>                    
             </div>                            
-            <div class="modal-footer">                   
-                <button type="button" class='btn btn-danger deleteYear'>- Delete</button>
-                <button type="button" class='btn btn-success addmoreYear'>+ Add More</button> 
-                <button class="btn btn-success" onclick="AddYear()">Save</button>
+            <div class="modal-footer">                    
+                <button class="btn btn-success" onclick="AddNewDonors()">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+            </div>
+            </div>            
+        </div>
+    </div>
+    
+    <div id="updateDonorsModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-md">
+        <!-- modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 id="UpdateCWDetailsModalTitle">Update Donor Details</h3><br>
+            </div>
+            <div class="modal-body">                                                           
+                <form role="form" id="updateDonorform" enctype="multipart/form-data" onsubmit="return false">
+                <input type="hidden" id="updateDonor" name="updateDonor" >
+                <input type="hidden" id="DlID" name="DlID" >
+                    <div class="form-group">
+                        <label for="viewfieldname">Dispatch Location Name:</label>
+                        <input type="text" class="form-control" id="viewfieldname" name="viewfieldname"  />
+                    </div>                  
+                    <div class="form-group">
+                        <label for="viewcontacts">Contacts:</label>
+                        <input type="text" class="form-control" id="viewcontacts" name="viewcontacts"  />
+                    </div>
+                </form>
+            </div>                            
+            <div class="modal-footer"> 
+                <button class="btn btn-success" onclick="updateDonor()">Save</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
             </div>
             </div>            
@@ -245,50 +309,30 @@ include_once ('../../controller/user/dashboardcontroller.php'); ?>
         });
         });
         
-       //remove ipc item
-        $(".deleteYear").on('click', function() {
-	$('.case:checkbox:checked').parents("tr").remove();
-	$('.check_all').prop("checked", false); 
-	check();
-        });
-        
-        //add ipc item
-        $(".addmoreYear").on('click',function(){
-        var data="<tr><td><input type='checkbox' class='form-control case' name='years[]' /></td>";
-        data += "<td><input type='text' class='form-control' name='seasonname[]'  /></td>";
-        data += "<td><input type='text' class='form-control datepicker_recurring_start' name='startdate[]'  /></td>";
-        data += "<td><input type='text' class='form-control datepicker_recurring_start' name='enddate[]'  /></td></tr>";
-            $('.tbladdYear').append(data);
-        });
-        
-        function AddYear(){           
-            //check atleast one textbox has been ticked
-            var checked = false;
-            $('input[type="checkbox"]').each(function() {
-                if($(this).is(":checked")){
-                    checked = true;
-                }
-            });
-            
-            if(checked === true){
-                if (window.confirm('are you sure you want to add Reg Years?'))
-                {
-                    //alert("Add IPC");
-                    _("addYear").value = "addYear";        
-                    _("addYearform").method = "post";
-                    _("addYearform").action = "regyears.php";
-                    _("addYearform").submit();
-                }else{
-
-                }
+        function updateDonor(){
+            if (window.confirm('are you sure you want to Update Donor Details?'))
+            {
+                _("updateDonor").value = "updateDonor";        
+                _("updateDonorform").method = "post";
+                _("updateDonorform").action = "donors.php";
+                _("updateDonorform").submit();
             }else{
-                alert('Please select items that you wish to add');
+                
+            } 
+        }
+        
+        function AddNewDonors(){           
+            if (window.confirm('are you sure you want to add Donors?'))
+            {
+                _("addDonors").value = "addDonors";        
+                _("addDonorsform").method = "post";
+                _("addDonorsform").action = "donors.php";
+                _("addDonorsform").submit();
+            }else{
+
             } 
         }
        
-        
-        
-        
         $(function() {
             //$( "#dateitem" ).datepicker( { dateFormat: 'dd/mm/yy' }); 
             //revenue dates
@@ -312,16 +356,13 @@ include_once ('../../controller/user/dashboardcontroller.php'); ?>
                 }
             });
             
-            $(".openModalLink").click(function(e) {
+            $(".openModalLinkDonorsDetails").click(function(e) {
                 e.preventDefault();       
-                $("#myModalTitle").html('Activate school');
-                $("#schoolnameID").html($(this).data('school'));
-                $("#StatusAction").html($(this).data('name'));
-                $("#StatusAction1").html($(this).data('name'));
-                $("#schoolID").val($(this).data('id'));
-                $("#schoolStatus").val($(this).data('status'));
+                $("#DlID").val($(this).data('id'));
+                $("#viewfieldname").val($(this).data('viewfieldname'));
+                $("#viewcontacts").val($(this).data('viewcontacts'));
 
-                $('#ActivateModal').modal('show');
+                $('#updateDonorsModal').modal('show');
             });
             
             $(".openModalLink1").click(function(e) {
@@ -347,16 +388,13 @@ include_once ('../../controller/user/dashboardcontroller.php'); ?>
             $('#example1').DataTable( {
                 dom: 'Bfrtip',
                 buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
-                    <?php if($_SESSION['nasfam_usertype'] == '1') { ?>
-                    ,
+                    'copy', 'csv', 'excel', 'pdf', 'print', 'colvis',
                     {
-                        text: 'Register New Season(s)',
+                        text: 'Register New Donor(s)',
                         action: function () {
-                            $('#addRegYearModal').modal('show');
+                            $('#addDonorsModal').modal('show');
                         }
-                    } 
-                     <?php } ?>
+                    }
                 ]
             } );
             

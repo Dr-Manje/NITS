@@ -256,14 +256,14 @@ class membersmodel{
     
     //list members in district with specific reg year dashboard male
     function listMembersAllRegYearMales($regYear){
-        $query = $this->link->query("SELECT count(*) FROM members where yearRegistered = '$regYear' AND gender = 'MALE' ");
+        $query = $this->link->query("SELECT count(*) as cnt FROM members where yearRegistered = '$regYear' AND gender = 'MALE' ");
         $result = $query->fetchColumn();
         return $result;
     }
     
     //list members in district with specific reg year dashboard male
     function listMembersAllRegYearFemales($regYear){
-        $query = $this->link->query("SELECT count(*) FROM members where yearRegistered = '$regYear' AND gender = 'FEMALE' ");
+        $query = $this->link->query("SELECT count(*) as cnt FROM members where yearRegistered = '$regYear' AND gender = 'FEMALE' ");
         $result = $query->fetchColumn();
         return $result;
     }
@@ -384,10 +384,10 @@ class membersmodel{
     
     //get member village info
     function MemberVillageInfo($id){
-        $query = $this->link->query("SELECT V.fieldname as vname, V.villageHeadman as Vheadman, V.fieldcode as vcode
-                                    FROM members M
-                                    JOIN village V ON M.village = V.villageID
-                                    WHERE M.memberID = '$id' ");
+        $query = $this->link->query("SELECT V.fieldname as vname, V.villageHeadman as vheadmane, V.fieldcode as vcode
+                                    FROM village V
+                                    join Members M on M.village = V.villageID
+                                    where M.memberID = '$id' ");
         $result = $query->fetchAll();
         return $result;
     }

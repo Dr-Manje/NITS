@@ -295,10 +295,10 @@
                                 <label for="qty">QTY:</label>
                                 <input type="text" class="form-control" id="qty" name="qty" />
                             </div>
-                            <div class="form-group">
+<!--                            <div class="form-group">
                                 <label for="cum">Cum:</label>
                                 <input type="text" class="form-control" id="cum" name="cum" />
-                            </div>
+                            </div>-->
                             <div class="form-group">
                                 <label for="price">Price:</label>
                                 <input type="text" class="form-control" id="price" name="price" />
@@ -580,6 +580,177 @@
         </div>                            
         <div class="modal-footer">                   
             <button class="btn btn-success" onclick="editWarehouseIPCs()">Save</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+        </div>
+        </div>            
+    </div>
+</div>
+
+<!-- EDIT WAREHOUSE -->
+<div id="editWarehouseModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-sm">
+    <!-- modal content -->
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h3>Edit Warehouse Name</h3>               
+        </div>
+        <div class="modal-body">  
+            <form role="form" id="editWarehouseNameform" enctype="multipart/form-data" onsubmit="return false">
+            <input type="hidden" id="editWarehouseName" name="editWarehouseName" >
+            <input type="hidden" id="editWarehouseNameID" name="editWarehouseNameID" >
+            <input type="hidden" id="seasonID" name="seasonID" value="<?php echo $id; ?>">           
+                <div class="form-group">
+                    <label for="warehouseName">WAREHOUSE:</label>
+                    <input type="text" class="form-control" id="warehouseName" name="warehouseName"  />
+                </div>    
+            </form>  
+        </div>                            
+        <div class="modal-footer">                   
+            <button class="btn btn-success" onclick="editWarehouseName()">Save</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+        </div>
+        </div>            
+    </div>
+</div>
+
+<!-- ADD GRADING -->
+<div id="addGradingModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+    <!-- modal content -->
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h3>Add Grading</h3>               
+        </div>
+        <div class="modal-body">  
+            <form role="form" id="addnewGradingDataform" enctype="multipart/form-data" onsubmit="return false">
+            <input type="hidden" id="addnewGradingData" name="addnewGradingData" >
+            <input type="hidden" id="seasonID" name="seasonID" value="<?php echo $id; ?>"> 
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="editseason">Upload Grading Data:</label>
+                        <input class="form-group" type="file" name="file" />
+                    </div> 
+                </div>
+            </div>
+            </form>  
+        </div>                            
+        <div class="modal-footer">                   
+            <button class="btn btn-success" onclick="addnewGradingDatas()">Save</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+        </div>
+        </div>            
+    </div>
+</div>
+
+<!-- addDispatchModal -->
+<div id="addDispatchModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+    <!-- modal content -->
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h3>Add Dispatch Trips</h3>               
+        </div>
+        <div class="modal-body">  
+            <form role="form" id="addnewDispatchDataform" enctype="multipart/form-data" onsubmit="return false">
+            <input type="hidden" id="addnewDispatchData" name="addnewDispatchData" >
+            <input type="hidden" id="seasonID" name="seasonID" value="<?php echo $id; ?>"> 
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="editseason">Upload Dispatch Data:</label>
+                        <input class="form-group" type="file" name="file" />
+                    </div> 
+                </div>
+            </div>
+            </form>  
+        </div>                            
+        <div class="modal-footer">                   
+            <button class="btn btn-success" onclick="addnewDispatchDatas()">Save</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+        </div>
+        </div>            
+    </div>
+</div>
+
+<!-- edit dispatch -->
+<div id="editDispatchModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+    <!-- modal content -->
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h3>Edit Dispatch</h3>               
+        </div>
+        <div class="modal-body">  
+            <form role="form" id="editDispatchform" enctype="multipart/form-data" onsubmit="return false">
+            <input type="hidden" id="editDispatch" name="editDispatch" >
+            <input type="text" id="editDispatchID" name="editDispatchID" >
+            <input type="text" id="seasonID" name="seasonID" value="<?php echo $id; ?>">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                    <label for="dateDispatch">Date:</label>
+                    <input type="text" class="form-control" id="dateDispatch" name="dateDispatch"  />
+                    </div> 
+                    <div class="form-group">
+                        <label for="departureDispatch">Departure:</label>
+                        <select class="form-control" id="departureDispatch" name="departureDispatch">
+                        <?php foreach ($DispatchLocations as $optionMemberList) { ;?>
+                           <option value="<?php echo $optionMemberList['dispatchbuyersid']; ?>"><?php echo $optionMemberList['fieldname']; ?></option>
+                       <?php  } ;?>
+                       </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="destinationDispatch">Destination:</label>
+                        <select class="form-control" id="destinationDispatch" name="destinationDispatch">
+                        <?php foreach ($DispatchLocations as $optionMemberList) { ;?>
+                           <option value="<?php echo $optionMemberList['dispatchbuyersid']; ?>"><?php echo $optionMemberList['fieldname']; ?></option>
+                       <?php  } ;?>
+                       </select>
+                    </div>
+                    <div class="form-group">
+                    <label for="cg7Dispatch">CG7:</label>
+                    <input type="text" class="form-control" id="cg7Dispatch" name="cg7Dispatch"  />
+                    </div>
+                    <div class="form-group">
+                        <label for="chalimDispatch">CHALIM:</label>
+                        <input type="text" class="form-control" id="chalimDispatch" name="chalimDispatch"  />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                    <label for="confirmedDispatch">Confirmed:</label>
+                    <select class="form-control" id="confirmedDispatch" name="confirmedDispatch">
+                       <option value="1">YES</option>
+                       <option value="0">NO</option>
+                    </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmedbyDispatch">Confirmed By:</label>
+                        <input type="text" class="form-control" id="confirmedbyDispatch" name="confirmedbyDispatch"  />
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmeddateDispatch">Confirmed Date:</label>
+                        <input type="text" class="form-control" id="confirmeddateDispatch" name="confirmeddateDispatch"  />
+                    </div>
+                    <div class="form-group">
+                        <label for="statusDispatch">Status:</label>
+                        <input type="text" class="form-control" id="statusDispatch" name="statusDispatch"  />
+                    </div>
+                    <div class="form-group">
+                        <label for="notesDispatch">Notes:</label>
+                        <input type="text" class="form-control" id="notesDispatch" name="notesDispatch"  />
+                    </div>
+                </div>
+            </div>
+            </form>  
+        </div>                            
+        <div class="modal-footer">                   
+            <button class="btn btn-success" onclick="editDispatchTing()">Save</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
         </div>
         </div>            

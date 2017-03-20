@@ -106,12 +106,12 @@ include_once ('../../controller/user/seeddistributioncontroller.php'); ?>
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Seed Distribution
-            <small><?php echo $regYearName ?></small>
+            Seed Distribution Summary
+            <small><?php // echo $regYearName ?></small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Seed Distribution</a></li>
-            <li class="active"> listing</li>
+            <li class="active"> Summary</li>
           </ol>
         </section>
 
@@ -142,20 +142,22 @@ include_once ('../../controller/user/seeddistributioncontroller.php'); ?>
                 </form>
                 </div><!-- /.box-header -->
                 <div class="box-body">
-                  <table id="seeddistributiontbl" class="table table-bordered table-striped" cellspacing="0" width="100%">
+                  <table id="seeddistributionsummarytbl" class="table table-bordered table-striped" cellspacing="0" width="100%">
                     <thead>
                         <tr>
-                            <th>Member No.</th>                          
-                            <th>Member</th>
-                            <th>District</th>
-                            <th>Seed Acquired</th>
-                            <th>Seed Acquired Amount</th>
-                            <th>Repayment Type</th>
-                            <th>Repayment Amount</th>
-                            <th>Status</th>
-                            <th>Donor</th>
+                          <th>Seed</th>                          
+                          <th>Association</th>
+                          <th>Total Clubs Received</th>
+                          <th>Male</th>
+                          <th>Female</th>
+                          <th>Seed Distributed</th>
+                          <th>Seed Recovered</th>
+                          <th>Donor</th>
                         </tr>
-                    </thead>                  
+                    </thead>
+                    <tbody>
+
+                    </tbody>
                   </table>
                  </div><!-- /.box-body -->
               </div><!-- /.box -->                   
@@ -168,68 +170,17 @@ include_once ('../../controller/user/seeddistributioncontroller.php'); ?>
 
       <!-- Main Footer -->
       <?php include('../common/footer.php') ;?>
-
-     
     </div><!-- ./wrapper -->
     
-    <!-- MODALS -->
-    
-    <!-- Add Seed Distribution Modal -->
-    <div id="addSeedDistributionModal" class="modal fade" role="dialog">
-            <div class="modal-dialog modal-lg">
-            <!-- modal content -->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h3>Enter Multiple members seed Distribution</h3><br>
-                    
-                </div>
-                <div class="modal-body">                                        
-                   <form method="post" action="seeddistribution.php" enctype="multipart/form-data" class="form-inline center-block">                    
-                        <div class="row">
-                            <div class="col-sm-4">                          
-                                 <div class="form-group">
-                                     <label for="regyearBulk">Registration Year:</label>
-                                     <select class="form-control" id="regyearBulk" name="regyearBulk">
-                                         <?php foreach ($listregYear as $optionMemberList) { ;?>
-                                 <option value="<?php echo $optionMemberList['regyearID']; ?>"><?php echo $optionMemberList['regYear']; ?></option>
-                             <?php  } ;?>
-                                     </select>
-                                 </div>
-                            </div>
-                        <div class="col-sm-4"> 
-                            <div class="form-group">
-                            <input class="form-group" type="file" name="seeddistributionFile" />
-                            </div> 
-                        </div>
-                            <div class="col-sm-4">
-                               <input class="btn btn-default" type="submit" name="addSDBulk" value="upload" /> 
-                            </div>
-                        </div>                       
-                    </form> 
-                                   
-                </div>                            
-                <div class="modal-footer">
-
-                    <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
-                </div>
-                </div>            
-            </div>
-        </div>
-    <!-- end Add Seed Distribution Modal -->
-    
-    <!-- END MODALS -->
-    
     <!-- REQUIRED JS SCRIPTS -->
-<!-- jQuery 2.1.4 -->
+    <!-- jQuery 2.1.4 -->
     <script src="../../../plugins/jQuery/jQuery-2.1.4.min.js"></script>
     <!-- Bootstrap 3.3.5 -->
     <script src="../../../bootstrap/js/bootstrap.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../../../dist/js/app.min.js"></script>
     
-    
-<script src="../../../js/jquery-ui.js"></script>
+    <script src="../../../js/jquery-ui.js"></script>
 
 <!--<script src="../../../rpt/jquery-1.12.3.js" type="text/javascript"></script>-->
 <script src="../../../rpt/jquery.dataTables.min.js" type="text/javascript"></script>
@@ -372,49 +323,29 @@ include_once ('../../controller/user/seeddistributioncontroller.php'); ?>
        });
        
         $(document).ready(function() {
-            var data1 = <?php echo json_encode($lstSeedDistro); ?>;
+            var data1 = <?php echo json_encode($lstSummary); ?>;
            //seeddistributiontbl
-            $('#seeddistributiontbl').DataTable( {
+            $('#seeddistributionsummarytbl').DataTable( {
                 data:           data1,
-                deferRender:    true,
-                scrollY:        400,
-                scrollCollapse: true,
-                scroller:       true,
-                scrollX: true,
+               // deferRender:    true,
+               // scrollY:        400,
+               // scrollCollapse: true,
+               // scroller:       true,
+               // scrollX: true,
                 dom: 'Bfrtip',
                 //dom: 'lfrip', addSeedDistributionModal">Add New Seed Distribution Data
                 buttons: [
                     'copy', 'excel', 'pdf', 'print', 'colvis'
-                    <?php if($_SESSION['nasfam_usertype'] == '2') { ?>,
-                    {
-                        text: 'Add New Seed Distribution Data',
-                        action: function () {
-                            $('#addSeedDistributionModal').modal('show');
-                        }
-                    }
-                     <?php } ?>
                 ]
-            } );
-           
-            
-        } );
-        
-      
-        function AddMemberSeedDistribution(){
-            _("addSDSingle").value = "addSDSingle";        
-            _("addSDSingleform").method = "post";
-            _("addSDSingleform").action = "seeddistribution.php";
-            _("addSDSingleform").submit();
-        }
+            } ); 
+        } ); 
         
         function SearchDistrictReg1(){
             _("SearchDistrictReg").value = "SearchDistrictReg";        
             _("frmSearchDistrictReg").method = "post";
-            _("frmSearchDistrictReg").action = "seeddistribution.php";
+            _("frmSearchDistrictReg").action = "seeddistributionsummary.php";
             _("frmSearchDistrictReg").submit();
         }
-        
-        
     </script>
 
     <!-- Optionally, you can add Slimscroll and FastClick plugins.
