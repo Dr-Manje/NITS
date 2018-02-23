@@ -84,25 +84,24 @@ class targetsmodel{
         return $result;
     }
     
-    function getTargetTotal($regyear,$gender){
+    function getTargetTotal($season,$ipc,$gender){
         $query = $this->link->query("SELECT count(M.memberID) as members
                                     FROM members M 
                                     join clubs C on M.club = clubsID
                                     join gac G on G.GACid = C.fieldref
                                     join associations A on A.associationsID = G.fieldref
-                                    join ipc I on I.IPCid = A.fieldref
-                                    join districtsregyear DY on DY.districtsregyearID = I.fieldref
-                                    join districts D on D.districtID = DY.district
-                                    where DY.districtsregyearID = '$regyear' and M.gender = '$gender' ");
+                                    join districts D on D.districtID = A.fieldref
+                                    join IPC I on I.IPCid = D.fieldref
+                                    where M.yearRegistered = '$season' and M.gender = '$gender' and I.IPCid = '$ipc' ");
         $result = $query->fetchColumn();        
         return $result;
     }
     
     //DistrictsTargetsModal
     function TotalDistrictsTargets($regyear){
-        $query = $this->link->query("select D.fieldname as district, RY.target as target, RY.districtsregyearID as did
+        $query = $this->link->query("select I.fieldname as IPCname, RY.target as target, RY.districtsregyearID as did, I.IPCid as ipc,RY.regyear as season
                                     from districtsregyear RY
-                                    join districts D on D.districtID = RY.district
+                                    join IPC I on I.IPCid = RY.ipc
                                     where RY.regyear = '$regyear' ");
         $result = $query->fetchAll();        
         return $result;

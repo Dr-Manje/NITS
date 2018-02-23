@@ -50,7 +50,7 @@ if(isset($_POST['SearchDistrictReg'])){ //search button clicked
     $getRegYearDetails = $common->getRegYearDetails($regYear);
     $regYearName = $getRegYearDetails[0][1];
 
-    $lstDistricts = $districts->listDistrictsYear($regYear);
+    $lstDistricts = $districts->listDistrictsYear();
 
     $i = 0;
     $IPCs = array();
@@ -81,20 +81,19 @@ if(isset($_POST['SearchDistrictReg'])){ //search button clicked
     
     
 
-    $lstDistricts = $districts->listDistricts();
+    $lstDistricts = $districts->listDistrictsYear();
 
     $i = 0;
     $IPCs = array();
 
     foreach($lstDistricts as $value){
-        $districtid = $value['districtID'];
+        $districtid = $value['IPCid'];
         $districtName = $value['fieldname'];
         $code = $value['fieldcode'];
 
         $listDistrictIPCs = $districts->listDistrictIPCs($districtid); //get number of ipcs
         $totalipcs = count($listDistrictIPCs);
         
-
         $ipc = array();
         array_push($ipc,$districtid);
         array_push($ipc,$districtName);
@@ -229,7 +228,7 @@ if(isset($_GET['ipcdid'])){
     
     $getDistrictDetails = $districts->getDistrictDetails($id);
     $districtID = $getDistrictDetails[0][0];
-    $districtName = $getDistrictDetails[0][2];
+    $districtName = $getDistrictDetails[0][1];
     
     $listDistrictIPCs = $districts->listDistrictIPCs($id); //get list of ipcs
 }
@@ -243,8 +242,8 @@ if(isset($_GET['assdid'])){
     
     $getRealAssoc = $districts->getRealAssoc($id);
     $IPCname = $getRealAssoc[0][0];
-    $IPCid = $getRealAssoc[0][1];
-    $districtname = $getRealAssoc[0][2];
+    $IPCid = $getRealAssoc[0][2];
+    $districtname = $getRealAssoc[0][1];
 }
 
 //GET GAC
@@ -258,8 +257,8 @@ if(isset($_GET['gacdid'])){
     $ipcname = $getRealGac[0][1];
     $districtname = $getRealGac[0][2];
     
-    $ipcref = $getRealGac[0][3];
-    $assocref = $getRealGac[0][4];  
+    $ipcref = $getRealGac[0][5];
+    $assocref = $getRealGac[0][3];  
 }
 
 //GET CLUB
@@ -268,14 +267,15 @@ if(isset($_GET['clubdid'])){
     
     $listGacClubs = $districts->listGacClubs($id);
     
-    $getRealClubs = $districts->getRealClubs($id);
-    $assocname = $getRealClubs[0][0];
-    $ipcname = $getRealClubs[0][1];
+    $getRealClubs = $districts->getRealClubs($id);    
     $districtname = $getRealClubs[0][2];
-    
-    $ipcref = $getRealClubs[0][3];
-    $assocref = $getRealClubs[0][4];
-    $gacname = $getRealClubs[0][5];
+    $ipcname = $getRealClubs[0][1];
+    $assocname = $getRealClubs[0][0];
+    $gacname = $getRealClubs[0][4];
+      
+    $assocref = $getRealClubs[0][5];
+    $assocref2 = $getRealClubs[0][6];
+    $assocref3 = $getRealClubs[0][7];
 }
 
 //GET MEMBERS LIST
@@ -285,16 +285,11 @@ if(isset($_GET['membersdid'])){
     $listClubMembers = $districts->listClubMembers($id);
     
     $getRealMembers = $districts->getRealMembers($id);
-    $assocname = $getRealMembers[0][0];
-    $ipcname = $getRealMembers[0][1];
-    $districtname = $getRealMembers[0][2];
-    
-    $ipcref = $getRealMembers[0][3];
-    $assocref = $getRealMembers[0][4];
-    $gacname = $getRealMembers[0][5];
-    
-    $clubname = $getRealMembers[0][6];
-    $gacid = $getRealMembers[0][7];
+    $ipc = $getRealMembers[0][1]; //ipc
+    $district = $getRealMembers[0][2];//district
+    $association = $getRealMembers[0][0];//association
+    $gac = $getRealMembers[0][3];//gac
+    $club = $getRealMembers[0][4];//club
 }
 
 //ADD IPC
@@ -444,14 +439,19 @@ if(isset($_POST['addNewDistrict'])){
         }
         
         //district               
-        $itemtable = 'districts';
+        $itemtable = 'IPC';
         $updateCodeTable = $districts->InsertIntoItemB($itemtable,$itemname,$newNumber);
+        if($updateCodeTable == 1){
+            echo 'IPC created successfuly';
+        }else{
+            echo 'Failed to create IPC';
+        }
         
         //get recent created district ID
-        $RecentDistrictDetails = $districts->RecentDistrictDetails();
-        $districtID = $RecentDistrictDetails[0][0]; //recent district ID
+        //$RecentDistrictDetails = $districts->RecentDistrictDetails();
+        //$districtID = $RecentDistrictDetails[0][0]; //recent district ID
         
-        $InsertDistrictReg = $districts->InsertDistrictReg($districtID,$regyear,$newNumber); //insert into district reg year with default target
+       // $InsertDistrictReg = $districts->InsertDistrictReg($districtID,$regyear,$newNumber); //insert into district reg year with default target
     }
     header("Location: $ReturnPath");  
 }
@@ -571,13 +571,13 @@ if(isset($_POST['addIPCItemsBulk'])){
     switch($item){
         case "2":
             //ipc
-            $itemtable = 'ipc';
-            $itemtableref = 'districts';
+            $itemtable = 'districts';
+            $itemtableref = 'IPC';
             break;
         case "3":
             //association
             $itemtable = 'associations';
-            $itemtableref = 'ipc';
+            $itemtableref = 'districts';
             break;
         case "4":
             //gac
@@ -678,15 +678,16 @@ if(isset($_POST['updateIPCItem'])){
     }
     
     switch($editviewitem){
-        case "1":
+        case "2":
             //district
             $itemtable = 'districts';
             $fieldID = 'districtID';
             //get district ID
-            $getDistrictID = $districts->getDistrictRealDetails($editid);
-            $updateID = $getDistrictID[0][1];
+            //$getDistrictID = $districts->getDistrictRealDetails($editid);
+            //$updateID = $getDistrictID[0][1];
+            $updateID = $editid;
             break;
-        case "2":
+        case "1":
             //ipc
             $itemtable = 'ipc';
             $fieldID = 'IPCid';

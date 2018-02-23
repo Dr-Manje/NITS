@@ -152,9 +152,9 @@ include_once ('../../controller/user/districtscontroller.php'); ?>
               <table id="example1" class="table table-striped table-bordered" cellspacing="0" width="100%">
                 <thead>
                     <tr>
-                        <td>District</td>
-                        <td>Code</td>
                         <td>IPC</td>
+                        <td>Code</td>
+                        <td>District</td>
                         <td>Association</td>
                         <td>GAC</td>
                         <td>Clubs</td>
@@ -191,10 +191,10 @@ include_once ('../../controller/user/districtscontroller.php'); ?>
                                     $getAssTotalsDistrict = $districts->getAssTotalsDistrict($districtId); //get total associations
                                     $getGacTotalsDistrict = $districts->getGacTotalsDistrict($districtId); //get total gacs
                                     $getClubTotalsDistrict = $districts->getClubTotalsDistrict($districtId); //get clubs total
-                                    $ipcs = $getIpcsTotalsDistrict;
-                                    $associations = $getAssTotalsDistrict;
-                                    $gacs = $getGacTotalsDistrict;
-                                    $clubs = $getClubTotalsDistrict;
+//                                    $ipcs = $getIpcsTotalsDistrict;
+//                                    $associations = $getAssTotalsDistrict;
+//                                    $gacs = $getGacTotalsDistrict;
+//                                    $clubs = $getClubTotalsDistrict;
                                     $males = $districts->getCompleteMemberTotalsDistrict($seasonid,'MALE',$districtId);
                                     $females = $districts->getCompleteMemberTotalsDistrict($seasonid,'FEMALE',$districtId);
                                     $members = $males + $females; 
@@ -202,15 +202,15 @@ include_once ('../../controller/user/districtscontroller.php'); ?>
                         <tr> 
                         <td><?php echo $value['1']; ?></td>
                         <td><?php echo $value['3']; ?></td>
-                        <td><?php echo $ipcs; ?></td>
-                        <td><?php echo $associations; ?></td>
-                        <td><?php echo $gacs; ?></td>
-                        <td><?php echo $clubs; ?></td>
+                        <td><?php echo $getIpcsTotalsDistrict; ?></td>
+                        <td><?php echo $getAssTotalsDistrict; ?></td>
+                        <td><?php echo $getGacTotalsDistrict; ?></td>
+                        <td><?php echo $getClubTotalsDistrict; ?></td>
                         <td><?php echo $males; ?></td>
                         <td><?php echo $females; ?></td>
                         <td><?php echo $members; ?></td>
                         <td>
-                            <?php if($ipcs > 0){ ?>
+                            <?php if($IPCs > 0){ ?>
                             <a rel="tooltip" title="View more IPC details (GACs, ASSOCIATIONS etc)" class="btn btn-info btn-xs"  href="ipcdetails.php?ipcdid=<?php echo $value['0'];?>">View more                                
                             </a> 
                             <?php } ?>
@@ -307,7 +307,7 @@ include_once ('../../controller/user/districtscontroller.php'); ?>
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h3>ADD DISTRICT</h3>                   
+                    <h3>ADD IPCs</h3>                   
                 </div>
                 <div class="modal-body">                                        
                     <form role="form" id="addDistrictform" onsubmit="return false" enctype="multipart/form-data" class="form-inline center-block">
@@ -454,7 +454,7 @@ include_once ('../../controller/user/districtscontroller.php'); ?>
         
         //add tree item
         $(".addmoredistrict").on('click',function(){
-        var data="<tr><td><input type='checkbox' class='form-control case' name='ipcs[]' /></td>";
+        var data="<tr><td><input type='checkbox' class='case' name='ipcs[]' /></td>";
         data += "<td><input type='text' class='form-control' name='ipcname[]' /></td></tr>";
             $('.tbladddistrict').append(data);
         });
@@ -470,7 +470,7 @@ include_once ('../../controller/user/districtscontroller.php'); ?>
             });
             
             if(checked === true){
-                if (window.confirm('are you sure you want to add District(s)?'))
+                if (window.confirm('are you sure you want to add IPC(s)?'))
                 {
 //                    alert("Add district");
                     _("addNewDistrict").value = "addNewDistrict";        
@@ -637,7 +637,7 @@ include_once ('../../controller/user/districtscontroller.php'); ?>
                 ]
             } );
             
-            <?php if($_SESSION['nasfam_usertype'] == '1'){ ?>
+            <?php // if($_SESSION['nasfam_usertype'] == '1'){ ?>
             $('#example1').DataTable( {
                 dom: 'Bfrtip',
                 buttons: [
@@ -650,28 +650,28 @@ include_once ('../../controller/user/districtscontroller.php'); ?>
                     }
                     ,
                     {
-                        text: 'Add District',
+                        text: 'Add IPCs',
                         action: function () {
                             $('#AddDistrictModal').modal('show');
                         }
                     }
                 ]
             } );
-            <?php  }else{?>
-              $('#example1').DataTable( {
-                dom: 'Bfrtip',
-                buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
-                    ,
-                    {
-                        text: 'Add Club(s)',
-                        action: function () {
-                            $('#AddIPCItemModal').modal('show');
-                        }
-                    }
-                ]
-            } );
-            <?php  }?>
+            <?php // }else{?>
+//              $('#example1').DataTable( {
+//                dom: 'Bfrtip',
+//                buttons: [
+//                    'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
+//                    ,
+//                    {
+//                        text: 'Add IPC Item',
+//                        action: function () {
+//                            $('#AddIPCItemModal').modal('show');
+//                        }
+//                    }
+//                ]
+//            } );
+            <?php // }?>
         } );
         
         

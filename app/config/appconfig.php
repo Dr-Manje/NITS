@@ -1,9 +1,9 @@
 <?php
 
     $db_name = 'nancy'; //database name
-    $db_user = 'sa'; //database user
+    $db_user = 'root'; //database user
     $db_host = 'localhost'; //database host machine
-    $db_pass = 'Manje@2014'; //database user password
+    $db_pass = 'admin'; //database user password
     
     try
     {

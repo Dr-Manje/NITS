@@ -6,7 +6,7 @@ include_once ('../../controller/user/districtscontroller.php'); ?>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>NASFAM</title>    
+    <title>NIS</title>    
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -124,20 +124,20 @@ include_once ('../../controller/user/districtscontroller.php'); ?>
              <div class="box box-success">
             <div class="box-header with-border">
                 <ol class="breadcrumb">
-                    <li><a href="districtsipcs.php"> Back to Districts</a></li>
-                    <li><a href="ipcdetails.php?ipcdid=<?php echo $ipcref ?>"> Back to IPCs</a></li>
-                    <li><a href="assdetails.php?assdid=<?php echo $assocref ?>"> Back to Association</a></li>
-                    <li><a href="gacdetails.php?gacdid=<?php echo $assocref ?>"> Back to GACs</a></li>
-                    <li><a href="clubdetails.php?clubdid=<?php echo $gacid ?>"> Back to Clubs</a></li>
+                    <li><a href="districtsipcs.php"> Back to IPCs</a></li>
+                    <li><a href="ipcdetails.php?ipcdid=<?php //echo $ipcref ?>"> Back to District</a></li>
+                    <li><a href="assdetails.php?assdid=<?php //echo $assocref ?>"> Back to Association</a></li>
+                    <li><a href="gacdetails.php?gacdid=<?php //echo $assocref ?>"> Back to GACs</a></li>
+                    <li><a href="clubdetails.php?clubdid=<?php //echo $gacid ?>"> Back to Clubs</a></li>
                    <li class="active"> Members</li>
                 </ol>
                 <div class="row">
                     <div class="col-xs-12">
-                        District: <?php echo $districtname ?><br>
-                        IPC: <a href="ipcdetails.php?ipcdid=<?php echo $ipcref ?>"><?php echo $ipcname ?></a><br>
-                        Association: <a href="assdetails.php?assdid=<?php echo $assocref ?>"><?php echo $assocname ?></a><br>
-                        Gac: <a href="gacdetails.php?gacdid=<?php echo $assocref ?>"><?php echo $gacname ?></a><br>
-                        Club: <a href="clubdetails.php?clubdid=<?php echo $gacid ?>"><?php echo $clubname ?></a><br>
+                        IPC: <?php echo $ipc ?><br>
+                        District: <a href="ipcdetails.php?ipcdid=<?php //echo $ipcref ?>"><?php echo $district ?></a><br>
+                        Association: <a href="assdetails.php?assdid=<?php //echo $assocref ?>"><?php echo $association ?></a><br>
+                        Gac: <a href="gacdetails.php?gacdid=<?php //echo $assocref ?>"><?php echo $gac ?></a><br>
+                        Club: <a href="clubdetails.php?clubdid=<?php //echo $gacid ?>"><?php echo $club ?></a><br>
                     </div> 
                 </div>
             </div><!-- /.box-header -->
@@ -240,9 +240,7 @@ include_once ('../../controller/user/districtscontroller.php'); ?>
         function _(x) {
             return document.getElementById(x);
         }
-        
-        
-        
+
         $(function() {
             //$( "#dateitem" ).datepicker( { dateFormat: 'dd/mm/yy' }); 
             //revenue dates
@@ -305,7 +303,7 @@ include_once ('../../controller/user/districtscontroller.php'); ?>
                     'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
                     ,
                     {
-                        text: 'Add Club(s)',
+                        text: 'Add IPC Item',
                         action: function () {
                             $('#AddIPCItemModal').modal('show');
                         }

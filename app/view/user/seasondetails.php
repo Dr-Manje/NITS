@@ -1,6 +1,6 @@
 <?php  
 session_start();
-error_reporting(0);
+error_reporting(1);
 include_once ('../../controller/user/seasonscontroller.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -126,14 +126,32 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Season Summary
-            <!--<small>Profile</small>-->
+            NIS
+            <small>Season Summary</small>
           </h1>
-<!--          <ol class="breadcrumb">
-              <li><a href="members.php"><i class="fa fa-users"></i> Members</a></li>
-            <li class="active">Profile</li>
-          </ol>-->
+          <ol class="breadcrumb">
+              <li><a href="regyears.php"><i class="fa fa-users"></i> Back To Seasons</a></li>
+            <!--<li class="active">Profile</li>-->
+          </ol>
         </section>
+        
+        <form class="form-inline" method="post" id="frmSearchDistrictReg">
+                    <input type="hidden" id="SearchDistrictReg" name="SearchDistrictReg" >
+                    <table class="table">
+                        <tr>
+                                <td>
+                                   <label>Select registered Year: </label>
+                                    <select class="form-control" id="regyearDS" name="regyearDS">
+                                     <?php foreach ($listregYear as $optionMemberList) { ;?>
+                                        <option value="<?php echo $optionMemberList['regyearID']; ?>"><?php echo $optionMemberList['regYear']; ?></option>
+                                    <?php  } ;?>
+                                    </select> 
+                                <button type="button" class="btn btn-info" onclick="SearchDistrictReg1()">Display</button>
+                               
+                            </td>                                       
+                        </tr>                               
+                    </table>
+                </form>
         
         
 
@@ -148,13 +166,17 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                         <div class="box-body box-profile">
                             
                             <?php foreach($getSeasonHeader as $seasonheader){?>
-                            <?php if($_SESSION['nasfam_usertype'] == '1') { ?>
+                            <?php if($_SESSION['nasfam_usertype'] == '3') { ?>
                             <strong>Season Details</strong>
-                            
+<!--                            <button type="button" class="btn btn-info btn-simple btn-xs pull-right" data-toggle="modal" data-target="#editSeasonHeaderModal"> <i class="fa fa-edit"></i> New Season </button> -->
                             <button type="button" class="btn btn-info btn-simple btn-xs pull-right" data-toggle="modal" data-target="#editSeasonHeaderModal"> <i class="fa fa-edit"></i> Edit</button>
                             <hr>
                             <?php } ?>
                             <p class="text-muted">
+                                <?php if($_SESSION['nasfam_usertype'] == '1') { ?>
+                                <?php }else{ ?>
+                                <strong>IPC:</strong> <?php echo $seasonheader['ipc']; ?><br>
+                                <?php } ?>
                                 <strong>Season:</strong> <?php echo $seasonheader['regYear']; ?><br>
                                 <strong>Start Date:</strong> <?php echo $seasonheader['startDate']; ?><br>
                                 <strong>End Date:</strong> <?php echo $seasonheader['endDate']; ?><br>                                
@@ -167,10 +189,17 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                 <div class="col-md-4">
                     <div class="box box-success">
                     <div class="box-body box-profile">
-                        <strong>Procurement Details</strong><hr>
-                        <strong>Procurement Amount: </strong> <?php echo $seasonheader['procurement']; ?><br>
-                        <strong>Market Procurement Amount: </strong> <?php echo $totalAmountSpent; ?><br>
-                        <strong>Balance: </strong> <?php $balance =  $seasonheader['procurement'] - $totalAmountSpent; echo $balance; ?><br>
+                        <?php if($_SESSION['nasfam_usertype'] == '3') { ?>
+                            <strong>Procurement Details</strong>
+                            
+                            <button type="button" class="btn btn-info btn-simple btn-xs pull-right" data-toggle="modal" data-target="#InsertAdvanceModal"> <i class="fa fa-money"></i> Add Advance</button>
+                            <hr>
+                            <?php } ?>
+                       
+                        <strong>Total Advance (MWK): </strong> <?php echo $seasonheader['advance']; ?><br>
+                        <strong>Advance to Date (MWK): </strong> <?php  $AdvanceToDate = $seasonheader['advance'] - $totalspent; echo $AdvanceToDate; ?><br>
+                        <strong>Total Spent (MWK): </strong> <?php echo $totalspent; ?><br>
+                        <strong>Variance (KG's): </strong> <?php  echo $variance; ?><br>
                     <?php } ?> 
                     </div>
                     </div>
@@ -200,24 +229,27 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                 <div class="col-lg-12">
                     <div class="nav-tabs-custom nav-pills-success">
                         <ul class="nav nav-tabs nav-pills-success">
-                            <li class="active"><a href="#summaries" data-toggle="tab"><strong>Seasonal Summary</strong></a></li>
+                            <!--<li class="active"><a href="#summaries" data-toggle="tab"><strong>Seasonal Summary</strong></a></li>-->
                             <!--<li><a href="#buyer" data-toggle="tab"><strong>Buying</strong></a></li>-->
                             
                             
 
-                            <li><a href="#marketcenters" data-toggle="tab"><strong>Market Center</strong></a></li>
+                            <li class="active"><a href="#marketcenters" data-toggle="tab"><strong>Market Center</strong></a></li>
                             <li><a href="#buyers" data-toggle="tab"><strong>Buyers</strong></a></li>
                             <li><a href="#purchases" data-toggle="tab"><strong>Purchases</strong></a></li>
                             
                             
                             <li><a href="#warehouse" data-toggle="tab"><strong>Warehouse</strong></a></li>
-                            <li><a href="#sorting" data-toggle="tab"><strong>Sorting</strong></a></li>
-                            <li><a href="#grading" data-toggle="tab"><strong>Grading</strong></a></li>
+                            <li><a href="#sorting" data-toggle="tab"><strong>Shelling</strong></a></li>
+                            <li><a href="#grading" data-toggle="tab"><strong>Sorting and Grading</strong></a></li>
                             
                             <li><a href="#dispatch" data-toggle="tab"><strong>Dispatch</strong></a></li>
+                            
+                            <li><a href="#ipcadvance" data-toggle="tab"><strong>IPC Advance</strong></a></li>
+                            <li><a href="#mkcadvance" data-toggle="tab"><strong>MKC Advance</strong></a></li>
                         </ul>
                         <div class="tab-content">                           
-                            <div class="tab-pane active" id="summaries"><!-- Summaries -->
+                            <div class="tab-pane" id="summaries"><!-- Summaries -->
                                 <h3>Seasonal Totals</h3>
                                 <table id="summary1" class="table table-bordered table-striped" width="100%" cellspacing="0">
                                     <thead>
@@ -229,7 +261,7 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                                     </thead>                                   
                                 </table><hr>                             
                             </div>                            
-                            <div class="tab-pane" id="marketcenters"> <!-- Market Centres -->
+                            <div class="tab-pane  active" id="marketcenters"> <!-- Market Centres -->
                                 <h3>Market Centres</h3>
                                 <table id="marketcenterstbl" class="table table-bordered table-striped" width="100%" cellspacing="0">
                                     <thead>
@@ -237,10 +269,10 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                                             <th>Market Center Name</th>
                                             <th>Market Center Code</th>
                                             <th>Gacs</th>
-                                            <th>MPA</th>
+                                            <th>Advance to Date (MWK)</th>
                                             <th>STATUS</th>
-                                            <th>Receipts Total</th>
-                                            <th>Balance</th>                                            
+                                            <th>Total Spent (MWK)</th>
+                                             <th>Total Bought (KGs)</th>                                            
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -251,7 +283,7 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                             </div>
                             
                             <div class="tab-pane" id="buyers"><!-- Buyers -->
-                                <h3>Buyers</h3>
+                                <h3>Buyers</h3><hr>
                                 <table id="buyerstbl" class="table table-bordered table-striped" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -273,7 +305,7 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                             </div>
                             
                             <div class="tab-pane" id="purchases"><!-- Purchases -->
-                                <h3>Purchases</h3>
+                                <h3>Purchases</h3><hr>
                                 <table id="purchasestbl" class="table table-bordered table-striped" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -335,7 +367,7 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                                 </table>
                             </div>
                             <div class="tab-pane" id="sorting"><!-- Sorting -->
-                                <h3>Sorting</h3>
+                                <h3>Shelling</h3><hr>
                                 <table id="sortingtbl" class="table table-bordered table-striped" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -359,7 +391,7 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                                 </table>
                             </div>
                             <div class="tab-pane" id="grading"><!-- Grading -->
-                                <h3>Grading</h3>
+                                <h3>Sorting and Grading</h3><hr>
                                 <table id="gradingtbl" class="table table-bordered table-striped" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -391,14 +423,14 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                                     <thead>
                                         <tr>
                                             <th>Date</th>
-                                            <th>Departure</th>
+                                            <th>GAC</th>
                                             <th>Destination</th>
-                                            <th>CG7</th>
-                                            <th>CHALIM</th>
-                                            <th>Total</th>
-                                            <th>Confirmed</th>
-                                            <th>Confirmed By</th>
-                                            <th>Confirmed Date</th>
+                                            <th>CG7 Sent (KGs)</th>
+                                            <th>CHALIM Sent (KGs)</th>
+                                            <th>Total Sent (KGs)</th>
+                                            <th>CG7 Received (KGs)</th>
+                                            <th>Chalim Received (KGs)</th>
+                                            <th>Total Received (KGs)</th>
                                             <th>Status</th>
                                             <th>Notes</th>
                                             <th>Action</th>
@@ -432,6 +464,82 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                                             </td>
                                         </tr>                                        
                                         <?php } ?>                                       
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane" id="ipcadvance">
+                                <h3>IPC Advance</h3><hr>
+                                <table id="ipcadvancetbl" class="table table-bordered table-striped" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>                                           
+                                            <th>Advance Amount</th>
+                                            <th>Advance Date</th>
+                                            <th>Remarks</th>
+                                            <!--<th>Action</th>-->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                            if ($ListIPCadvance == 0) {
+                                            ?>
+                                              <tr> 
+                                              <td>Season</td>
+                                              <!--<td>Action</td>-->
+                                               </tr>
+                                           <?php   }
+                                              else 
+                                              {
+                                                 foreach($ListIPCadvance as $value)
+                                                      {                                   
+                                                     ?>    
+                                               <tr> 
+                                                  <td><?php echo $value['amount']; ?></td>
+                                                  <td><?php echo $value['confirmeddate']; ?></td>
+                                                  <td><?php echo $value['remarkes']; ?></td>
+                                                  
+                                                  </tr>
+                                               <?php  }
+                                              }
+                                              ?> 
+                                    </tbody>
+                                </table> 
+                            </div>
+                            <div class="tab-pane" id="mkcadvance">
+                                <h3>Market Advance</h3><hr>
+                                <table id="mkcadvancetbl" class="table table-bordered table-striped" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Market Center</th>
+                                            <th>Advance Amount</th>
+                                            <th>Advance Date</th>
+                                            <th>Remarks</th>
+                                            <!--<th>Action</th>-->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                            if ($ListMKCadvance == 0) {
+                                            ?>
+                                              <tr> 
+                                              <td>Season</td>
+                                              <!--<td>Action</td>-->
+                                               </tr>
+                                           <?php   }
+                                              else 
+                                              {
+                                                 foreach($ListMKCadvance as $value)
+                                                      {                                   
+                                                     ?>    
+                                               <tr>
+                                                   <td><?php echo $value['mkc']; ?></td>
+                                                  <td><?php echo $value['amount']; ?></td>
+                                                  <td><?php echo $value['confirmeddate']; ?></td>
+                                                  <td><?php echo $value['remarkes']; ?></td>
+                                                  
+                                                  </tr>
+                                               <?php  }
+                                              }
+                                              ?> 
                                     </tbody>
                                 </table>
                             </div>
@@ -583,6 +691,15 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                 }
         }
         
+        function dispatchUpdateModal(dispatchid){
+            $("#editDispatchID").val(dispatchid);
+//            $("#departuredate").val(departuredate);
+//            $("#departure").val(departure);
+//            $("#destination").val(destination);
+//            alert('Update dispatch');
+            $('#editDispatchModal').modal('show');
+        }
+        
         $(function() {
             $('#rdate').datepicker( {
                 changeMonth: true,
@@ -656,9 +773,9 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
             } );
            
            //dispatchtbl
-           //var gradinglist = <?php // echo json_encode($lstDispatchList); ?>;
+           var dispatching = <?php echo json_encode($lstDispatch); ?>;
            $('#dispatchtbl').DataTable( {
-                //data:           gradinglist,
+                data:           dispatching,
 //                deferRender:    true,
 //                scrollY:        350,
                 scrollX:        true,
@@ -667,7 +784,7 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                 dom: 'Bfrtip',
                 buttons: [
                     'copy', 'excel', 'print', 'colvis'
-                     <?php if($_SESSION['nasfam_usertype'] == '1') { ?>                             
+                                                
                     ,
                     {
                         text: 'Add Dispatch data',
@@ -675,7 +792,54 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                             $('#addDispatchModal').modal('show');
                         }
                     }
-                    <?php  } ?>
+                    
+                ]
+            } );
+            
+            //IPC advance
+            var ipcadvancelist = <?php  echo json_encode($IPCadvanceData); ?>;
+           $('#ipcadvancetbl').DataTable( {
+                //data:           ipcadvancelist,
+//                deferRender:    true,
+//                scrollY:        350,
+               // scrollX:        true,
+//                scrollCollapse: true,
+//                scroller:       true,
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'excel', 'print', 'colvis'
+                                                 
+//                    ,
+//                    {
+//                        text: 'Add Grading data',
+//                        action: function () {
+//                            $('#addGradingModal').modal('show');
+//                        }
+//                    }
+                   
+                ]
+            } );
+            
+           // var ipcadvancelist = <?php  //echo json_encode($IPCadvanceData); ?>;
+           $('#mkcadvancetbl').DataTable( {
+                //data:           ipcadvancelist,
+//                deferRender:    true,
+//                scrollY:        350,
+               // scrollX:        true,
+//                scrollCollapse: true,
+//                scroller:       true,
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'excel', 'print', 'colvis'
+                                                 
+//                    ,
+//                    {
+//                        text: 'Add Grading data',
+//                        action: function () {
+//                            $('#addGradingModal').modal('show');
+//                        }
+//                    }
+                   
                 ]
             } );
            
@@ -692,15 +856,15 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                 dom: 'Bfrtip',
                 buttons: [
                     'copy', 'excel', 'print', 'colvis'
-                     <?php if($_SESSION['nasfam_usertype'] == '1') { ?>                             
+                                                 
                     ,
                     {
-                        text: 'Add Grading data',
+                        text: 'Add Sorting and Grading data',
                         action: function () {
                             $('#addGradingModal').modal('show');
                         }
                     }
-                    <?php  } ?>
+                   
                 ]
             } );
            
@@ -717,7 +881,7 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                 dom: 'Bfrtip',
                 buttons: [
                     'copy', 'excel', 'print', 'colvis'
-                     <?php if($_SESSION['nasfam_usertype'] == '1') { ?>                             
+                                                 
                     ,
                     {
                         text: 'Add Warehouse(s)',
@@ -725,7 +889,7 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                             $('#addWarehouseModal').modal('show');
                         }
                     }
-                    <?php  } ?>
+                   
                 ]
             } );
            
@@ -774,7 +938,7 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                 dom: 'Bfrtip',
                 buttons: [
                     'copy', 'excel', 'pdf', 'print', 'colvis'
-                    <?php if($_SESSION['nasfam_usertype'] == '1') { ?>                             
+                                               
                     ,
                     {
                         text: 'Add Purchase(s)',
@@ -782,7 +946,7 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                             $('#addPurchasesModal').modal('show');
                         }
                     }
-                    <?php  } ?>
+                    
                 ]
             } );
             
@@ -799,16 +963,15 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                 dom: 'Bfrtip',
                 buttons: [
                     'copy', 'excel', 'pdf', 'print', 'colvis'
-                    <?php if($_SESSION['nasfam_usertype'] == '1') { ?>                             
+                                             
                     ,
                     {
-                        text: 'Add Sorting Data',
+                        text: 'Add Shelling Data',
                         action: function () {
                             $('#addSortingModal').modal('show');
                         }
                     }
-                    <?php  } ?>
-                        <?php if($_SESSION['nasfam_usertype'] == '1') { ?>                             
+                                                
                     ,
                     {
                         text: 'Add Casual Workers',
@@ -816,7 +979,7 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                             $('#addCasualWorkerModal').modal('show');
                         }
                     }
-                    <?php  } ?>
+                   
                 ]
             } );
             
@@ -834,7 +997,7 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                 dom: 'Bfrtip',
                 buttons: [
                     'copy', 'excel', 'pdf', 'print', 'colvis'
-                    <?php if($_SESSION['nasfam_usertype'] == '1') { ?>                             
+                                              
                     ,
                     {
                         text: 'Add Market Center',
@@ -842,7 +1005,7 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                             $('#addMarketCenterModal').modal('show');
                         }
                     }
-                    <?php  } ?>
+                   
                 ]
             } );
             
@@ -861,7 +1024,7 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                 dom: 'Bfrtip',
                 buttons: [
                     'copy', 'excel', 'pdf', 'print', 'colvis'
-                    <?php if($_SESSION['nasfam_usertype'] == '1') { ?>                             
+                                              
                     ,
                     {
                         text: 'Add Buyer(s)',
@@ -869,7 +1032,7 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                             $('#addBuyersModal').modal('show');
                         }
                     }
-                    <?php  } ?>
+                   
                 ]
             } );
             
@@ -887,7 +1050,7 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                 dom: 'Bfrtip',
                 buttons: [
                     'copy', 'excel', 'pdf', 'print', 'colvis'
-                    <?php if($_SESSION['nasfam_usertype'] == '1') { ?>                             
+                                              
                     ,
                     {
                         text: 'Add Casual Workers',
@@ -895,7 +1058,7 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                             $('#addCasualWorkerModal').modal('show');
                         }
                     }
-                    <?php  } ?>
+                    
                 ]
             } );          
        });
@@ -1124,6 +1287,18 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
                 }
        }
        
+       //insert advance
+       function InsertAdvance(){
+           if (window.confirm('are you sure you want to insert advance?'))
+                {
+                    _("InsertAdvance").value = "InsertAdvance";        
+                    _("InsertAdvanceform").method = "post";
+                    _("InsertAdvanceform").action = "seasondetails.php";
+                    _("InsertAdvanceform").submit();
+                }else{
+                }
+        }
+       
        //
         function addNewMKC(){
            if (window.confirm('are you sure you want to add new Market Center?'))
@@ -1174,6 +1349,13 @@ include_once ('../../controller/user/seasonscontroller.php'); ?>
         data += "</tr>";
             $('.tblDistricts').append(data);
         });
+        
+        function SearchDistrictReg1(){
+            _("SearchDistrictReg").value = "SearchDistrictReg";        
+            _("frmSearchDistrictReg").method = "post";
+            _("frmSearchDistrictReg").action = "seasondetails.php";
+            _("frmSearchDistrictReg").submit();
+        }
        </script>
       </body>
 </html>

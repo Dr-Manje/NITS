@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="52e92873-d677-4a75-bfaf-9a47994cf0ea" name="Default" comment="" />
+    <ignored path="app.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <ignored path=".idea/dataSources.local.xml" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="app" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="seasondetails.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/view/user/seasondetails.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-5.5454545">
+              <caret line="206" column="38" selection-start-line="206" selection-start-column="38" selection-end-line="206" selection-end-column="38" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="seasonscontroller.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/controller/user/seasonscontroller.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="147.0">
+              <caret line="1501" column="8" selection-start-line="1501" selection-start-column="8" selection-end-line="1501" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dashboardcontroller.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/controller/user/dashboardcontroller.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.34767643">
+              <caret line="202" column="4" selection-start-line="202" selection-start-column="4" selection-end-line="202" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="seasonsmodel.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/model/user/seasonsmodel.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-21.038462">
+              <caret line="918" column="13" selection-start-line="918" selection-start-column="13" selection-end-line="918" selection-end-column="13" />
+              <folding>
+                <marker date="1501151732000" expanded="true" signature="365:726" placeholder="select disti..purchases..." />
+                <marker date="1501151732000" expanded="true" signature="919:1025" placeholder="select count..purchases..." />
+                <marker date="1501151732000" expanded="true" signature="1208:1277" placeholder="select sum(m..purchases..." />
+                <marker date="1501151732000" expanded="true" signature="1466:1809" placeholder="select sum(P..purchases..." />
+                <marker date="1501151732000" expanded="true" signature="1987:2334" placeholder="select sum(P..purchases..." />
+                <marker date="1501151732000" expanded="true" signature="2497:2639" placeholder="SELECT * FRO..marketcenter..." />
+                <marker date="1501151732000" expanded="true" signature="2851:2879" placeholder="SELECT count..." />
+                <marker date="1501151732000" expanded="true" signature="3169:3347" placeholder="INSERT INTO ..." />
+                <marker date="1501151732000" expanded="true" signature="3698:3842" placeholder="SELECT dispa..dispatchlocations..." />
+                <marker date="1501151732000" expanded="true" signature="4047:4184" placeholder="update donor..." />
+                <marker date="1501151732000" expanded="true" signature="4472:4656" placeholder="update dispa..." />
+                <marker date="1501151732000" expanded="true" signature="4975:5341" placeholder="UPDATE dispa..." />
+                <marker date="1501151732000" expanded="true" signature="5577:5636" placeholder="UPDATE donor..." />
+                <marker date="1501151732000" expanded="true" signature="5888:5966" placeholder="UPDATE dispa..." />
+                <marker date="1501151732000" expanded="true" signature="6167:6213" placeholder="select * fro..donors..." />
+                <marker date="1501151732000" expanded="true" signature="6373:6393" placeholder="select * fro..donors..." />
+                <marker date="1501151732000" expanded="true" signature="6594:6625" placeholder="select * fro..dispatchlocations..." />
+                <marker date="1501151732000" expanded="true" signature="6828:6866" placeholder="select count..dispatchlocations..." />
+                <marker date="1501151732000" expanded="true" signature="7048:7075" placeholder="select count..donors..." />
+                <marker date="1501151732000" expanded="true" signature="7284:7357" placeholder="INSERT INTO ..." />
+                <marker date="1501151732000" expanded="true" signature="7713:7808" placeholder="INSERT INTO ..." />
+                <marker date="1501151732000" expanded="true" signature="8100:8221" placeholder="SELECT * FRO..warehouse..." />
+                <marker date="1501151732000" expanded="true" signature="8421:8650" placeholder="insert into ..." />
+                <marker date="1501151732000" expanded="true" signature="8532:8650" placeholder="SELECT wareh..warehouse..." />
+                <marker date="1501151732000" expanded="true" signature="8871:9065" placeholder="insert into ..." />
+                <marker date="1501151732000" expanded="true" signature="8974:9065" placeholder="SELECT IPCid..ipc..." />
+                <marker date="1501151732000" expanded="true" signature="9313:9634" placeholder="insert into ..." />
+                <marker date="1501151732000" expanded="true" signature="9445:9634" placeholder="select marke..marketcenter..." />
+                <marker date="1501151732000" expanded="true" signature="9835:9938" placeholder="update buyer..." />
+                <marker date="1501151732000" expanded="true" signature="10143:10256" placeholder="update casua..." />
+                <marker date="1501151732000" expanded="true" signature="10452:10557" placeholder="update wareh..." />
+                <marker date="1501151732000" expanded="true" signature="10755:10854" placeholder="update buyer..." />
+                <marker date="1501151732000" expanded="true" signature="11047:11120" placeholder="update casua..." />
+                <marker date="1501151732000" expanded="true" signature="11314:11373" placeholder="update wareh..." />
+                <marker date="1501151732000" expanded="true" signature="11570:11653" placeholder="update buyer..." />
+                <marker date="1501151732000" expanded="true" signature="11851:11962" placeholder="update marke..." />
+                <marker date="1501151732000" expanded="true" signature="12424:12762" placeholder="SELECT MC.ma..marketcenter..." />
+                <marker date="1501151732000" expanded="true" signature="12922:13051" placeholder="update marke..." />
+                <marker date="1501151732000" expanded="true" signature="13282:13605" placeholder="update purch..." />
+                <marker date="1501151732000" expanded="true" signature="13312:13530" placeholder="select buyer..buyers..." />
+                <marker date="1501151732000" expanded="true" signature="13403:13507" placeholder="select marke..marketcenter..." />
+                <marker date="1501151732000" expanded="true" signature="13823:13940" placeholder="update purch..." />
+                <marker date="1501151732000" expanded="true" signature="14151:14300" placeholder="update purch..." />
+                <marker date="1501151732000" expanded="true" signature="14182:14245" placeholder="SELECT membe..members..." />
+                <marker date="1501151732000" expanded="true" signature="14504:14605" placeholder="select count..." />
+                <marker date="1501151732000" expanded="true" signature="14782:14873" placeholder="update purch..." />
+                <marker date="1501151732000" expanded="true" signature="15108:15230" placeholder="update purch..." />
+                <marker date="1501151732000" expanded="true" signature="15415:15438" placeholder="SELECT * FRO..warehouse..." />
+                <marker date="1501151732000" expanded="true" signature="15581:15607" placeholder="SELECT * FRO..marketcenter..." />
+                <marker date="1501151732000" expanded="true" signature="15746:15763" placeholder="SELECT * FRO..ipc..." />
+                <marker date="1501151732000" expanded="true" signature="15948:16643" placeholder="SELECT B.buy..buyers..." />
+                <marker date="1501151732000" expanded="true" signature="16858:16991" placeholder="UPDATE wareh..." />
+                <marker date="1501151732000" expanded="true" signature="18078:18241" placeholder="UPDATE casua..." />
+                <marker date="1501151732000" expanded="true" signature="18516:18734" placeholder="UPDATE gradi..." />
+                <marker date="1501151732000" expanded="true" signature="19019:19276" placeholder="UPDATE hands..." />
+                <marker date="1501151732000" expanded="true" signature="19534:19659" placeholder="UPDATE buyer..." />
+                <marker date="1501151732000" expanded="true" signature="19849:19996" placeholder="SELECT sum(m..purchases..." />
+                <marker date="1501151732000" expanded="true" signature="20183:20833" placeholder="SELECT CW.ca..casualworkers..." />
+                <marker date="1501151732000" expanded="true" signature="21013:21905" placeholder="SELECT B.buy..buyers..." />
+                <marker date="1501151732000" expanded="true" signature="22144:22373" placeholder="SELECT count..casualworkers..." />
+                <marker date="1501151732000" expanded="true" signature="22549:22926" placeholder="select sum(H..handsorting..." />
+                <marker date="1501151732000" expanded="true" signature="23089:23467" placeholder="SELECT disti..warehouse..." />
+                <marker date="1501151732000" expanded="true" signature="23610:23969" placeholder="SELECT disti..warehouse..." />
+                <marker date="1501151732000" expanded="true" signature="24158:24629" placeholder="SELECT CW.ca..casualworkers..." />
+                <marker date="1501151732000" expanded="true" signature="24794:25226" placeholder="select gradi..grading..." />
+                <marker date="1501151732000" expanded="true" signature="25417:25603" placeholder="select sum(q..grading..." />
+                <marker date="1501151732000" expanded="true" signature="25761:26789" placeholder="SELECT DATE_..dispatch..." />
+                <marker date="1501151732000" expanded="true" signature="26940:27059" placeholder="select disti..grading..." />
+                <marker date="1501151732000" expanded="true" signature="27224:27438" placeholder="select sum(q..handsorting..." />
+                <marker date="1501151732000" expanded="true" signature="27642:28282" placeholder="SELECT P.typ..purchases..." />
+                <marker date="1501151732000" expanded="true" signature="28431:28848" placeholder="SELECT disti..handsorting..." />
+                <marker date="1501151732000" expanded="true" signature="29027:29471" placeholder="select sum(q..handsorting..." />
+                <marker date="1501151732000" expanded="true" signature="29641:30018" placeholder="SELECT sum(P..purchases..." />
+                <marker date="1501151732000" expanded="true" signature="30171:30706" placeholder="SELECT disti..purchases..." />
+                <marker date="1501151732000" expanded="true" signature="30887:31467" placeholder="SELECT conca..members..." />
+                <marker date="1501151732000" expanded="true" signature="31623:33016" placeholder="SELECT P.pur..purchases..." />
+                <marker date="1501151732000" expanded="true" signature="33174:34061" placeholder="SELECT P.pur..purchases..." />
+                <marker date="1501151732000" expanded="true" signature="34212:34725" placeholder="select hands..handsorting..." />
+                <marker date="1501151732000" expanded="true" signature="34912:35056" placeholder="SELECT MC.ma..marketcenter..." />
+                <marker date="1501151732000" expanded="true" signature="35246:35573" placeholder="SELECT MC.ma..marketcenter..." />
+                <marker date="1501151732000" expanded="true" signature="35777:36091" placeholder="SELECT sum(P..purchases..." />
+                <marker date="1501151732000" expanded="true" signature="36248:36522" placeholder="select sum(A..advance..." />
+                <marker date="1501151732000" expanded="true" signature="36694:37108" placeholder="SELECT MC.ma..marketcenter..." />
+                <marker date="1501151732000" expanded="true" signature="37297:37469" placeholder="SELECT count..." />
+                <marker date="1501151732000" expanded="true" signature="37627:37909" placeholder="SELECT G.GAC..marketcentermembers..." />
+                <marker date="1501151732000" expanded="true" signature="38100:38719" placeholder="select sum(H..handsorting..." />
+                <marker date="1501151732000" expanded="true" signature="38932:39388" placeholder="SELECT sum(P..purchases..." />
+                <marker date="1501151732000" expanded="true" signature="39545:39727" placeholder="SELECT sum(m..purchases..." />
+                <marker date="1501151732000" expanded="true" signature="39880:40919" placeholder="SELECT regye..registrationyear..." />
+                <marker date="1501151732000" expanded="true" signature="40375:40696" placeholder="select sum(A..advance..." />
+                <marker date="1501151732000" expanded="true" signature="40747:40793" placeholder="select field..ipc..." />
+                <marker date="1501151732000" expanded="true" signature="41062:41089" placeholder="select count..buyers..." />
+                <marker date="1501151732000" expanded="true" signature="41262:41295" placeholder="select count..marketcenter..." />
+                <marker date="1501151732000" expanded="true" signature="41473:41503" placeholder="select count..warehouse..." />
+                <marker date="1501151732000" expanded="true" signature="41682:41967" placeholder="select B.buy..buyers..." />
+                <marker date="1501151732000" expanded="true" signature="42143:42177" placeholder="select count..casualworkers..." />
+                <marker date="1501151732000" expanded="true" signature="42471:42603" placeholder="INSERT INTO ..." />
+                <marker date="1501151732000" expanded="true" signature="43310:43631" placeholder="INSERT INTO ..." />
+                <marker date="1501151732000" expanded="true" signature="43439:43631" placeholder="SELECT membe..members..." />
+                <marker date="1501151732000" expanded="true" signature="43861:43942" placeholder="INSERT INTO ..." />
+                <marker date="1501151732000" expanded="true" signature="44280:44538" placeholder="insert into ..." />
+                <marker date="1501151732000" expanded="true" signature="44412:44538" placeholder="select wareh..warehouse..." />
+                <marker date="1501151732000" expanded="true" signature="44779:44863" placeholder="INSERT INTO ..." />
+                <marker date="1501151732000" expanded="true" signature="45172:45248" placeholder="SELECT marke..marketcenter..." />
+                <marker date="1501151732000" expanded="true" signature="45404:45471" placeholder="SELECT wareh..warehouse..." />
+                <marker date="1501151732000" expanded="true" signature="45648:45695" placeholder="SELECT GACid..gac..." />
+                <marker date="1501151732000" expanded="true" signature="45863:45968" placeholder="SELECT count..marketcentermembers..." />
+                <marker date="1501151732000" expanded="true" signature="46144:46211" placeholder="INSERT INTO ..." />
+                <marker date="1501151732000" expanded="true" signature="46536:46636" placeholder="INSERT INTO ..." />
+                <marker date="1501151732000" expanded="true" signature="47005:47363" placeholder="insert into ..." />
+                <marker date="1501151732000" expanded="true" signature="47129:47363" placeholder="SELECT casua..casualworkers..." />
+                <marker date="1501151732000" expanded="true" signature="47560:47607" placeholder="SELECT IPCid..ipc..." />
+                <marker date="1501151732000" expanded="true" signature="47844:47943" placeholder="INSERT INTO ..." />
+                <marker date="1501151732000" expanded="true" signature="48263:48328" placeholder="SELECT marke..marketcenter..." />
+                <marker date="1501151732000" expanded="true" signature="48571:48685" placeholder="INSERT INTO ..." />
+                <marker date="1501151732000" expanded="true" signature="49029:49461" placeholder="select I.fie..advance..." />
+                <marker date="1501151732000" expanded="true" signature="49657:50342" placeholder="select I.fie..advance..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/view/user/seasondetails.php" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+  </component>
+  <component name="NamedScopeManager">
+    <order />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1378" />
+    <option name="height" value="744" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="user" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="SearchEverywhereHistoryKey" value="seasonheader&#9;null&#9;null&#10;getseasonnumbers&#9;null&#9;null&#10;totalspent&#9;null&#9;null&#10;advance&#9;null&#9;null&#10;total spent&#9;null&#9;null" />
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="52e92873-d677-4a75-bfaf-9a47994cf0ea" name="Default" comment="" />
+      <created>1503344475881</created>
+      <option name="number" value="Default" />
+      <updated>1503344475881</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1378" height="744" extended-state="1" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2496329" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/model/user/seasonsmodel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-21.038462">
+          <caret line="918" column="13" selection-start-line="918" selection-start-column="13" selection-end-line="918" selection-end-column="13" />
+          <folding>
+            <marker date="1501151732000" expanded="true" signature="365:726" placeholder="select disti..purchases..." />
+            <marker date="1501151732000" expanded="true" signature="919:1025" placeholder="select count..purchases..." />
+            <marker date="1501151732000" expanded="true" signature="1208:1277" placeholder="select sum(m..purchases..." />
+            <marker date="1501151732000" expanded="true" signature="1466:1809" placeholder="select sum(P..purchases..." />
+            <marker date="1501151732000" expanded="true" signature="1987:2334" placeholder="select sum(P..purchases..." />
+            <marker date="1501151732000" expanded="true" signature="2497:2639" placeholder="SELECT * FRO..marketcenter..." />
+            <marker date="1501151732000" expanded="true" signature="2851:2879" placeholder="SELECT count..." />
+            <marker date="1501151732000" expanded="true" signature="3169:3347" placeholder="INSERT INTO ..." />
+            <marker date="1501151732000" expanded="true" signature="3698:3842" placeholder="SELECT dispa..dispatchlocations..." />
+            <marker date="1501151732000" expanded="true" signature="4047:4184" placeholder="update donor..." />
+            <marker date="1501151732000" expanded="true" signature="4472:4656" placeholder="update dispa..." />
+            <marker date="1501151732000" expanded="true" signature="4975:5341" placeholder="UPDATE dispa..." />
+            <marker date="1501151732000" expanded="true" signature="5577:5636" placeholder="UPDATE donor..." />
+            <marker date="1501151732000" expanded="true" signature="5888:5966" placeholder="UPDATE dispa..." />
+            <marker date="1501151732000" expanded="true" signature="6167:6213" placeholder="select * fro..donors..." />
+            <marker date="1501151732000" expanded="true" signature="6373:6393" placeholder="select * fro..donors..." />
+            <marker date="1501151732000" expanded="true" signature="6594:6625" placeholder="select * fro..dispatchlocations..." />
+            <marker date="1501151732000" expanded="true" signature="6828:6866" placeholder="select count..dispatchlocations..." />
+            <marker date="1501151732000" expanded="true" signature="7048:7075" placeholder="select count..donors..." />
+            <marker date="1501151732000" expanded="true" signature="7284:7357" placeholder="INSERT INTO ..." />
+            <marker date="1501151732000" expanded="true" signature="7713:7808" placeholder="INSERT INTO ..." />
+            <marker date="1501151732000" expanded="true" signature="8100:8221" placeholder="SELECT * FRO..warehouse..." />
+            <marker date="1501151732000" expanded="true" signature="8421:8650" placeholder="insert into ..." />
+            <marker date="1501151732000" expanded="true" signature="8532:8650" placeholder="SELECT wareh..warehouse..." />
+            <marker date="1501151732000" expanded="true" signature="8871:9065" placeholder="insert into ..." />
+            <marker date="1501151732000" expanded="true" signature="8974:9065" placeholder="SELECT IPCid..ipc..." />
+            <marker date="1501151732000" expanded="true" signature="9313:9634" placeholder="insert into ..." />
+            <marker date="1501151732000" expanded="true" signature="9445:9634" placeholder="select marke..marketcenter..." />
+            <marker date="1501151732000" expanded="true" signature="9835:9938" placeholder="update buyer..." />
+            <marker date="1501151732000" expanded="true" signature="10143:10256" placeholder="update casua..." />
+            <marker date="1501151732000" expanded="true" signature="10452:10557" placeholder="update wareh..." />
+            <marker date="1501151732000" expanded="true" signature="10755:10854" placeholder="update buyer..." />
+            <marker date="1501151732000" expanded="true" signature="11047:11120" placeholder="update casua..." />
+            <marker date="1501151732000" expanded="true" signature="11314:11373" placeholder="update wareh..." />
+            <marker date="1501151732000" expanded="true" signature="11570:11653" placeholder="update buyer..." />
+            <marker date="1501151732000" expanded="true" signature="11851:11962" placeholder="update marke..." />
+            <marker date="1501151732000" expanded="true" signature="12424:12762" placeholder="SELECT MC.ma..marketcenter..." />
+            <marker date="1501151732000" expanded="true" signature="12922:13051" placeholder="update marke..." />
+            <marker date="1501151732000" expanded="true" signature="13282:13605" placeholder="update purch..." />
+            <marker date="1501151732000" expanded="true" signature="13312:13530" placeholder="select buyer..buyers..." />
+            <marker date="1501151732000" expanded="true" signature="13403:13507" placeholder="select marke..marketcenter..." />
+            <marker date="1501151732000" expanded="true" signature="13823:13940" placeholder="update purch..." />
+            <marker date="1501151732000" expanded="true" signature="14151:14300" placeholder="update purch..." />
+            <marker date="1501151732000" expanded="true" signature="14182:14245" placeholder="SELECT membe..members..." />
+            <marker date="1501151732000" expanded="true" signature="14504:14605" placeholder="select count..." />
+            <marker date="1501151732000" expanded="true" signature="14782:14873" placeholder="update purch..." />
+            <marker date="1501151732000" expanded="true" signature="15108:15230" placeholder="update purch..." />
+            <marker date="1501151732000" expanded="true" signature="15415:15438" placeholder="SELECT * FRO..warehouse..." />
+            <marker date="1501151732000" expanded="true" signature="15581:15607" placeholder="SELECT * FRO..marketcenter..." />
+            <marker date="1501151732000" expanded="true" signature="15746:15763" placeholder="SELECT * FRO..ipc..." />
+            <marker date="1501151732000" expanded="true" signature="15948:16643" placeholder="SELECT B.buy..buyers..." />
+            <marker date="1501151732000" expanded="true" signature="16858:16991" placeholder="UPDATE wareh..." />
+            <marker date="1501151732000" expanded="true" signature="18078:18241" placeholder="UPDATE casua..." />
+            <marker date="1501151732000" expanded="true" signature="18516:18734" placeholder="UPDATE gradi..." />
+            <marker date="1501151732000" expanded="true" signature="19019:19276" placeholder="UPDATE hands..." />
+            <marker date="1501151732000" expanded="true" signature="19534:19659" placeholder="UPDATE buyer..." />
+            <marker date="1501151732000" expanded="true" signature="19849:19996" placeholder="SELECT sum(m..purchases..." />
+            <marker date="1501151732000" expanded="true" signature="20183:20833" placeholder="SELECT CW.ca..casualworkers..." />
+            <marker date="1501151732000" expanded="true" signature="21013:21905" placeholder="SELECT B.buy..buyers..." />
+            <marker date="1501151732000" expanded="true" signature="22144:22373" placeholder="SELECT count..casualworkers..." />
+            <marker date="1501151732000" expanded="true" signature="22549:22926" placeholder="select sum(H..handsorting..." />
+            <marker date="1501151732000" expanded="true" signature="23089:23467" placeholder="SELECT disti..warehouse..." />
+            <marker date="1501151732000" expanded="true" signature="23610:23969" placeholder="SELECT disti..warehouse..." />
+            <marker date="1501151732000" expanded="true" signature="24158:24629" placeholder="SELECT CW.ca..casualworkers..." />
+            <marker date="1501151732000" expanded="true" signature="24794:25226" placeholder="select gradi..grading..." />
+            <marker date="1501151732000" expanded="true" signature="25417:25603" placeholder="select sum(q..grading..." />
+            <marker date="1501151732000" expanded="true" signature="25761:26789" placeholder="SELECT DATE_..dispatch..." />
+            <marker date="1501151732000" expanded="true" signature="26940:27059" placeholder="select disti..grading..." />
+            <marker date="1501151732000" expanded="true" signature="27224:27438" placeholder="select sum(q..handsorting..." />
+            <marker date="1501151732000" expanded="true" signature="27642:28282" placeholder="SELECT P.typ..purchases..." />
+            <marker date="1501151732000" expanded="true" signature="28431:28848" placeholder="SELECT disti..handsorting..." />
+            <marker date="1501151732000" expanded="true" signature="29027:29471" placeholder="select sum(q..handsorting..." />
+            <marker date="1501151732000" expanded="true" signature="29641:30018" placeholder="SELECT sum(P..purchases..." />
+            <marker date="1501151732000" expanded="true" signature="30171:30706" placeholder="SELECT disti..purchases..." />
+            <marker date="1501151732000" expanded="true" signature="30887:31467" placeholder="SELECT conca..members..." />
+            <marker date="1501151732000" expanded="true" signature="31623:33016" placeholder="SELECT P.pur..purchases..." />
+            <marker date="1501151732000" expanded="true" signature="33174:34061" placeholder="SELECT P.pur..purchases..." />
+            <marker date="1501151732000" expanded="true" signature="34212:34725" placeholder="select hands..handsorting..." />
+            <marker date="1501151732000" expanded="true" signature="34912:35056" placeholder="SELECT MC.ma..marketcenter..." />
+            <marker date="1501151732000" expanded="true" signature="35246:35573" placeholder="SELECT MC.ma..marketcenter..." />
+            <marker date="1501151732000" expanded="true" signature="35777:36091" placeholder="SELECT sum(P..purchases..." />
+            <marker date="1501151732000" expanded="true" signature="36248:36522" placeholder="select sum(A..advance..." />
+            <marker date="1501151732000" expanded="true" signature="36694:37108" placeholder="SELECT MC.ma..marketcenter..." />
+            <marker date="1501151732000" expanded="true" signature="37297:37469" placeholder="SELECT count..." />
+            <marker date="1501151732000" expanded="true" signature="37627:37909" placeholder="SELECT G.GAC..marketcentermembers..." />
+            <marker date="1501151732000" expanded="true" signature="38100:38719" placeholder="select sum(H..handsorting..." />
+            <marker date="1501151732000" expanded="true" signature="38932:39388" placeholder="SELECT sum(P..purchases..." />
+            <marker date="1501151732000" expanded="true" signature="39545:39727" placeholder="SELECT sum(m..purchases..." />
+            <marker date="1501151732000" expanded="true" signature="39880:40919" placeholder="SELECT regye..registrationyear..." />
+            <marker date="1501151732000" expanded="true" signature="40375:40696" placeholder="select sum(A..advance..." />
+            <marker date="1501151732000" expanded="true" signature="40747:40793" placeholder="select field..ipc..." />
+            <marker date="1501151732000" expanded="true" signature="41062:41089" placeholder="select count..buyers..." />
+            <marker date="1501151732000" expanded="true" signature="41262:41295" placeholder="select count..marketcenter..." />
+            <marker date="1501151732000" expanded="true" signature="41473:41503" placeholder="select count..warehouse..." />
+            <marker date="1501151732000" expanded="true" signature="41682:41967" placeholder="select B.buy..buyers..." />
+            <marker date="1501151732000" expanded="true" signature="42143:42177" placeholder="select count..casualworkers..." />
+            <marker date="1501151732000" expanded="true" signature="42471:42603" placeholder="INSERT INTO ..." />
+            <marker date="1501151732000" expanded="true" signature="43310:43631" placeholder="INSERT INTO ..." />
+            <marker date="1501151732000" expanded="true" signature="43439:43631" placeholder="SELECT membe..members..." />
+            <marker date="1501151732000" expanded="true" signature="43861:43942" placeholder="INSERT INTO ..." />
+            <marker date="1501151732000" expanded="true" signature="44280:44538" placeholder="insert into ..." />
+            <marker date="1501151732000" expanded="true" signature="44412:44538" placeholder="select wareh..warehouse..." />
+            <marker date="1501151732000" expanded="true" signature="44779:44863" placeholder="INSERT INTO ..." />
+            <marker date="1501151732000" expanded="true" signature="45172:45248" placeholder="SELECT marke..marketcenter..." />
+            <marker date="1501151732000" expanded="true" signature="45404:45471" placeholder="SELECT wareh..warehouse..." />
+            <marker date="1501151732000" expanded="true" signature="45648:45695" placeholder="SELECT GACid..gac..." />
+            <marker date="1501151732000" expanded="true" signature="45863:45968" placeholder="SELECT count..marketcentermembers..." />
+            <marker date="1501151732000" expanded="true" signature="46144:46211" placeholder="INSERT INTO ..." />
+            <marker date="1501151732000" expanded="true" signature="46536:46636" placeholder="INSERT INTO ..." />
+            <marker date="1501151732000" expanded="true" signature="47005:47363" placeholder="insert into ..." />
+            <marker date="1501151732000" expanded="true" signature="47129:47363" placeholder="SELECT casua..casualworkers..." />
+            <marker date="1501151732000" expanded="true" signature="47560:47607" placeholder="SELECT IPCid..ipc..." />
+            <marker date="1501151732000" expanded="true" signature="47844:47943" placeholder="INSERT INTO ..." />
+            <marker date="1501151732000" expanded="true" signature="48263:48328" placeholder="SELECT marke..marketcenter..." />
+            <marker date="1501151732000" expanded="true" signature="48571:48685" placeholder="INSERT INTO ..." />
+            <marker date="1501151732000" expanded="true" signature="49029:49461" placeholder="select I.fie..advance..." />
+            <marker date="1501151732000" expanded="true" signature="49657:50342" placeholder="select I.fie..advance..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/view/user/seasondetails.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.5454545">
+          <caret line="206" column="38" selection-start-line="206" selection-start-column="38" selection-end-line="206" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controller/user/seasonscontroller.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="147.0">
+          <caret line="1501" column="8" selection-start-line="1501" selection-start-column="8" selection-end-line="1501" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controller/user/dashboardcontroller.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.34767643">
+          <caret line="202" column="4" selection-start-line="202" selection-start-column="4" selection-end-line="202" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

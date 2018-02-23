@@ -390,6 +390,8 @@ if(isset($_POST['addMember'])){
 //Add Members in bulk
 if(isset($_POST['uploadBulkMembers']))
 {
+    
+    
     $datetime_var = new DateTime();
     $fname = $_FILES['file']['name'];
     $yearRegistered = $_POST['regyearBulk'];
@@ -403,6 +405,8 @@ if(isset($_POST['uploadBulkMembers']))
     $getUserDistrict = $common->getUserDistrict($userDistrict);
     $district = $getUserDistrict[0][1];
     $districtPrfx =  $getUserDistrict[0][2];
+    
+    echo 'district id: '.$district.' District prefix: '.$districtPrfx.'<br>';
     
     if(strtolower(end($chk_ext)) == "csv")
     {
@@ -429,6 +433,9 @@ if(isset($_POST['uploadBulkMembers']))
             $ftype = strtoupper($data[22]); //ftype 22
             $rtype = strtoupper($data[23]); //rtype 23
             $wtype = strtoupper($data[24]); //wtype 24
+            
+            $phonenumber = strtoupper($data[25]); //phone number
+            $mwid = strtoupper($data[26]); //mw ID
                         
             //get club id
             $GetClubDetailsClubCode = $districts->GetClubDetailsClubCode($getclub);
@@ -445,19 +452,24 @@ if(isset($_POST['uploadBulkMembers']))
             //get member prefix
             $Mcount = 1;
             $newMemberNumber = $districtPrfx.''.$Mcount;
-            echo 'new member number :'.$newMemberNumber.'<hr>'; 
+            echo 'new member number :'.$newMemberNumber.'<br>'; 
             $AddMemberNumber = $members->AddMemberNumber($newMemberNumber,$district,$dateCreated,$Mcount);
+                if($AddMemberNumber == 1){
+                    echo 'succesfully added <hr>';
+                }else{
+                    echo 'failed to add <hr>';
+                }
             }else{
                 echo 'Members<br>';
                 $getMemberNumber1 = $members->GetRecentMemberCounter($district);
-                $Mcount = $getMemberNumber += 1;
+                $Mcount = $getMemberNumber1 += 1;
                 $newMemberNumber = $districtPrfx.''.$Mcount;
                 echo 'member number :'.$newMemberNumber.'<hr>';
                 //add member
                 $AddMemberNumber = $members->AddMemberNumber($newMemberNumber,$district,$dateCreated,$Mcount);
             }
             
-            $addMember = $members->RegisterMemberInitial($names,$lastname,$gender,$yearRegistered,$dateofbirth,$hhsize,$newMemberNumber,$club,$district,$cropsales,$osources,$gvc,$mwf,$ftype,$rtype,$wtype);
+            $addMember = $members->RegisterMemberInitial($names,$lastname,$gender,$yearRegistered,$dateofbirth,$hhsize,$newMemberNumber,$club,$district,$cropsales,$osources,$gvc,$mwf,$ftype,$rtype,$wtype,$phonenumber,$mwid);
             if($addMember == 1){
             //get recent entered member
             $getMemberDetails = $members->RecentMemberDetails();
@@ -567,13 +579,16 @@ if(Isset($_GET['Sid'])){
     //get general info
     //IPC data
     $IPCdata = $members->MemberIPCDetails($id);
-    $Mdistrict = $IPCdata[0][4]; //district
-    $Mipc = $IPCdata[0][3];//IPC
+    $Mipc = $IPCdata[0][0];//IPC
+    $Mdistrict = $IPCdata[0][1]; //district
     $Massoc = $IPCdata[0][2];//association
-    $Mgac = $IPCdata[0][1];//gac
-    $Mclub = $IPCdata[0][0];//club
+    $Mgac = $IPCdata[0][3];//gac
+    $Mclub = $IPCdata[0][4];//club
+    
     $MclubCode = $IPCdata[0][5]; //club code
     $season = $IPCdata[0][6]; //season
+    
+    $seasonID = $IPCdata[0][7]; //season
     //$generalInfo = $members->MemberGeneralInfo($id);
     
     $ta = $personalDetails[0][10];
@@ -586,7 +601,7 @@ if(Isset($_GET['Sid'])){
         $villagehead = 'N/A';
         $villagecode = 'N/A';
     }else{
-       $villageName = $villageInfo[0][0];
+        $villageName = $villageInfo[0][0];
         $villagehead = $villageInfo[0][1];
         $villagecode = $villageInfo[0][2]; 
     }
@@ -641,9 +656,12 @@ if(isset($_POST['updatePersonalInfo'])){
     $viewhh = $_POST['viewhh'];
     $viewgvh = $_POST['viewgvh'];
     
+    $viewidno = $_POST['viewidno'];
+    $viewphone = $_POST['viewphone'];
+    
     $viewdob = date("Y-m-d H:i:s", strtotime($dob));
     
-    $update = $members->UpdatePersonalInfo($memberID,$viewfname,$viewlname,$editgender,$viewdob,$viewhh,$viewgvh);
+    $update = $members->UpdatePersonalInfo($memberID,$viewfname,$viewlname,$editgender,$viewdob,$viewhh,$viewgvh,$viewidno,$viewphone);
     if($update == 1){
         header("Location: memberprofile.php?Sid=$memberID ");
         echo 'DONE';
@@ -847,9 +865,10 @@ if(isset($_POST['deleteLivestockmember'])){
 //member profile SEED DISTRIBUTION ---------------------------------------------------------------
 //add SEED DISTRIBUTION to member
 if(isset($_POST['AddSeedDistributionmember'])){
-    
+    $season = $_POST['AddSeedDistributionSeason']; //season 
     $memberID = $_POST['AddSeedDistributionID']; //memberID   
     $rowCount = count($_POST['seeddees']);
+    
     
 
     for($i=0;$i<$rowCount;$i++){
@@ -858,7 +877,7 @@ if(isset($_POST['AddSeedDistributionmember'])){
         $donor = $_POST['donor'][$i]; //number of trees
        
         //check if entry exists
-        $addMemberSeedDistro = $seeds->addMemberSeedDistro($memberID,$seedsdee,$seedskgs,$donor);
+        $addMemberSeedDistro = $seeds->addMemberSeedDistro($memberID,$seedsdee,$seedskgs,$donor,$season);
     }
     header("Location: memberprofile.php?Sid=$memberID ");
 }

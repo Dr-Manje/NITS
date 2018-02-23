@@ -48,7 +48,7 @@ if(isset($_POST['SearchCMReg'])){
     $lstCropMarketing = array();
     
     foreach($listCropMarketingDistrictCurrentYear as $value){
-        $district = $value['district']; //district
+        $district = $value['IPCname']; //district
         $CPID = $value['CPID']; //CPID
         
         $crop = $value['crop']; //crop
@@ -106,7 +106,7 @@ if(isset($_POST['SearchCMReg'])){
     $lstCropMarketing = array();
     
     foreach($listCropMarketingDistrictCurrentYear as $value){
-        $district = $value['district']; //district
+        $district = $value['IPCname']; //district
         $CPID = $value['CPID']; //CPID
         
         $crop = $value['crop']; //crop

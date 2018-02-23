@@ -188,17 +188,16 @@ include_once ('../../controller/user/clubscontroller.php'); ?>
 //                            join districts D on D.districtID = DY.district
 //                            where regyear = $cat "; 
 //                    }
-                    $quer="select * from districts "; 
+                    $quer="select * from ipc "; 
                 ////////// end of query for second subcategory drop down list box ///////////////////////////
                 
                 /////// for Third drop down list we will check if sub category is selected else we will display all the subcategory3///// 
                 $cat3=$_GET['cat3']; // This line is added to take care if your global variable is off
                 
                 if(isset($cat3) and strlen($cat3) > 0){
-                    $quer1="select I.IPCid as ipcid, I.fieldname as ipcname
-                            from ipc I
-                            join districts DY ON DY.districtID = I.fieldref
-                            where DY.districtID = $cat3 "; 
+                    $quer1="select D.districtID as did,D.fieldname as district
+                            from districts D join IPC I on I.IPCid = D.fieldref
+                            where D.fieldref = $cat3 "; 
                     }
                 
                 ////////// end of query for third subcategory drop down list box ///////////////////////////
@@ -232,13 +231,13 @@ include_once ('../../controller/user/clubscontroller.php'); ?>
                     $thequery="select C.fieldname as club, C.fieldcode as clubcode
                                 , G.fieldname as gac, G.fieldcode as gaccode
                                 , A.fieldname as assoc, A.fieldcode as assoccode
-                                , I.fieldname as ipcname, I.fieldcode as ipccode
-                                , DY.districtsregyearID as did  
+                                , D.fieldname as dname, D.fieldcode as dcode
+                                , I.fieldname as ipc 
                                 from clubs C
                                 join gac G on G.GACid = C.fieldref
                                 join associations A on A.associationsID = G.fieldref
-                                join ipc I on I.IPCid = A.fieldref
-                                join districtsregyear DY ON DY.districtsregyearID = I.fieldref
+                                join districts D on D.districtID = A.fieldref
+                                join ipc I on I.IPCid = D.fieldref
                                 where C.fieldref = '$cat6' "; }
                     
                 ?>
@@ -246,30 +245,30 @@ include_once ('../../controller/user/clubscontroller.php'); ?>
                     <table class="table table-hover">
                         <tr>
                             <td>
-                                <label for="cat">District:</label>
+                                <label for="cat">IPC:</label>
                             </td>
                             <td>
                                 <?php
                                     //////////  Starting of second drop downlist /////////
                                     echo "<select class='form-control' name='subcat' id='subcat' onchange=\"reload3(this.form)\">";
                                     foreach ($dbo->query($quer) as $noticia) {
-                                        if($noticia['districtID']==@$cat3){echo "<option selected value='$noticia[districtID]'>$noticia[fieldname]</option>"."<BR>";}
-                                        else{echo  "<option value='$noticia[districtID]'>$noticia[fieldname]</option>";}
+                                        if($noticia['IPCid']==@$cat3){echo "<option selected value='$noticia[IPCid]'>$noticia[fieldname]</option>"."<BR>";}
+                                        else{echo  "<option value='$noticia[IPCid]'>$noticia[fieldname]</option>";}
                                         }
                                     echo "</select>";
                                     //////////////////  This will end the second drop down list ///////////
                                     ?>
                             </td>
                             <td>
-                                <label for="cat">IPC:</label>
+                                <label for="cat">District:</label>
                             </td>
                             <td>
                                 <?php
                                     //////////  Starting of second drop downlist /////////
                                     echo "<select class='form-control' name='subcat1' id='subcat1' onchange=\"reload4(this.form)\"><option value=''>Select IPC</option>";
                                     foreach ($dbo->query($quer1) as $noticia) {
-                                        if($noticia['ipcid']==@$cat4){echo "<option selected value='$noticia[ipcid]'>$noticia[ipcname]</option>"."<BR>";}
-                                        else{echo  "<option value='$noticia[ipcid]'>$noticia[ipcname]</option>";}
+                                        if($noticia['did']==@$cat4){echo "<option selected value='$noticia[did]'>$noticia[district]</option>"."<BR>";}
+                                        else{echo  "<option value='$noticia[did]'>$noticia[district]</option>";}
                                         }
                                     echo "</select>";
                                     //////////////////  This will end the second drop down list ///////////
@@ -324,9 +323,9 @@ include_once ('../../controller/user/clubscontroller.php'); ?>
                         <th>GAC CODE</th>
                         <th>ASSOCIATION</th>
                         <th>ASSOCIATION CODE</th>
-                        <th>IPC</th>
-                        <th>IPC CODE</th>
                         <th>DISTRICT</th>
+                        <th>DISTRICT CODE</th>
+                        <th>IPC</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -335,9 +334,9 @@ include_once ('../../controller/user/clubscontroller.php'); ?>
                             $i = 0;
                            foreach($dbo->query($thequery) as $value)
                                 { 
-                                   $districtId = $value['did'];
-                                   $getDistrictRealDetails = $districts->getDistrictRealDetails($districtId);
-                                   $district = $getDistrictRealDetails[0][0];
+                                   //$districtId = $value['did'];
+                                   //$getDistrictRealDetails = $districts->getDistrictRealDetails($districtId);
+                                   //$district = $getDistrictRealDetails[0][0];
                                ?>    
                          <tr> 
                         <td><?php echo $value['club']; ?></td>
@@ -346,9 +345,9 @@ include_once ('../../controller/user/clubscontroller.php'); ?>
                         <td><?php echo $value['gaccode']; ?></td>
                         <td><?php echo $value['assoc']; ?></td>
                         <td><?php echo $value['assoccode']; ?></td>
-                        <td><?php echo $value['ipcname']; ?></td>
-                        <td><?php echo $value['ipccode']; ?></td>
-                        <td><?php echo $district; ?></td>
+                        <td><?php echo $value['dname']; ?></td>
+                        <td><?php echo $value['dcode']; ?></td>
+                        <td><?php echo $value['ipc']; ?></td>
                        
                             </tr>
                          <?php $i++;  }

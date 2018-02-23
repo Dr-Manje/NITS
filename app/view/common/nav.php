@@ -59,7 +59,7 @@
                 <li><a href="treeplantingHQ.php">Tree Planting Summary</a></li> 
               </ul>
             </li>
-            <li><a href="regyears.php"><i class="fa fa-calendar"></i> <span>Seasons</span></a></li>
+            <li><a href="regyears.php"><i class="fa fa-calendar"></i> <span>NIS</span></a></li>
             <?php if($_SESSION['nasfam_usertype'] == '2'){ ?> 
             <li><a href="coderegister.php"><i class="fa fa-barcode"></i> <span>Code Register</span></a></li> 
             <?php }?>

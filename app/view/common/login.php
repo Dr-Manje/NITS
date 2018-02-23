@@ -4,7 +4,7 @@
     <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Nasfam</title>    
+    <title>NIS</title>    
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -89,7 +89,7 @@
   right: 0;
   z-index: 9999;">
       <div class="login-logo">
-          <a href="#" style="color: white; text-shadow: 1px 1px 1px #000;"><b>NASFAM</b></a>
+          <a href="#" style="color: white; text-shadow: 1px 1px 1px #000;"><b>NIS</b></a>
       </div><!-- /.login-logo -->
       <div class="login-box-body" style="box-shadow: 3px 3px 3px #888888;
             -webkit-box-shadow:0 0 40px rgba(0,0,0,0.5);

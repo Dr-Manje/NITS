@@ -1,5 +1,6 @@
 <?php  
 session_start();
+error_reporting(1);
 include_once ('../../controller/user/tphqcontroller.php'); ?>
 <!DOCTYPE html>
 <html lang="en">

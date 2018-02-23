@@ -103,8 +103,8 @@ include_once ('../../controller/user/districtscontroller.php'); ?>
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            IPC List For:
-            <small><?php echo $districtName; ?> District</small>
+            Districts List For:
+            <small><?php echo $districtName; ?> IPC</small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> IPC</a></li>
@@ -121,12 +121,12 @@ include_once ('../../controller/user/districtscontroller.php'); ?>
              <div class="box box-success">
             <div class="box-header with-border">
                 <ol class="breadcrumb">
-                    <li><a href="districtsipcs.php"> Back to Districts</a></li>
-                   <li class="active"> IPC</li>
+                    <li><a href="districtsipcs.php"> Back to IPCs</a></li>
+                   <li class="active"> Districts</li>
                 </ol>
                 <div class="row">
                     <div class="col-xs-12">
-                        District: <?php echo $districtName; ?>
+                        IPC: <?php echo $districtName; ?>
                     </div> 
                 </div>
                 
@@ -135,8 +135,8 @@ include_once ('../../controller/user/districtscontroller.php'); ?>
               <table id="example1" class="table table-striped table-bordered" cellspacing="0" width="100%">
                 <thead>
                     <tr>
-                        <td>IPC Name</td>
-                        <td>IPC Code</td>
+                        <td>District Name</td>
+                        <td>District Code</td>
                         <td>Associations</td>
                         <td>Action</td>
                     </tr>
@@ -146,8 +146,8 @@ include_once ('../../controller/user/districtscontroller.php'); ?>
                       if ($listDistrictIPCs == 0) {
                       ?>
                         <tr> 
-                        <td>IPC Name</td>
-                        <td>IPC Code</td>
+                        <td>District Name</td>
+                        <td>District Code</td>
                         <td>Associations</td>
                         <td>Action</td>
                          </tr>
@@ -156,7 +156,7 @@ include_once ('../../controller/user/districtscontroller.php'); ?>
                         {
                            foreach($listDistrictIPCs as $value)
                                 { 
-                                    $ipcid = $value['IPCid'];
+                                    $ipcid = $value['districtID'];
                                     $listIPCAssociations = $districts->listIPCAssociations($ipcid);
                                     $totalass = count($listIPCAssociations);
                                ?>    
@@ -167,11 +167,11 @@ include_once ('../../controller/user/districtscontroller.php'); ?>
                         <td>
                             <?php if($totalass > 0){ ?>
                             <a rel="tooltip" title="View more IPC details (GACs, ASSOCIATIONS etc)" class="btn btn-info btn-xs" 
-                               href="assdetails.php?assdid=<?php echo $value['IPCid'];?>">View more</a> 
+                               href="assdetails.php?assdid=<?php echo $value['districtID'];?>">View more</a> 
                           <?php } ?>
                             <?php if($_SESSION['nasfam_usertype'] == '1'){ ?>
                             <a rel="tooltip" title="Edit/Update Details" class="btn btn-warning btn-xs openEditIPCModal" href="/" 
-                                data-editid="<?php echo $value['IPCid'] ?>"
+                                data-editid="<?php echo $value['districtID'] ?>"
                                 data-editviewitem="2" 
                                 data-editviewname="<?php echo $value['fieldname'] ?>"
                                 data-returnpathid="districtsipcs"
@@ -415,7 +415,7 @@ include_once ('../../controller/user/districtscontroller.php'); ?>
             
             
             //addIpcsModal
-            <?php if($_SESSION['nasfam_usertype'] == '1'){ ?>
+            <?php // if($_SESSION['nasfam_usertype'] == '1'){ ?>
             $('#example1').DataTable( {
                 dom: 'Bfrtip',
                 buttons: [
@@ -436,21 +436,21 @@ include_once ('../../controller/user/districtscontroller.php'); ?>
                     
                 ]
             } );
-            <?php  }else{?>
-              $('#example1').DataTable( {
-                dom: 'Bfrtip',
-                buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
-                    ,
-                    {
-                        text: 'Add Club(s)',
-                        action: function () {
-                            $('#AddIPCItemModal').modal('show');
-                        }
-                    }
-                ]
-            } );
-            <?php  }?>
+            <?php // }else{?>
+//              $('#example1').DataTable( {
+//                dom: 'Bfrtip',
+//                buttons: [
+//                    'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
+//                    ,
+//                    {
+//                        text: 'Add Club(s)',
+//                        action: function () {
+//                            $('#AddIPCItemModal').modal('show');
+//                        }
+//                    }
+//                ]
+//            } );
+            <?php // }?>
 
 
         } );

@@ -55,8 +55,8 @@ if(isset($_POST['loginuser'])){
                 //get user type
                 $_SESSION['nasfam_usertype'] = $userSessions['usertype'];
                 
-                //user district
-                $_SESSION['nasfam_userdistrict'] = $userSessions['district'];
+                //user IPC
+                $_SESSION['nasfam_userIPC'] = $userSessions['IPC'];
 
                
                 if(isset($_SESSION['nasfam_userid'])){

@@ -76,15 +76,14 @@ if(isset($_POST['Addregyear'])){
         
         $createCodingRef = $login_users->createCodingRef();//create code ref
         
-        $addDistrictCodesToReg = $login_users->addDistrictCodesToReg();//insert districts into code register
+        $addDistrictCodesToReg = $login_users->addIPCCodesToReg();//insert districts into code register
         
-        $createDefaultDistricts = $login_users->createDefaultDistricts(); //add districts
+        $createDefaultDistricts = $login_users->createDefaultIPCs(); //add districts
         
-        $createRegyearDistricts = $login_users->createRegyearDistricts($regYearID); //add default district reg year data
+        $createRegyearDistricts = $login_users->createRegyearIPCs($regYearID); //add default district reg year data
         
         $addTreeCodesToReg = $login_users->addTreeCodesToReg();//insert trees into code register
         $createTreeCategories = $login_users->createTreeCategories(); //set tree types
-        
         
         //create the target defaults
         $createDefaultTargets = $login_users->createDefaultTargets($regYearID); // create activity targets
@@ -212,14 +211,13 @@ if(isset($_POST['SearchDistrictReg'])){
 }else{
     $regYear = $_SESSION['nasfam_regyearID'];
     //season --------------------------------------------
-    //$getSeasonHeader = $seasons->SeasonDetails($regYear); 
     
     //membership ----------------------------------------
     $lstMembers = $members->listAllMembersForYear($regYear);
     $tMales = $members->listMembersAllRegYearMales($regYear);
-    //$tMales = $countMales[0][0];
+
     $tFemales = $members->listMembersAllRegYearFemales($regYear);
-    //$tFemales = $countFemales[0][0];
+    
     $tmembers = $tMales + $tFemales;
     
     //get target amount for district for that year

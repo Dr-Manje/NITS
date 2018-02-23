@@ -1,5 +1,6 @@
 <?php  
 session_start();
+error_reporting(0);
 include_once ('../../controller/user/dashboardcontroller.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -254,7 +255,7 @@ include_once ('../../controller/user/dashboardcontroller.php'); ?>
         
         //add ipc item
         $(".addmoreYear").on('click',function(){
-        var data="<tr><td><input type='checkbox' class='form-control case' name='years[]' /></td>";
+        var data="<tr><td><input type='checkbox' class='case' name='years[]' /></td>";
         data += "<td><input type='text' class='form-control' name='seasonname[]'  /></td>";
         data += "<td><input type='text' class='form-control datepicker_recurring_start' name='startdate[]'  /></td>";
         data += "<td><input type='text' class='form-control datepicker_recurring_start' name='enddate[]'  /></td></tr>";
@@ -348,7 +349,7 @@ include_once ('../../controller/user/dashboardcontroller.php'); ?>
                 dom: 'Bfrtip',
                 buttons: [
                     'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
-                    <?php if($_SESSION['nasfam_usertype'] == '1') { ?>
+                    <?php if($_SESSION['nasfam_usertype'] == '3') { ?>
                     ,
                     {
                         text: 'Register New Season(s)',

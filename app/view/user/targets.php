@@ -147,7 +147,7 @@ include_once ('../../controller/user/targetscontroller.php'); ?>
           <div class="col-xs-12">
              <div class="box box-success">
             <div class="box-header with-border">
-                <h3 class="box-title">Districts</h3>
+                <h3 class="box-title">IPCs</h3>
                 <div class="box-tools pull-right">
                 <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                 <!--<button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>-->
@@ -187,11 +187,14 @@ include_once ('../../controller/user/targetscontroller.php'); ?>
                            foreach($lstDistrictsTargets as $value)
                                 {  
                                     $RYid = $value['did'];
+                                    $ipc = $value['ipc']; //ipc
+                                    $season = $value['season']; //reg year season
+                                    
                                     $male = 'MALE';
                                     $female = 'FEMALE';
                                     
-                                    $getFeMaleTotal = $targets->getTargetTotal($RYid,$female); //get female total
-                                    $getMaleTotal = $targets->getTargetTotal($RYid,$male); //get male total
+                                    $getFeMaleTotal = $targets->getTargetTotal($season,$ipc,$female); //get female total
+                                    $getMaleTotal = $targets->getTargetTotal($season,$ipc,$male); //get male total
                                     $totalMembers = $getFeMaleTotal + $getMaleTotal; //total
                                     if($totalMembers > 0){
                                        $Getmalepercentage = $getMaleTotal/$totalMembers * 100;
@@ -213,7 +216,7 @@ include_once ('../../controller/user/targetscontroller.php'); ?>
                                     
                                ?>    
                          <tr> 
-                            <td><?php echo $value['district'] ?></td>
+                            <td><?php echo $value['IPCname'] ?></td>
                             <td><?php echo $getFeMaleTotal ?></td>
                             <td><?php echo $getMaleTotal ?></td>
                             <td><?php echo $femalepercentage ?></td>
@@ -696,11 +699,11 @@ include_once ('../../controller/user/targetscontroller.php'); ?>
                                ?>    
                             <tr> 
                             <td>
-                                <input type="checkbox" class="form-control case" name="districts[]" value="<?php echo $value['did'] ?>" />
+                                <input type="checkbox" class="case" name="districts[]" value="<?php echo $value['did'] ?>" />
                                 <input type="hidden" class="form-control case" name="targetID[<?php echo $value['did'] ?>]" value="<?php echo $value['did'] ?>"/>
-                                <input type="hidden" class="form-control case" name="targetItem[<?php echo $value['did'] ?>]" value="<?php echo $value['district'] ?>"/>
+                                <input type="hidden" class="form-control case" name="targetItem[<?php echo $value['did'] ?>]" value="<?php echo $value['IPCname'] ?>"/>
                             </td>
-                            <td><?php echo $value['district'] ?></td>
+                            <td><?php echo $value['IPCname'] ?></td>
                             <td><input type="text" class="form-control case" name="districttarget[<?php echo $value['did'] ?>]" value="<?php echo $value['target'] ?>"></td>
                             </tr>
                          <?php  }
@@ -744,7 +747,7 @@ include_once ('../../controller/user/targetscontroller.php'); ?>
                                ?>    
                             <tr> 
                             <td>
-                                <input type="checkbox" class="form-control case" name="districts[]" value="<?php echo $value['tid'] ?>" />
+                                <input type="checkbox" class="case" name="districts[]" value="<?php echo $value['tid'] ?>" />
                                 <input type="hidden" class="form-control case" name="targetID[<?php echo $value['tid'] ?>]" value="<?php echo $value['tid'] ?>"/>
                                 <input type="hidden" class="form-control case" name="targetItem[<?php echo $value['tid'] ?>]" value="<?php echo $value['item'] ?>"/>
                             </td>
@@ -793,7 +796,7 @@ include_once ('../../controller/user/targetscontroller.php'); ?>
                                ?>    
                             <tr> 
                             <td>
-                                <input type="checkbox" class="form-control case" name="districts[]" value="<?php echo $value['tid'] ?>" />
+                                <input type="checkbox" class="case" name="districts[]" value="<?php echo $value['tid'] ?>" />
                                 <input type="hidden" class="form-control case" name="targetID[<?php echo $value['tid'] ?>]" value="<?php echo $value['tid'] ?>"/>
                                 <input type="hidden" class="form-control case" name="targetItem[<?php echo $value['tid'] ?>]" value="<?php echo $value['item'] ?>"/>
                             </td>
@@ -843,7 +846,7 @@ include_once ('../../controller/user/targetscontroller.php'); ?>
                                ?>    
                             <tr> 
                             <td>
-                                <input type="checkbox" class="form-control case" name="districts[]" value="<?php echo $value['tid'] ?>" />
+                                <input type="checkbox" class="case" name="districts[]" value="<?php echo $value['tid'] ?>" />
                                 <input type="hidden" class="form-control case" name="targetID[<?php echo $value['tid'] ?>]" value="<?php echo $value['tid'] ?>"/>
                                 <input type="hidden" class="form-control case" name="targetItem[<?php echo $value['tid'] ?>]" value="<?php echo $value['item'] ?>"/>
                             </td>
@@ -893,7 +896,7 @@ include_once ('../../controller/user/targetscontroller.php'); ?>
                                ?>    
                             <tr> 
                             <td>
-                                <input type="checkbox" class="form-control case" name="districts[]" value="<?php echo $value['tid'] ?>" />
+                                <input type="checkbox" class="case" name="districts[]" value="<?php echo $value['tid'] ?>" />
                                 <input type="hidden" class="form-control case" name="targetID[<?php echo $value['tid'] ?>]" value="<?php echo $value['tid'] ?>"/>
                                 <input type="hidden" class="form-control case" name="targetItem[<?php echo $value['tid'] ?>]" value="<?php echo $value['item'] ?>"/>
                             </td>
@@ -1011,7 +1014,7 @@ include_once ('../../controller/user/targetscontroller.php'); ?>
             $('#myModal').modal('show');
 
             //district table buttons
-            <?php if($_SESSION['nasfam_usertype'] == '1'){ ?>
+            <?php if($_SESSION['nasfam_usertype'] == '3'){ ?>
             $('#example1').DataTable( {
                 dom: 'Bfrtip',
                 buttons: [
@@ -1034,7 +1037,7 @@ include_once ('../../controller/user/targetscontroller.php'); ?>
             <?php  }?>
            
            //training table buttons
-           <?php if($_SESSION['nasfam_usertype'] == '1'){ ?>
+           <?php if($_SESSION['nasfam_usertype'] == '3'){ ?>
             $('#trainingunittbl').DataTable( {
                 dom: 'Bfrtip',
                 buttons: [
@@ -1057,7 +1060,7 @@ include_once ('../../controller/user/targetscontroller.php'); ?>
             <?php  }?>
            
            //community development table
-           <?php if($_SESSION['nasfam_usertype'] == '1'){ ?>
+           <?php if($_SESSION['nasfam_usertype'] == '3'){ ?>
             $('#communitytbl').DataTable( {
                 dom: 'Bfrtip',
                 buttons: [
@@ -1080,7 +1083,7 @@ include_once ('../../controller/user/targetscontroller.php'); ?>
             <?php  }?>
            
            //policy activities table
-           <?php if($_SESSION['nasfam_usertype'] == '1'){ ?>
+           <?php if($_SESSION['nasfam_usertype'] == '3'){ ?>
             $('#policytbl').DataTable( {
                 dom: 'Bfrtip',
                 buttons: [
@@ -1103,7 +1106,7 @@ include_once ('../../controller/user/targetscontroller.php'); ?>
             <?php  }?>
            
            //farm services table
-           <?php if($_SESSION['nasfam_usertype'] == '1'){ ?>
+           <?php if($_SESSION['nasfam_usertype'] == '3'){ ?>
             $('#farmtbl').DataTable( {
                 dom: 'Bfrtip',
                 buttons: [

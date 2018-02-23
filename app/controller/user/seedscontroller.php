@@ -32,7 +32,7 @@ $lstMembers = $members->listMembers();
 $lstcrops = $crops->listCrops();
 
 //list seed distribution for current year
-$lstSeedDistribution = $seeds->listSeedDistribution();
+//$lstSeedDistribution = $seeds->listSeedDistribution();
 
 //add seed
 if(isset($_POST['addSeeds'])){   

@@ -1,6 +1,6 @@
 <?php  
 session_start();
-error_reporting(0);
+error_reporting(1);
 include_once ('../../controller/user/memberscontroller.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -59,9 +59,9 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
 <body class="hold-transition skin-green sidebar-mini">
     <div class="wrapper">
     <!-- Main Header -->
-    <?php include ('../common/header.php');?>
+    <?php  include ('../common/header.php');?>
       <!-- Left side column. contains the logo and sidebar -->
-        <?php include ('../common/nav.php');?>
+        <?php  include ('../common/nav.php');?>
        
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
@@ -173,6 +173,8 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
                         <th>CLUB</th>
                         <th>GAC</th>
                         <th>ASSOCIATION</th>
+                        <th>IPC</th>
+                        <th>DISTRICT</th>
                         <th>ACTION</th>
                       </tr>
                     </thead>
@@ -214,71 +216,42 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
     <!-- MODALS -->
     <!-- Revenue budget Modal -->
         <div id="addMembersModal" class="modal fade" role="dialog">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog modal-sm">
             <!-- modal content -->
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h3>Enter Multiple members</h3><br>
+                    <h3>Register Members</h3>
+                    
+                </div>
+                <div class="modal-body">
                     <form method="post" action="members.php" enctype="multipart/form-data" class="form-inline center-block">
                         
                         <div class="row">
-                            <div class="col-sm-4">                          
+                            <div class="col-lg-12">                          
                                  <div class="form-group">
-                                     <label for="regyearBulk">Registration Year:</label>
-                                     <select class="form-control" id="regyearBulk" name="regyearBulk">
-                                         <?php foreach ($listregYear as $optionMemberList) { ;?>
-                                 <option value="<?php echo $optionMemberList['regyearID']; ?>"><?php echo $optionMemberList['regYear']; ?></option>
-                             <?php  } ;?>
-                                     </select>
+                                    <label for="regyearBulk">Registration Year:</label>
+                                    <select class="form-control" id="regyearBulk" name="regyearBulk">
+                                        <?php foreach ($listregYear as $optionMemberList) { ;?>
+                                            <option value="<?php echo $optionMemberList['regyearID']; ?>"><?php echo $optionMemberList['regYear']; ?></option>
+                                        <?php  } ;?>
+                                    </select>
                                  </div>
-                            </div>
-                        <div class="col-sm-4"> 
-                            <div class="form-group">
+                                
+                                <div class="form-group">
                             <input class="form-group" type="file" name="file" />
+                            
                             </div> 
-                        </div>
-                            <div class="col-sm-4">
-                               <input class="btn btn-default" type="submit" name="uploadBulkMembers" value="upload" /> 
                             </div>
+                        
                         </div>
                         
-                    </form>
+                    
                 </div>
-<!--                <div class="modal-body">                                        
-                    <h3>Or Enter Single member</h3>                    
-                    <form role="form" id="addMemberform" enctype="multipart/form-data" onsubmit="return false">
-                    <input type="hidden" id="addMember" name="addMember" >
-                    <table id="exampleLstActivities" class="table table-striped table-bordered tbladdmember" cellspacing="0" width="100%"> 
-                        <tr>
-                            <td>
-                                <label for="regyearBulk">Registration Year:</label>
-                            </td>
-                            <td colspan="2">
-                                     <select class="form-control" id="regyear" name="regyear">
-                                         <?php// foreach ($listregYear as $optionMemberList) { ;?>
-                                 <option value="<?php// echo $optionMemberList['regyearID']; ?>"><?php// echo $optionMemberList['regYear']; ?></option>
-                             <?php // } ;?>
-                                     </select>
-                            </td>
-                           
-                        </tr>
-                            <tr>
-                                <th>Select</th>
-                                <th>Names</th>
-                                <th>Last Name</th> 
-                                <th>gender</th> 
-                                <th>dob</th> 
-                                <th>hh size</th> 
-                                <th>Club</th> 
-                            </tr>
-                        </table>                      
-                    </form>                    
-                </div>                            -->
+                         
                 <div class="modal-footer">                   
-<!--                    <button type="button" class='btn btn-danger deletemember'>- Delete</button>
-                    <button type="button" class='btn btn-success addmoremember'>+ Add More</button> 
-                    <button class="btn btn-success" onclick="AddMember()">Save</button>-->
+                    <input class="btn btn-default" type="submit" name="uploadBulkMembers" value="upload" /> 
+                    </form>
                     <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
                 </div>
                 </div>            

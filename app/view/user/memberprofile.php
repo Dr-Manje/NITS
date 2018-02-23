@@ -1,4 +1,4 @@
-<?php  
+<?php  error_reporting(E_ERROR | E_PARSE);
 session_start();
 //error_reporting(0);
 include_once ('../../controller/user/memberscontroller.php'); ?>
@@ -123,6 +123,9 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
                        data-viewdob="<?php echo $personalinfo['dob2'] ?>"
                        data-viewhh="<?php echo $personalinfo['hh'] ?>"
                        data-viewgvh="<?php echo $personalinfo['gvh'] ?>"
+                       
+                       data-viewidno="<?php echo $personalinfo['IdNo'] ?>"
+                       data-viewphone="<?php echo $personalinfo['phonenumber'] ?>"
                        >
                         <i class="fa fa-edit"></i>
                     </a>
@@ -131,7 +134,9 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
                       <strong>Gender:</strong> <?php echo $personalinfo['gender']; ?><br>
                       <strong>Year of Birth:</strong> <?php echo $personalinfo['dob1']; ?><br>
                       <strong>House Hold Size:</strong> <?php echo $personalinfo['hh']; ?><br>
-                      <strong>GVC:</strong> <?php echo $personalinfo['gvh']; ?><br>                  
+                      <strong>GVC:</strong> <?php echo $personalinfo['gvh']; ?><br>
+                      <strong>ID Number:</strong> <?php echo $personalinfo['IdNo']; ?><br>
+                      <strong>Phone Number:</strong> <?php echo $personalinfo['phonenumber']; ?><br>
                   </p>
                   <?php } ?>                
                   <strong>General information</strong>
@@ -804,6 +809,7 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
                 <div class="modal-body">                                        
                    <form role="form" id="AddSeedDistributionmemberform" enctype="multipart/form-data" onsubmit="return false">                        
                         <input type="hidden" id="AddSeedDistributionID" name="AddSeedDistributionID" value="<?php echo $memberProfID ?>" >
+                        <input type="hidden" id="AddSeedDistributionSeason" name="AddSeedDistributionSeason" value="<?php echo $seasonID ?>" >
                         <input type="hidden" id="AddSeedDistributionmember" name="AddSeedDistributionmember" >
                         <table id="exampleLstActivities" class="table table-striped table-bordered tblAddSeedDistribution" cellspacing="0" width="100%"> 
                             <tr>
@@ -1433,7 +1439,7 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
                             </div>
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <label for="editgender">Seed:</label>
+                                    <label for="editgender">Gender:</label>
                                     <select class="form-control" id="editgender" name="editgender">
                                         <option value="MALE">MALE</option>
                                         <option value="FEMALE">FEMALE</option>
@@ -1458,6 +1464,20 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
                                 <div class="form-group">
                                     <label for="viewgvh">GVH:</label>
                                     <input type="text" class="form-control" id="viewgvh" name="viewgvh" placeholder="Please enter the name of the seed" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="viewidno">Identification No:</label>
+                                    <input type="text" class="form-control" id="viewidno" name="viewidno" placeholder="Please enter ID Number" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="viewphone">Phone Number:</label>
+                                    <input type="text" class="form-control" id="viewphone" name="viewphone" placeholder="Please enter Phone number" />
                                 </div>
                             </div>
                         </div>
@@ -1851,7 +1871,7 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
         
         //add more ACTIVITIES items
         $(".addmoreAddActivities").on('click',function(){
-        var data="<tr><td><input type='checkbox' class='form-control case selectactivities' name='activities[]' /></td>";
+        var data="<tr><td><input type='checkbox' class='case selectactivities' name='activities[]' /></td>";
         data += "<td><select class='form-control' name='activity[]'><?php foreach ($lstActivities as $optionSeedList) { ;?><option value='<?php echo $optionSeedList['Aid']; ?>'><?php echo $optionSeedList['actName']; ?></option><?php  } ;?></select></td>";
         data += "</tr>";
             $('.tblAddActivities').append(data);
@@ -1931,7 +1951,7 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
         
         //add more crop items
         $(".addmoreAddCrop").on('click',function(){
-        var data="<tr><td><input type='checkbox' class='form-control case cropselect' name='crops[]' /></td>";
+        var data="<tr><td><input type='checkbox' class='case cropselect' name='crops[]' /></td>";
         data += "<td><select class='form-control' name='crop[]'><?php foreach ($lstcrops as $optionSeedList) { ;?><option value='<?php echo $optionSeedList['cropID']; ?>'><?php echo $optionSeedList['fieldname']; ?></option><?php  } ;?></select></td>";
         data += "<td><input type='text' class='form-control' name='acreage[]' /></td></tr>";
             $('.tblAddCrop').append(data);
@@ -2038,7 +2058,7 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
         
         //add more LIVESTOCK items
         $(".addmoreAddLivestock").on('click',function(){
-        var data="<tr><td><input type='checkbox' class='form-control case livestockselect' name='livestocks[]' /></td>";
+        var data="<tr><td><input type='checkbox' class='case livestockselect' name='livestocks[]' /></td>";
         data += "<td><select class='form-control' name='livestock[]'><?php foreach ($lstLivestock as $optionSeedList) { ;?><option value='<?php echo $optionSeedList['livestockID']; ?>'><?php echo $optionSeedList['fieldname']; ?></option><?php  } ;?></select></td>";
         data += "<td><input type='text' class='form-control' name='quantity[]' /></td></tr>";
             $('.tblAddLivestock').append(data);
@@ -2127,7 +2147,7 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
         
         //add more SEED DISTRIBUTION items $lstDonors
         $(".addmoreSeedDistribution").on('click',function(){
-        var data="<tr><td><input type='checkbox' class='form-control case seeddistributionselect' name='seeddees[]' /></td>";
+        var data="<tr><td><input type='checkbox' class='case seeddistributionselect' name='seeddees[]' /></td>";
         data += "<td><select class='form-control' name='seedsdee[]'><?php foreach ($lstSeeds as $optionSeedList) { ;?><option value='<?php echo $optionSeedList['seedID']; ?>'><?php echo $optionSeedList['fieldname']; ?></option><?php  } ;?></select></td>";
         data += "<td><select class='form-control' name='donor[]'><?php foreach ($lstDonors as $optionSeedList) { ;?><option value='<?php echo $optionSeedList['donorsid']; ?>'><?php echo $optionSeedList['fieldname']; ?></option><?php  } ;?></select></td>";
         data += "<td><input type='number' min='0' max='200'  value='0' step='5' onkeydown='return false' class='form-control seeddistro' id='seeddistro' name='seedskgs[]' /></td></tr>";
@@ -2215,7 +2235,7 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
         
         //add more crop marketing items
         $(".addmoreAddCM").on('click',function(){
-        var data="<tr><td><input type='checkbox' class='form-control case cropmarketingselect' name='cropmarketings[]' /></td>";
+        var data="<tr><td><input type='checkbox' class='case cropmarketingselect' name='cropmarketings[]' /></td>";
         data += "<td><select class='form-control' name='crop4marketing[]'><?php foreach ($lstcrops as $optionSeedList) { ;?><option value='<?php echo $optionSeedList['cropID']; ?>'><?php echo $optionSeedList['fieldname']; ?></option><?php  } ;?></select></td>";
         data += "<td><input type='text' class='form-control' name='Receipt[]' /></td>";
         data += "<td><input type='text' class='form-control' name='Price[]' /></td>";
@@ -2276,7 +2296,7 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
         });
         
         $(".addmore").on('click',function(){
-        var data="<tr><td><input type='checkbox' class='form-control case' name='seeds[]' /></td>";
+        var data="<tr><td><input type='checkbox' class='case' name='seeds[]' /></td>";
         data += "<td><select class='form-control' name='seed[]'><?php foreach ($lstSeeds as $optionSeedList) { ;?><option value='<?php echo $optionSeedList['seedID']; ?>'><?php echo $optionSeedList['fieldname']; ?></option><?php  } ;?></select></td>";
         data += "<td><input type='text' class='form-control' name='amount[]' /></td></tr>";
             $('.tbl').append(data);
@@ -2293,7 +2313,7 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
         
         //add tree planting items
         $(".addmoreTreePlanting").on('click',function(){
-        var data="<tr><td><input type='checkbox' class='form-control case' name='treeplantings[]' /></td>";
+        var data="<tr><td><input type='checkbox' class='case' name='treeplantings[]' /></td>";
         data += "<td><select class='form-control' name='treetype[]'><?php foreach ($listTrees as $optionList) { ;?><option value='<?php echo $optionList['treesid']; ?>'><?php echo $optionList['fieldname']; ?></option><?php  } ;?></select></td>";
         data += "<td><input type='text' class='form-control' name='numberoftrees[]' /></td>";
         data += "<td><input type='text' class='form-control' name='treeremarks[]' /></td></tr>";
@@ -2516,6 +2536,9 @@ include_once ('../../controller/user/memberscontroller.php'); ?>
                 $("#viewdob").val($(this).data('viewdob'));
                 $("#viewhh").val($(this).data('viewhh'));
                 $("#viewgvh").val($(this).data('viewgvh'));
+                
+                $("#viewidno").val($(this).data('viewidno'));
+                $("#viewphone").val($(this).data('viewphone'));
 
                 $('#UpdateMemberDetailsModal').modal('show');
             });

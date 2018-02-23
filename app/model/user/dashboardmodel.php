@@ -36,9 +36,9 @@ class dashmodel{
         return $counts;        
     }
     
-    function updateseason($startdate,$enddate,$season,$pro,$id){
+    function updateseason($startdate,$enddate,$season,$id){
         $query = $this->link->prepare("UPDATE registrationyear "
-                                    . "set startDate = '$startdate',endDate = '$enddate',season = '$season',procurementAmount = '$pro' "
+                                    . "set startDate = '$startdate',endDate = '$enddate',season = '$season' "
                                     . "where  regyearID = '$id' ");
         if($query->execute()){
             return 1;

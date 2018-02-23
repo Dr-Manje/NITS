@@ -124,16 +124,16 @@ include_once ('../../controller/user/districtscontroller.php'); ?>
              <div class="box box-success">
             <div class="box-header with-border">
                 <ol class="breadcrumb">
-                    <li><a href="districtsipcs.php"> Back to Districts</a></li>
-                    <li><a href="ipcdetails.php?ipcdid=<?php echo $ipcref ?>"> Back to IPCs</a></li>
+                    <li><a href="districtsipcs.php"> Back to IPCs</a></li>
+                    <li><a href="ipcdetails.php?ipcdid=<?php echo $ipcref ?>"> Back to Districts</a></li>
                     <li><a href="assdetails.php?assdid=<?php echo $assocref ?>"> Back to Association</a></li>
                    <li class="active"> GACs</li>
                 </ol>
                 <div class="row">
                     <div class="col-xs-12">
-                        District: <?php echo $districtname ?><br>
                         IPC: <a href="ipcdetails.php?ipcdid=<?php echo $ipcref ?>"><?php echo $ipcname ?></a><br>
-                        Association: <a href="assdetails.php?assdid=<?php echo $assocref ?>"><?php echo $assocname ?></a><br>
+                        District: <a href="assdetails.php?assdid=<?php echo $assocref ?>"><?php echo  $districtname ?></a><br>
+                        Association: <?php echo $assocname ?><br>
                     </div> 
                 </div>
             </div><!-- /.box-header -->
@@ -450,7 +450,7 @@ include_once ('../../controller/user/districtscontroller.php'); ?>
             $('#myModal').modal('show');
             
             //addGacsModal
-           <?php if($_SESSION['nasfam_usertype'] == '1'){ ?>
+           <?php // if($_SESSION['nasfam_usertype'] == '1'){ ?>
             $('#example1').DataTable( {
                 dom: 'Bfrtip',
                 buttons: [
@@ -471,21 +471,21 @@ include_once ('../../controller/user/districtscontroller.php'); ?>
                     
                 ]
             } );
-            <?php  }else{?>
-              $('#example1').DataTable( {
-                dom: 'Bfrtip',
-                buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
-                    ,
-                    {
-                        text: 'Add Club(s)',
-                        action: function () {
-                            $('#AddIPCItemModal').modal('show');
-                        }
-                    }
-                ]
-            } );
-            <?php  }?>
+            <?php //  }else{?>
+//              $('#example1').DataTable( {
+//                dom: 'Bfrtip',
+//                buttons: [
+//                    'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
+//                    ,
+//                    {
+//                        text: 'Add Club(s)',
+//                        action: function () {
+//                            $('#AddIPCItemModal').modal('show');
+//                        }
+//                    }
+//                ]
+//            } );
+            <?php //  }?>
             
 
             

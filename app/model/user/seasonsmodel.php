@@ -59,10 +59,10 @@ class seasonsmodel{
         return $result;
     }
     
-    function seasonMarketCenters($season){
+    function seasonMarketCenters($season,$ipc){
         $query = $this->link->query("SELECT * 
                                     FROM marketcenter
-                                    where regYear = '$season' ");
+                                    where regYear = '$season' and ipc = '$ipc' ");
         $result = $query->fetchAll();
         return $result;
     }
@@ -76,9 +76,9 @@ class seasonsmodel{
     }
     
     //add new dispatch trip
-    function addNewDispatchTrip($date,$departure,$destination,$cg7,$chalim,$confirmed,$confirmedby,$confirmeddate,$status,$notes,$season){
-        $query = $this->link->prepare("INSERT INTO dispatch (dispatchdate,dispatchdeparture,dispatchdestination,cg7,chalim,confirmed,confirmedby,confirmeddate,status,notes,season) VALUES (?,?,?,?,?,?,?,?,?,?,?)");        
-        $values = array($date,$departure,$destination,$cg7,$chalim,$confirmed,$confirmedby,$confirmeddate,$status,$notes,$season);        
+    function addNewDispatchTrip($date,$departure,$destination,$cg7,$chalim,$cg7Received,$chalimReceived,$notes,$status,$seasonid,$ipc){
+        $query = $this->link->prepare("INSERT INTO dispatch (dispatchdate,dispatchdeparture,dispatchdestination,cg7_Sent,chalim_sent,cg7_received,chalim_received,notes,status,season,ipc) VALUES (?,?,?,?,?,?,?,?,?,?,?)");        
+        $values = array($date,$departure,$destination,$cg7,$chalim,$cg7Received,$chalimReceived,$notes,$status,$seasonid,$ipc);        
         $query -> execute($values);        
         $counts = $query->rowCount();
         return $counts;        
@@ -207,9 +207,9 @@ class seasonsmodel{
         return $result;
     }
     
-    function addGradingData($date,$warehouse,$seasonid,$variety,$grade,$qty){
-        $query = $this->link->prepare("insert into grading (warehouse,date,season,variety,grade,quantity)
-                                        SELECT warehouseid,'$date','$seasonid','$variety','$grade','$qty' FROM warehouse where fieldcode = '$warehouse' ");
+    function addGradingData($date,$warehouse,$seasonid,$variety,$grade,$qty,$ipc){
+        $query = $this->link->prepare("insert into grading (warehouse,date,season,variety,grade,quantity,ipc)
+                                        SELECT warehouseid,'$date','$seasonid','$variety','$grade','$qty','$ipc' FROM warehouse where fieldcode = '$warehouse' ");
         if($query -> execute()){
             return 1;
         }else{
@@ -227,9 +227,9 @@ class seasonsmodel{
         }
     }
     
-    function addNewBuyer($mkc,$names,$lastname,$gender,$contacts,$season,$buyercode){
-        $query = $this->link->prepare("insert into buyers (marketcenter,names,lastname,gender,address,status,season,buyercode)
-                                        select marketcenterid,'$names','$lastname','$gender','$contacts','INACTIVE','$season','$buyercode' "
+    function addNewBuyer($mkc,$names,$lastname,$gender,$contacts,$season,$buyercode,$ipc){
+        $query = $this->link->prepare("insert into buyers (marketcenter,names,lastname,gender,address,status,season,buyercode,ipc)
+                                        select marketcenterid,'$names','$lastname','$gender','$contacts','INACTIVE','$season','$buyercode','$ipc' "
                                     . "from marketcenter where fieldcode = '$mkc' ");
         if($query -> execute()){
             return 1;
@@ -419,7 +419,7 @@ class seasonsmodel{
     }
     
     //get all casual workers
-    function lstAllBuyersData($id){
+    function lstAllBuyersData($id,$ipc){
         $query = $this->link->query("SELECT B.buyersid as bid
                                     , concat(B.names,' ',B.lastname) as buyer
                                     , B.gender as gender
@@ -430,7 +430,7 @@ class seasonsmodel{
                                     , B.marketcenter as marketcenterid
                                     FROM buyers B
                                     join marketcenter MC on MC.marketcenterid = B.marketcenter
-                                    where B.season = '$id' ");
+                                    where B.season = '$id' and B.ipc = '$ipc' ");
         $result = $query->fetchAll();
         return $result;
     }
@@ -593,12 +593,12 @@ class seasonsmodel{
     }
     
     
-    function lstAllWarehouse($id){
+    function lstAllWarehouse($id,$ipc){
         $query = $this->link->query("SELECT distinct(W.warehouseid) as wid, W.fieldname as wname, W.fieldcode as wcode
                                     , W.status as status, I.fieldname as ipcname, I.IPCid as ipcid
                                     FROM warehouse W
                                     join ipc I on I.IPCid = W.IPC
-                                    where W.regYear = '$id' ");
+                                    where W.regYear = '$id' and W.IPC = '$ipc' ");
         $result = $query->fetchAll();
         return $result;
     }
@@ -614,13 +614,13 @@ class seasonsmodel{
     }
     
     //get all casual workers
-    function lstCasualWorkersData($id){
+    function lstCasualWorkersData($id,$ipc){
         $query = $this->link->query("SELECT CW.casualworkersid as cwid, concat(CW.names,' ',CW.lname) as cwname
                                     , CW.casualworkercode as cwcode, CW.gender as gender
                                     , W.fieldname as warehouse , CW.status as status
                                     FROM casualworkers CW
                                     JOIN warehouse W on CW.warehouse = W.warehouseid
-                                    where CW.season = '$id' ");
+                                    where CW.season = '$id' and CW.ipc = '$ipc' ");
         $result = $query->fetchAll();
         return $result;
     }
@@ -638,22 +638,21 @@ class seasonsmodel{
         return $result;
     }
     
-    function getGradingVarietyGradingData($variety,$grade,$whsID,$id){
+    function getGradingVarietyGradingData($variety,$grade,$whsID,$id,$ipc){
         $query = $this->link->query("select sum(quantity) as qty from grading "
-                                . "where variety = '$variety' and grade = '$grade' and warehouse = '$whsID' and season = '$id' ");
+                                . "where variety = '$variety' and grade = '$grade' and warehouse = '$whsID' and season = '$id' and ipc = '$ipc' ");
         $result = $query->fetchColumn();
         return $result;
     }
     
-    function getDispatchList($id){
+    function getDispatchList($id,$ipc){
         $query = $this->link->query("SELECT DATE_FORMAT(D.dispatchdate,'%d-%m-%Y') as departuredate
                                     ,DD.fieldname as departure
                                     ,DL.fieldname as destination
-                                    ,D.cg7 as cg7
-                                    ,D.chalim as chalim
-                                    ,D.confirmed as confirmed
-                                    ,D.confirmedby as confirmedby
-                                    ,DATE_FORMAT(D.confirmeddate,'%d-%m-%Y') as confirmeddate
+                                    ,D.cg7_Sent as cg7_Sent
+                                    ,D.chalim_sent as chalim_sent
+                                    ,D.cg7_received as cg7_received
+                                    ,D.chalim_received as chalim_received
                                     ,D.status as status
                                     ,D.notes as notes
                                     ,D.dispatchid as did 
@@ -661,7 +660,7 @@ class seasonsmodel{
                                     FROM dispatch D
                                     JOIN dispatchlocations DD ON DD.dispatchbuyersid = D.dispatchdeparture
                                     JOIN dispatchlocations DL ON DL.dispatchbuyersid = D.dispatchdestination
-                                    WHERE D.season = '$id' ");
+                                    WHERE D.season = '$id' and D.ipc = '$ipc' ");
         $result = $query->fetchAll();
         return $result;
     }
@@ -746,18 +745,13 @@ class seasonsmodel{
                                     ,M.memberNumber as mnumber
                                     FROM members M 
                                     join clubs C on M.club = clubsID
-                                    join gac G on G.GACid = C.fieldref
-                                    join associations A on A.associationsID = G.fieldref
-                                    join ipc I on I.IPCid = A.fieldref
-                                    join districtsregyear DY on DY.districtsregyearID = I.fieldref
-                                    join districts D on D.districtID = DY.district
-                                    join registrationyear RY on RY.regyearID = DY.regyear
+                                    join gac G on G.GACid = C.fieldref                                    
                                     where M.memberID = '$id' ");
         $result = $query->fetchAll();
         return $result;
     }
     
-    function lstPurchasesList($id){
+    function lstPurchasesList($id,$ipc){
         $query = $this->link->query("SELECT P.purchasesid as pid
                                     ,P.receipt as receipt
                                     ,DATE_FORMAT(P.date,'%D %M %Y') as pDate
@@ -780,7 +774,7 @@ class seasonsmodel{
                                     FROM purchases P
                                     join buyers B on P.buyer = B.buyersid
                                     join marketcenter MC on B.marketcenter = MC.marketcenterid
-                                    where P.season = '$id' ");
+                                    where P.season = '$id' and P.ipc = '$ipc' ");
         $result = $query->fetchAll();
         return $result;
     }
@@ -850,14 +844,23 @@ class seasonsmodel{
         return $result;
     }
     
-    function lstAllMarketCenterList1($criteria){
+    function getTotalAdvanceMKC($mkc){
+        $query = $this->link->query("select sum(A.advanceAmount) as cnt
+                                    from advance A
+                                    join marketcenter MKC on MKC.marketcenterid = A.MarketCenter
+                                    where A.advanceType = 2 and MKC.marketcenterid = '$mkc' ");
+        $result = $query->fetchColumn();
+        return $result;
+    }
+    
+    function lstAllMarketCenterList1($criteria,$ipc){
         $query = $this->link->query("SELECT MC.marketcenterid as mcid
                                     , MC.fieldname as marketcenter
                                     , MC.fieldcode as mkcode
                                     , MC.mpa as mpa
                                     , MC.status as status
                                     FROM marketcenter MC
-                                    where MC.status = '$criteria' ");
+                                    where MC.regyear = '$criteria' and MC.ipc = '$ipc' ");
         $result = $query->fetchAll();
         return $result;
     }
@@ -908,14 +911,28 @@ class seasonsmodel{
         return $result;
     }
     
+    function getSeasonVariance($id,$ipc){
+        $query = $this->link->query("SELECT sum(mwk) as totalSpent, sum(qty) as variance
+                                    FROM purchases p
+                                    where p.season = '$id' and p.ipc = '$ipc' ");
+        $result = $query->fetchAll();
+        Return $result;
+    }
     
-    function SeasonDetails($id){
+    function SeasonDetails($id,$ipc){
         $query = $this->link->query("SELECT regyearID,DATE_FORMAT(startDate,'%D %M %Y') as startDate
                                     ,DATE_FORMAT(endDate,'%D %M %Y') as endDate
                                     , season as regYear, status
                                     , ifnull(procurementAmount, 0) as procurement
                                     ,DATE_FORMAT(startDate,'%y-%m-%d') as startDate1
                                     ,DATE_FORMAT(endDate,'%y-%m-%d') as endDate1
+                                    , (select sum(A.advanceAmount) as cnt 
+                                    from advance A
+                                    join ipc I on I.IPCid = A.IPC
+                                    where A.season = '$id' 
+                                    and IPC = '$ipc'
+                                    and advanceType = 1) as advance
+                                    ,(select fieldname from ipc where ipcid = '$ipc') as ipc
                                     FROM registrationyear
                                     WHERE regyearID = '$id' ");
         $result = $query->fetchAll();
@@ -956,9 +973,9 @@ class seasonsmodel{
     }
     
     //add none farmer purchase
-    function addNoneMemberPurchase($receipt,$date,$buyer,$farmer,$gender,$farmerstatus,$type,$qty,$price,$mwk,$season){
-        $query = $this->link->prepare("INSERT INTO purchases (receipt,date,buyer,farmer,gender,farmerstatus,type,qty,price,mwk,season) VALUES (?,?,?,?,?,?,?,?,?,?,?)");        
-        $values = array($receipt,$date,$buyer,$farmer,$gender,$farmerstatus,$type,$qty,$price,$mwk,$season);        
+    function addNoneMemberPurchase($receipt,$date,$buyer,$farmer,$gender,$farmerstatus,$type,$qty,$price,$mwk,$season,$ipc){
+        $query = $this->link->prepare("INSERT INTO purchases (receipt,date,buyer,farmer,gender,farmerstatus,type,qty,price,mwk,season,ipc) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");        
+        $values = array($receipt,$date,$buyer,$farmer,$gender,$farmerstatus,$type,$qty,$price,$mwk,$season,$ipc);        
         $query -> execute($values);        
         $counts = $query->rowCount();
         return $counts;        
@@ -975,9 +992,9 @@ class seasonsmodel{
     }
     
     //add member purchase
-    function addMemberPurchase($receipt,$date,$buyer,$farmerstatus,$type,$qty,$price,$mwk,$season,$member){
-        $query = $this->link->prepare("INSERT INTO purchases (member,receipt,date,buyer,farmerstatus,type,qty,price,mwk,season)
-                                    SELECT memberID,'$receipt','$date','$buyer','$farmerstatus','$type','$qty','$price','$mwk','$season' "
+    function addMemberPurchase($receipt,$date,$buyer,$farmerstatus,$type,$qty,$price,$mwk,$season,$member,$ipc){
+        $query = $this->link->prepare("INSERT INTO purchases (member,receipt,date,buyer,farmerstatus,type,qty,price,mwk,season,ipc)
+                                    SELECT memberID,'$receipt','$date','$buyer','$farmerstatus','$type','$qty','$price','$mwk','$season','$ipc' "
                                     . "from members where membernumber = '$member' ");
         if($query -> execute()){
             return 1;
@@ -994,9 +1011,9 @@ class seasonsmodel{
         return $counts;        
     }
     
-    function addCasualworker($whs,$names,$lname,$gender,$newNumber2,$season){
-        $query = $this->link->prepare("insert into casualworkers (warehouse,names,lname,gender,season,casualworkercode,status)
-                                        select warehouseid,'$names','$lname','$gender','$season','$newNumber2','ACTIVE' from warehouse where fieldcode = '$whs' ");
+    function addCasualworker($whs,$names,$lname,$gender,$newNumber2,$season,$ipc){
+        $query = $this->link->prepare("insert into casualworkers (warehouse,names,lname,gender,season,casualworkercode,status,ipc)
+                                        select warehouseid,'$names','$lname','$gender','$season','$newNumber2','ACTIVE','$ipc' from warehouse where fieldcode = '$whs' ");
         if($query -> execute()){
             return 1;
         }else{
@@ -1004,9 +1021,9 @@ class seasonsmodel{
         }   
     }
     
-    function addMarketCenter($marketcentername,$mpa,$marketcentercode,$regyear){
-        $query = $this->link->prepare("INSERT INTO marketcenter (fieldname,fieldcode,regyear,mpa,status) VALUES (?,?,?,?,?)");        
-        $values = array($marketcentername,$marketcentercode,$regyear,$mpa,'ACTIVE');        
+    function addMarketCenter($marketcentername,$marketcentercode,$regyear,$ipc){
+        $query = $this->link->prepare("INSERT INTO marketcenter (fieldname,fieldcode,regyear,status,ipc) VALUES (?,?,?,?,?)");        
+        $values = array($marketcentername,$marketcentercode,$regyear,'ACTIVE',$ipc);        
         $query -> execute($values);        
         $counts = $query->rowCount();
         return $counts;        
@@ -1053,10 +1070,10 @@ class seasonsmodel{
         return $counts;        
     }
     
-    function addSorting($casualworker,$date,$qty,$variety,$gradeouts,$shells,$season){
-        $query = $this->link->prepare("insert into handsorting (casualworker,date,qty,variety,gradeouts,shells,season)
+    function addSorting($casualworker,$date,$qty,$variety,$gradeouts,$shells,$season,$ipc){
+        $query = $this->link->prepare("insert into handsorting (casualworker,date,qty,variety,gradeouts,shells,season,ipc)
                                         SELECT casualworkersid
-                                        ,'$date','$qty','$variety','$gradeouts','$shells','$season' "
+                                        ,'$date','$qty','$variety','$gradeouts','$shells','$season','$ipc' "
                                         . "from casualworkers where casualworkercode = '$casualworker' ");
         if($query -> execute()){
             return 1;
@@ -1065,5 +1082,64 @@ class seasonsmodel{
         }
     }
     
+    //get ipc
+    function GetIPC($code){
+        $query = $this->link->query("SELECT IPCid FROM ipc where fieldcode = '$code' ");
+        $result = $query->fetchColumn();
+        return $result;
+    }
+    
+    //insert ipc advance
+    function insertAdvanceIPC($amount,$advanceTyping,$ipc,$seasonid,$advanceDate,$remarks){
+        $query = $this->link->prepare("INSERT INTO advance (advanceAmount,advanceType,IPC,season,advanceDate,remarks) VALUES (?,?,?,?,?,?)");        
+        $values = array($amount,$advanceTyping,$ipc,$seasonid,$advanceDate,$remarks);        
+        $query -> execute($values);        
+        $counts = $query->rowCount();
+        return $counts;        
+    }
+    
+    //get market center
+    function GetMKC($code){
+        $query = $this->link->query("SELECT marketcenterid FROM marketcenter where fieldcode = '$code' ");
+        $result = $query->fetchColumn();
+        return $result;
+    }
+    
+    //insert MKC advance
+    function insertAdvanceMKC($amount,$advanceTyping,$ipc,$seasonid,$advanceDate,$remarks,$ipc1){
+        $query = $this->link->prepare("INSERT INTO advance (advanceAmount,advanceType,MarketCenter,season,advanceDate,remarks,ipc) VALUES (?,?,?,?,?,?,?)");        
+        $values = array($amount,$advanceTyping,$ipc,$seasonid,$advanceDate,$remarks,$ipc1);        
+        $query -> execute($values);        
+        $counts = $query->rowCount();
+        return $counts;        
+    }
+    
+    //list Advance for IPC
+    function ListIPCadvance($season,$ipc){
+        $query = $this->link->query("select I.fieldname,A.advanceAmount as amount,DATE_FORMAT(A.advanceDate,'%d-%m-%Y') as confirmeddate,A.remarks as remarkes,A.advanceid as id
+                                    from advance A
+                                    join ipc I on I.IPCid = A.IPC
+                                    where A.season = '$season'
+                                    and A.advanceType = 1
+                                    and A.IPC = '$ipc' ");
+        $result = $query->fetchAll();
+        return $result;
+    }
+    
+    //list advance for Market centers
+    function ListMKCadvance($season,$ipc){
+        $query = $this->link->query("select I.fieldname,A.advanceAmount as amount,DATE_FORMAT(A.advanceDate,'%d-%m-%Y') as confirmeddate,A.remarks as remarkes
+                                    ,A.advanceid as id
+                                    ,A.MarketCenter as mkcid
+                                    ,MKC.fieldname as mkc
+                                    from advance A
+                                    join ipc I on I.IPCid = A.IPC
+                                    join marketcenter MKC on MKC.marketcenterid = A.MarketCenter
+                                    where A.season = '$season'
+                                    and A.advanceType = 2
+                                    and A.IPC = '$ipc' ");
+        $result = $query->fetchAll();
+        return $result;
+    }
 }
 

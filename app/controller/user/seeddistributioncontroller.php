@@ -52,7 +52,7 @@ if(isset($_POST['SearchDistrictReg'])){
         $SDID = $value['SDID']; //SDID
         $memberNumber = $value['memberNumber']; //member number
         $memberName = $value['memberName']; //member name
-        $district = $value['district']; //district
+        $district = $value['ipcname']; //district
         
         $seedname = $value['seedname']; //member name
         $acquiredseedkgs = $value['acquiredseedkgs']; //district
@@ -152,7 +152,7 @@ if(isset($_POST['SearchDistrictReg'])){
         $SDID = $value['SDID']; //SDID
         $memberNumber = $value['memberNumber']; //member number
         $memberName = $value['memberName']; //member name
-        $district = $value['district']; //district
+        $district = $value['ipcname']; //district
         
         $seedname = $value['seedname']; //member name
         $acquiredseedkgs = $value['acquiredseedkgs']; //district

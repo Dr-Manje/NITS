@@ -66,7 +66,7 @@ class districtsmodel{
     }
     
     function RecentDistrictDetails(){
-        $query = $this->link->query("select districtID from districts order by districtID desc limit 1");
+        $query = $this->link->query("select IPCid from IPC order by IPCid desc limit 1");
         $result = $query->fetchAll();
         return $result;
     }
@@ -223,46 +223,43 @@ class districtsmodel{
     
     //list all livestock with selected
     function getClubTotalsDistrict($assid){
-        $query = $this->link->query("select count(C.clubsID) as clubs 
-                                    from clubs C
-                                    JOIN gac G on G.GACid = C.fieldref
-                                    JOIN associations A ON A.associationsID = G.fieldref
-                                    JOIN ipc I ON I.IPCid = A.fieldref
-                                    JOIN districtsregyear DY ON DY.districtsregyearID = I.fieldref
-                                    where DY.districtsregyearID = '$assid' ");
+        $query = $this->link->query("SELECT count(*) as cnt 
+                                    FROM clubs c
+                                    join gac g on g.GACid = c.fieldref
+                                    join associations A on A.associationsID = g.fieldref
+                                    join districts D on D.districtID = A.fieldref
+                                    join IPC I on I.IPCid = D.fieldref 
+                                    where I.IPCid = '$assid' ");
         $result = $query->fetchColumn();
         return $result;
     }
     
     //list all livestock with selected
     function getGacTotalsDistrict($id){
-        $query = $this->link->query("select count(G.GACid) as gacs
-                                    from gac G
-                                    JOIN associations A ON A.associationsID = G.fieldref
-                                    JOIN ipc I ON I.IPCid = A.fieldref
-                                    JOIN districtsregyear DY ON DY.districtsregyearID = I.fieldref
-                                    where DY.districtsregyearID = '$id' ");
+        $query = $this->link->query("select count(*) as cnt
+                                    from gac g
+                                    join associations A on A.associationsID = g.fieldref
+                                    join districts D on D.districtID = A.fieldref
+                                    join IPC I on I.IPCid = D.fieldref 
+                                    where I.IPCid = '$id' ");
         $result = $query->fetchColumn();
         return $result;
     }
     
     //list all livestock with selected
     function getIpcsTotalsDistrict($id){
-        $query = $this->link->query("select count(I.IPCid) as ipcs 
-                                    from ipc I
-                                    join districts DY on DY.districtID = I.fieldref 
-                                    where DY.districtID = '$id' ");
+        $query = $this->link->query("select count(*) as cnt from districts where fieldref = '$id' ");
         $result = $query->fetchColumn();
         return $result;
     }
     
     //list all livestock with selected
     function getAssTotalsDistrict($id){
-        $query = $this->link->query("select count(A.associationsID) as associations
+        $query = $this->link->query("select count(*) as cnt 
                                     from associations A
-                                    join IPC I on I.IPCid = A.fieldref
-                                    join districtsregyear DY on DY.districtsregyearID = I.fieldref
-                                    where DY.districtsregyearID = '$id' ");
+                                    join districts D on D.districtID = A.fieldref
+                                    join IPC I on I.IPCid = D.fieldref 
+                                    where I.IPCid = '$id' ");
         $result = $query->fetchColumn();
         return $result;
     }
@@ -296,23 +293,23 @@ class districtsmodel{
     }
     
     function getRealAssoc($id){
-        $query = $this->link->query("select I.fieldname as ipcname, I.fieldref as districtid, D.fieldname as district
+        $query = $this->link->query("select I.fieldname as ipcname, D.fieldname as district,D.districtID
                                     from associations A
-                                    join ipc I on I.IPCid = A.fieldref
-                                    JOIN districtsregyear DY ON DY.districtsregyearID = I.fieldref
-                                    join districts D on D.districtID = DY.district
+                                    join districts D on D.districtID = A.fieldref
+                                    join ipc I on I.IPCid = D.fieldref
                                     where A.fieldref = '$id' ");
         $result = $query->fetchAll();
         return $result;
     }
     
     function getRealGac($id){
-        $query = $this->link->query("select A.fieldname as assocname, I.fieldname as ipcname, D.fieldname as districtname, DY.districtsregyearID as did, A.fieldref as assocref
+        $query = $this->link->query("select distinct A.fieldname as assocname, I.fieldname as ipcname
+                                    , D.fieldname as districtname, A.fieldref as assocref
+                                    , A.associationsID,D.fieldref
                                     from gac G
                                     join associations A on A.associationsID = G.fieldref
-                                    join ipc I on I.IPCid = A.fieldref
-                                    JOIN districtsregyear DY ON DY.districtsregyearID = I.fieldref
-                                    join districts D on D.districtID = DY.district
+                                    join districts D on D.districtID = A.fieldref
+                                    join ipc I on I.IPCid = D.fieldref
                                     where G.fieldref = '$id' ");
         $result = $query->fetchAll();
         return $result;
@@ -322,15 +319,16 @@ class districtsmodel{
         $query = $this->link->query("select A.fieldname as assocname
                                     , I.fieldname as ipcname
                                     , D.fieldname as districtname
-                                    , DY.districtsregyearID as did
                                     , A.fieldref as assocref
                                     , G.fieldname as gacname
+                                    , G.fieldref
+                                    , A.fieldref
+                                    , D.fieldref
                                     from clubs C
                                     join gac G on G.GACid = C.fieldref
                                     join associations A on A.associationsID = G.fieldref
-                                    join ipc I on I.IPCid = A.fieldref
-                                    JOIN districtsregyear DY ON DY.districtsregyearID = I.fieldref
-                                    join districts D on D.districtID = DY.district
+                                    join districts D on D.districtID = A.fieldref
+                                    join ipc I on I.IPCid = D.fieldref
                                     where C.fieldref = '$id' ");
         $result = $query->fetchAll();
         return $result;
@@ -340,26 +338,25 @@ class districtsmodel{
         $query = $this->link->query("select A.fieldname as assocname
                                     , I.fieldname as ipcname
                                     , D.fieldname as districtname
-                                    , DY.districtsregyearID as did
-                                    , A.fieldref as assocref
                                     , G.fieldname as gacname
-                                    , C.fieldname as clubname
-                                    , G.fieldref as gacid
+                                    ,C.fieldname as clubname
+                                    , A.fieldref as assocref
+                                    , G.fieldref
+                                    , D.fieldref
                                     from members M
-                                    join clubs C on C.clubsID = club
+                                    join clubs C on C.clubsID = M.club
                                     join gac G on G.GACid = C.fieldref
                                     join associations A on A.associationsID = G.fieldref
-                                    join ipc I on I.IPCid = A.fieldref
-                                    JOIN districtsregyear DY ON DY.districtsregyearID = I.fieldref
-                                    join districts D on D.districtID = DY.district
+                                    join districts D on D.districtID = A.fieldref
+                                    join ipc I on I.IPCid = D.fieldref
                                     where M.club = '$id' ");
         $result = $query->fetchAll();
         return $result;
     }
     
     //list all livestock with selected
-    function listDistrictIPCs($district){
-        $query = $this->link->query("select * from ipc where fieldref = '$district' ");
+    function listDistrictIPCs($ipc){
+        $query = $this->link->query("select * from districts where fieldref = '$ipc' ");
         $result = $query->fetchAll();
         return $result;
     }
@@ -377,7 +374,7 @@ class districtsmodel{
     
     //get district name then search for district in targets table
     function getDistrictDetails($district){
-        $query = $this->link->query("SELECT * from districts where districtID = '$district' ");
+        $query = $this->link->query("select * from IPC where IPCid = '$district' ");
         $result = $query->fetchAll();
         return $result;
     }
@@ -440,6 +437,13 @@ class districtsmodel{
         return $result;
     }
     
+    //list all IPCs
+    function listAllIPCs(){
+        $query = $this->link->query("SELECT * FROM IPC ");
+        $result = $query->fetchAll();
+        return $result;
+    }
+    
     function listDonors(){
         $query = $this->link->query("SELECT * FROM donors ");
         $result = $query->fetchAll();
@@ -447,11 +451,8 @@ class districtsmodel{
     }
     
     //list all livestock with selected
-    function listDistrictsYear($regYear){
-        $query = $this->link->query("select DY.districtsregyearID as did, D.fieldname as dname, DY.fieldcode as code  
-                                    from districtsregyear DY
-                                    join districts D ON DY.district = D.districtID
-                                    where DY.regyear = '$regYear' ");
+    function listDistrictsYear(){
+        $query = $this->link->query("select IPCid,fieldname,fieldcode from IPC ");
         $result = $query->fetchAll();
         return $result;
     }

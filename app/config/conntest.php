@@ -1,10 +1,10 @@
 <?php
 
 //$db_name = 'JB';
-$db_name = 'startmwc_nasfam'; //database name
-$db_user = 'sa'; //database user
+$db_name = 'nancy'; //database name
+$db_user = 'root'; //database user
 $db_host = 'localhost'; //database host machine
-$db_pass = 'Manje@2014'; //database user password
+$db_pass = 'admin'; //database user password
 
 $conn = new PDO("mysql:host=$db_host;dbname=$db_name",  $db_user, $db_pass);
 //$conn = new PDO("sqlsrv:server=$db_host;Database=$db_name");

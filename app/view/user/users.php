@@ -129,7 +129,7 @@ include_once ('../../controller/user/userscontroller.php'); ?>
                         <th>Name</th>
                          <th>Email</th>
                          <th>Type</th>
-                         <th>District</th>
+                         <th>IPC</th>
                         <th>Status</th>                        
                         <th>Action</th>
                     </tr>
@@ -142,7 +142,7 @@ include_once ('../../controller/user/userscontroller.php'); ?>
                         <th>Name</th>
                          <th>Email</th>
                          <th>Type</th>
-                         <th>District</th>
+                         <th>IPC</th>
                         <th>Status</th>                        
                         <th>Action</th>
                          </tr>
@@ -155,13 +155,20 @@ include_once ('../../controller/user/userscontroller.php'); ?>
                                     switch ($value['usertype']) {
                                         case "Regular":
                                             //get district
-                                            $userDistrict = $value['userID'];
-                                            $getUserDistrict = $login_users->getUserDistrict($userDistrict);
-                                            $district = $getUserDistrict[0][0];                                            
+                                            $userIPC = $value['userID'];
+                                            $getUserIPC = $login_users->getUserDistrict($userIPC);
+                                            $ipc = $getUserIPC[0][0];                                            
                                             break;
                                         case "Admin":
                                             //get district
-                                            $district = 'N/A';
+                                            $ipc = 'N/A';
+                                        
+                                            break;
+                                        case "HQ Admin":
+                                            //get district
+                                            $userIPC = $value['userID'];
+                                            $getUserIPC = $login_users->getUserDistrict($userIPC);
+                                            $ipc = $getUserIPC[0][0]; 
                                         
                                             break;
                                         default:
@@ -176,7 +183,7 @@ include_once ('../../controller/user/userscontroller.php'); ?>
                              <td><?php echo $value['firstname'].' '.$value['lastname'] ?></td>
                              <td><?php echo $value['email'] ?></td>
                              <td><?php echo $value['usertype'] ?></td>
-                             <td><?php echo $district ?></td>
+                             <td><?php echo $ipc ?></td>
                              <td><?php echo $value['status'] ?></td>                                                                   
                             <td>
 <!--                                <a rel="tooltip" title="Edit/Update User details" class="btn btn-info openUserEditModalLink" href="/" 
@@ -246,7 +253,7 @@ include_once ('../../controller/user/userscontroller.php'); ?>
                             <th>Email</th> 
                             <th>Password</th>
                             <th>User Type</th>
-                            <th>District</th>
+                            <th>IPC</th>
                         </tr>
                     </table>  
                 </form>
@@ -356,13 +363,13 @@ include_once ('../../controller/user/userscontroller.php'); ?>
         
         //add tree item
         $(".addmoreuser").on('click',function(){
-        var data="<tr><td><input type='checkbox' class='form-control case' name='users[]' /></td>";
+        var data="<tr><td><input type='checkbox' class='case' name='users[]' /></td>";
         data += "<td><input type='text' class='form-control' name='names[]' /></td>";
         data += "<td><input type='text' class='form-control' name='surname[]' /></td>";
         data += "<td><input type='text' class='form-control' name='email[]' /></td>";
         data += "<td><input type='text' class='form-control' name='password[]' /></td>";
         data += "<td><select class='form-control' name='usertype[]'><?php foreach ($lstUserTypes as $optionList) { ?><option value='<?php echo $optionList['usertypesid'] ?>'><?php echo $optionList['usertype'] ?></option><?php }?></select></td>";
-        data += "<td><select class='form-control' name='district[]'><?php foreach ($lstDistricts as $optionList) { ?><option value='<?php echo $optionList['districtID'] ?>'><?php echo $optionList['fieldname'] ?></option><?php }?></select></td></tr>";
+        data += "<td><select class='form-control' name='IPC[]'><?php foreach ($lstIPC as $optionList) { ?><option value='<?php echo $optionList['IPCid'] ?>'><?php echo $optionList['fieldname'] ?></option><?php }?></select></td></tr>";
             $('.tbladduser').append(data);
         });
         

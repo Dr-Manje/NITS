@@ -60,10 +60,10 @@ class seedsmodel{
     }
     
     //add single member seed distro 
-    function addMemberSeedDistro($member,$seed,$seedkgs,$donor){
+    function addMemberSeedDistro($member,$seed,$seedkgs,$donor,$season){
         $status = 'UNPAID';
-        $query = $this->link->prepare("INSERT INTO seeddistribution (memberID,acquiredseedID,acquiredseedkgs,status,donor) VALUES (?,?,?,?,?)");        
-        $values = array($member,$seed,$seedkgs,$status,$donor);        
+        $query = $this->link->prepare("INSERT INTO seeddistribution (memberID,acquiredseedID,acquiredseedkgs,status,donor,regYearID) VALUES (?,?,?,?,?,?)");        
+        $values = array($member,$seed,$seedkgs,$status,$donor,$season);        
         $query -> execute($values);        
         $counts = $query->rowCount();
         return $counts;        
@@ -98,10 +98,10 @@ class seedsmodel{
     
     //SEED DISTRIBUTION --------------------------------------------
     //add SEED DISTRIBUTION for member
-    function addSingleSeedDistribution($memberID,$seedAquired1,$SeedAcquiredAmount1,$donorID){
+    function addSingleSeedDistribution($regYear,$memberID,$seedAquired1,$SeedAcquiredAmount1,$donorID){
         $status = 'UNPAID';
-        $query = $this->link->prepare("INSERT INTO seeddistribution (memberID,acquiredseedID,acquiredseedkgs,status,donor) VALUES (?,?,?,?,?)");        
-        $values = array($memberID,$seedAquired1,$SeedAcquiredAmount1,$status,$donorID);        
+        $query = $this->link->prepare("INSERT INTO seeddistribution (regYearID,memberID,acquiredseedID,acquiredseedkgs,status,donor) VALUES (?,?,?,?,?,?)");        
+        $values = array($regYear,$memberID,$seedAquired1,$SeedAcquiredAmount1,$status,$donorID);        
         $query -> execute($values);        
         $counts = $query->rowCount();
         return $counts;        
@@ -202,7 +202,7 @@ class seedsmodel{
     function listSeedDistribution($regYear){
         $query = $this->link->query("SELECT M.memberNumber as memberNumber
                                     , concat(M.names,' ', M.surname) as memberName
-                                    , D.fieldname as district
+                                    , I.fieldname as ipcname
                                     , S.fieldname as seedname
                                     , SD.acquiredseedkgs as acquiredseedkgs
                                     , SD.status as status
@@ -216,10 +216,9 @@ class seedsmodel{
                                     join clubs C on M.club = clubsID
                                     join gac G on G.GACid = C.fieldref
                                     join associations A on A.associationsID = G.fieldref
-                                    join ipc I on I.IPCid = A.fieldref
-                                    join districtsregyear DY on DY.districtsregyearID = I.fieldref
-                                    join districts D on D.districtID = DY.district
-                                    join registrationyear RY on RY.regyearID = DY.regyear
+                                    join districts D on D.districtID = A.fieldref
+                                    join ipc I on I.IPCid = D.fieldref
+                                    join registrationyear RY on RY.regyearID = SD.regYearID
                                     join donors DR on DR.donorsid = SD.donor
                                     where RY.regYearID = '$regYear' ");
         $result = $query->fetchAll();

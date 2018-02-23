@@ -163,8 +163,8 @@ include_once ('../../controller/user/dashboardcontroller.php'); ?>
                 </div>
                 <div class="box-footer no-padding">
                   <ul class="nav nav-stacked">
-                    <li><a href="#">Districts <span class="pull-right badge bg-blue"><?php echo $districts ?></span></a></li>
                     <li><a href="#">IPCs <span class="pull-right badge bg-aqua"><?php echo $ipcs ?></span></a></li>
+                    <li><a href="#">Districts <span class="pull-right badge bg-blue"><?php echo $districts ?></span></a></li>                    
                     <li><a href="#">GACs <span class="pull-right badge bg-green"><?php echo $gacs ?></span></a></li>
                     <li><a href="#">CLUBs <span class="pull-right badge bg-green"><?php echo $clubs ?></span></a></li>
                     <!--<li><a href="#">More info <i class="fa fa-arrow-circle-right"></i></a></li>-->

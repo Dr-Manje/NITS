@@ -103,11 +103,12 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <?php if($_SESSION['nasfam_usertype'] == '1'){ ?>
-                    <h3>ADD ITEM</h3>      
-                    <?php }else{?>
-                    <h3>ADD CLUB(S)</h3>
-                    <?php } ?>
+                    <?php // if($_SESSION['nasfam_usertype'] == '1'){ ?>
+                    <!--<h3>ADD ITEM</h3>-->      
+                    <?php // }else{?>
+                    <!--<h3>ADD CLUB(S)</h3>-->
+                    <?php // } ?>
+                    <h3>ADD ITEM</h3>
                 </div>
                 <div class="modal-body">                                        
                     <form role="form" id="addIPCItemsBulkform" onsubmit="return false" enctype="multipart/form-data" class="form-inline center-block">
@@ -115,22 +116,22 @@
                         <input type="hidden" id="returnpathid" name="returnpathid" value="<?php echo $id ?>" >
                         <input type="hidden" id="ipcpage" name="ipcpage" value="<?php echo basename($_SERVER['PHP_SELF'], ".php"); ?>">
                         <div class="row">
-                            <?php if($_SESSION['nasfam_usertype'] == '1'){ ?>
+                            <?php // if($_SESSION['nasfam_usertype'] == '1'){ ?>
                         <div class="col-sm-4"> 
                             <div class="form-group">
                                 <select class="form-control" id="Ipcitem" name="Ipcitem">
                                     <option value="NONE">-- SELECT ITEM --</option>
-                                    <option value="2">IPC</option>
+                                    <option value="2">DISTRICT</option>
                                     <option value="3">ASSOCIATION</option>
                                     <option value="4">GAC</option>
                                     <option value="5">CLUB</option>
                                 </select>
                             </div> 
                         </div>
-                            <?php }else{ ?>
-                            <input type="hidden" id="Ipcitem" name="Ipcitem" value="5" >
+                            <?php // }else{ ?>
+                            <!--<input type="hidden" id="Ipcitem" name="Ipcitem" value="5" >-->
                             
-                            <?php } ?>
+                            <?php // } ?>
                         <div class="col-sm-4"> 
                             <div class="form-group">
                                 <input class="form-group" type="file" name="file" id="file" />

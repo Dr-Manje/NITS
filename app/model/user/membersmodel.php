@@ -131,21 +131,21 @@ class membersmodel{
     
     //list all memebers with selected
     function listAllMembersForYear($regyear){
-        $query = $this->link->query("SELECT M.memberNumber, concat(M.names, ' ', M.surname) as membername
+        $query = $this->link->query("Select M.memberNumber, concat(M.names, ' ', M.surname) as membername
                                     , M.gender
                                     , C.fieldname as clubname
                                     , G.fieldname as gacname
                                     , A.fieldname as assocname
-                                    , I.fieldname as ipcname
                                     , D.fieldname as districtname
+                                    , I.fieldname as ipcname
                                     , concat('<a class=btn-info href=memberprofile.php?Sid=',M.memberID,'>View Profile','</a>') as action
                                     FROM members M
                                     join clubs C on M.club = clubsID
                                     join gac G on G.GACid = C.fieldref
                                     join associations A on A.associationsID = G.fieldref
-                                    join ipc I on I.IPCid = A.fieldref
+                                    join districts D on D.districtID = A.fieldref
+                                    join IPC I on I.IPCid = D.fieldref
                                     join districtsregyear DY on DY.districtsregyearID = I.fieldref
-                                    join districts D on D.districtID = DY.district
                                     where yearRegistered = '$regyear' ");
         $result = $query->fetchAll();
         return $result;
@@ -193,11 +193,9 @@ class membersmodel{
                                     join clubs C on M.club = clubsID
                                     join gac G on G.GACid = C.fieldref
                                     join associations A on A.associationsID = G.fieldref
-                                    join ipc I on I.IPCid = A.fieldref
-                                    join districtsregyear DY on DY.districtsregyearID = I.fieldref
-                                    join districts D on D.districtID = DY.district
-                                    join registrationyear RY on RY.regyearID = DY.regyear
-                                    where DY.regyear = '$regYear' ");
+                                    join districts D on D.districtID = A.fieldref
+                                    join ipc I on I.IPCid = D.fieldref
+                                    where M.yearRegistered = '$regYear' ");
         $result = $query->fetchAll();
         return $result;
     }
@@ -229,26 +227,48 @@ class membersmodel{
                                     , C.fieldname as clubname
                                     , G.fieldname as gacname
                                     , A.fieldname as assocname
+                                    , I.fieldname as ipcselect
+                                    , D.fieldname as district
                                     , concat('<a class=btn-info href=memberprofile.php?Sid=',M.memberID,'>View Profile','</a>') as action
                                     FROM members M
-                                    join clubs C on M.club = clubsID
+                                    join clubs C on C.clubsID = M.club
                                     join gac G on G.GACid = C.fieldref
                                     join associations A on A.associationsID = G.fieldref
-                                    where district = '$district' AND yearRegistered = '$regYear' ");
+                                    join districts D on D.districtID = A.fieldref
+                                    join ipc I on I.IPCid = D.fieldref
+                                    where I.IPCid = '$district' 
+                                    AND M.yearRegistered = '$regYear' ");
         $result = $query->fetchAll();
         return $result;
     }
     
     //list members in district with specific reg year dashboard male
     function listMembersDistrictRegYearMales($district,$regYear){
-        $query = $this->link->query("SELECT count(*) FROM members where district = '$district' AND yearRegistered = '$regYear' AND gender = 'MALE' ");
+        $query = $this->link->query("SELECT count(*) as cnt 
+                                    FROM members M
+                                    join clubs C on C.clubsID = M.club
+                                    join gac G on G.GACid = C.fieldref
+                                    join associations A on A.associationsID = G.fieldref
+                                    join districts D on D.districtID = A.fieldref
+                                    join ipc I on I.IPCid = D.fieldref
+                                    where I.IPCid = '$district' 
+                                    AND M.yearRegistered = '$regYear' 
+                                    AND M.gender = 'MALE' ");
         $result = $query->fetchAll();
         return $result;
     }
     
     //list members in district with specific reg year dashboard male
     function listMembersDistrictRegYearFemales($district,$regYear){
-        $query = $this->link->query("SELECT count(*) FROM members where district = '$district' AND yearRegistered = '$regYear' AND gender = 'FEMALE' ");
+        $query = $this->link->query("SELECT count(*) as cnt 
+                                    FROM members M
+                                    join clubs C on C.clubsID = M.club
+                                    join gac G on G.GACid = C.fieldref
+                                    join associations A on A.associationsID = G.fieldref
+                                    join districts D on D.districtID = A.fieldref
+                                    join ipc I on I.IPCid = D.fieldref
+                                    where I.IPCid = '$district' 
+                                    AND M.yearRegistered = '$regYear' AND gender = 'FEMALE' ");
         $result = $query->fetchAll();
         return $result;
     }
@@ -278,7 +298,7 @@ class membersmodel{
     
     //get target amount
     function getItemTargetForYear($district,$year){
-        $query = $this->link->query("select target from districtsregyear where regYear = '$year' and district = '$district' ");
+        $query = $this->link->query("select target from districtsregyear where regYear = '$year' and IPC = '$district' ");
         $result = $query->fetchColumn();
         return $result;
     }
@@ -298,10 +318,10 @@ class membersmodel{
     }
 
     //add member individual initial details
-    function RegisterMemberInitial($names,$lastname,$gender,$yearRegistered,$dateofbirth,$hhsize,$Mcount,$club,$district,$cropsales,$osources,$gvc,$mwf,$ftype,$rtype,$wtype){
+    function RegisterMemberInitial($names,$lastname,$gender,$yearRegistered,$dateofbirth,$hhsize,$Mcount,$club,$district,$cropsales,$osources,$gvc,$mwf,$ftype,$rtype,$wtype,$phonenumber,$mwid){
         $status = 'ACTIVE';
-        $query = $this->link->prepare("INSERT INTO members (names,surname,gender,yearRegistered,dob,hhSize,memberNumber,club,district,status,cropsales,othersources,gendervcat,nomonthswithfood,ftype,rtype,wtype) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");        
-        $values = array($names,$lastname,$gender,$yearRegistered,$dateofbirth,$hhsize,$Mcount,$club,$district,$status,$cropsales,$osources,$gvc,$mwf,$ftype,$rtype,$wtype);        
+        $query = $this->link->prepare("INSERT INTO members (names,surname,gender,yearRegistered,dob,hhSize,memberNumber,club,district,status,cropsales,othersources,gendervcat,nomonthswithfood,ftype,rtype,wtype,phonenumber,identificationNo) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");        
+        $values = array($names,$lastname,$gender,$yearRegistered,$dateofbirth,$hhsize,$Mcount,$club,$district,$status,$cropsales,$osources,$gvc,$mwf,$ftype,$rtype,$wtype,$phonenumber,$mwid);        
         $query -> execute($values);        
         $counts = $query->rowCount();
         return $counts;        
@@ -346,6 +366,7 @@ class membersmodel{
         $query = $this->link->query("SELECT M.names as fnames, M.surname as surname, M.gender as gender, M.hhSize as hh, M.gvh as gvh "
                                     . ",DATE_FORMAT(M.dob,'%D %M %Y') as dob1, M.memberID as memberID, M.memberNumber as memberNumber "
                                     . ", M.yearRegistered as regYear, M.dob as dob2, M.ta as ta , M.tccregno as tcc "
+                                    . ", M.identificationNo as IdNo, M.phonenumber as phonenumber "
                                     . "FROM members M WHERE M.memberID = '$id' ");
         $result = $query->fetchAll();
         return $result;
@@ -353,21 +374,21 @@ class membersmodel{
     
     //get member IPC Info
     function MemberIPCDetails($id){
-        $query = $this->link->query("SELECT C.fieldname as clubname
-                                    , G.fieldname as gacname
-                                    , A.fieldname as assocname
-                                    , I.fieldname as ipcname
+        $query = $this->link->query("select I.fieldname as ipcname
                                     , D.fieldname as districtname
+                                    , A.fieldname as assocname 
+                                    , G.fieldname as gacname
+                                    , C.fieldname as clubname
                                     , C.fieldcode as clubcode
                                     , RY.season as season
-                                    FROM members M 
-                                    join clubs C on M.club = clubsID
+                                    , RY.regYearID as seasonID
+                                    from members M
+                                    join clubs C on C.clubsID = M.club
                                     join gac G on G.GACid = C.fieldref
                                     join associations A on A.associationsID = G.fieldref
-                                    join ipc I on I.IPCid = A.fieldref
-                                    join districtsregyear DY on DY.districtsregyearID = I.fieldref
-                                    join districts D on D.districtID = DY.district
-                                    join registrationyear RY on RY.regyearID = DY.regyear
+                                    join districts D on D.districtID = A.fieldref
+                                    join ipc I on I.IPCid = D.fieldref
+                                    join registrationyear RY on RY.regyearID = M.yearRegistered
                                     where M.memberID = '$id' ");
         $result = $query->fetchAll();
         return $result;
@@ -453,9 +474,10 @@ class membersmodel{
     
     //update member details
     //update personal info
-    function UpdatePersonalInfo($memberID,$viewfname,$viewlname,$editgender,$viewdob,$viewhh,$viewgvh){
+    function UpdatePersonalInfo($memberID,$viewfname,$viewlname,$editgender,$viewdob,$viewhh,$viewgvh,$viewidno,$viewphone){
         $query = $this->link->prepare("UPDATE members SET names = '$viewfname',surname = '$viewlname', gender = '$editgender'"
-                . ", dob = '$viewdob',hhSize = '$viewhh', gvh = '$viewgvh' WHERE memberID = '$memberID' ");
+                                    . ", identificationNo = '$viewidno',phonenumber = '$viewphone' "
+                                    . ", dob = '$viewdob',hhSize = '$viewhh', gvh = '$viewgvh' WHERE memberID = '$memberID' ");
         if($query -> execute()){
             return 1;
         }else {

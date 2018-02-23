@@ -16,6 +16,7 @@ $districts = new districtsmodel();
 $listregYear = $dashboard->ListRegYear();
 
 $lstDistricts = $districts->listDistricts();
+$lstIPC = $districts->listAllIPCs();
 
 //list users
 $loggedinuserid = $_SESSION['nasfam_userid'];
@@ -43,7 +44,7 @@ if(isset($_POST['adduser'])){
         $email = $_POST['email'][$i];
         $password = $_POST['password'][$i];
         $usertype = $_POST['usertype'][$i];
-        $district = $_POST['district'][$i];
+        $ipc = $_POST['IPC'][$i];
         
         $CheckUserExists = $login_users->CheckUserExists($email);//check if exists by email
         if($CheckUserExists == 1){//if exists
@@ -55,7 +56,7 @@ if(isset($_POST['adduser'])){
             if($usertype == 1){ //if admin                
                 $addUser = $login_users->addAdminUser($names,$surname,$email,$password,$usertype);
             }else{ //if regular 
-                 $addUser = $login_users->addRegularUser($names,$surname,$email,$password,$usertype,$district);
+                 $addUser = $login_users->addRegularUser($names,$surname,$email,$password,$usertype,$ipc);
             }                      
         } 
     }
@@ -101,6 +102,6 @@ if(isset($_GET['userstat'])){
 if(isset($_GET['passreset'])){
     $userid = $_GET['passreset']; //user id
     $RestetUserPassword = $login_users->RestetUserPassword($userid);
-    //set notifiaction
+    //set notification
     header("Location: users.php");
 }

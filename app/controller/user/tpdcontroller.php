@@ -36,7 +36,7 @@ if(isset($_POST['SearchTPD'])){
         $memberID = $value['mid']; //member id
         $memberNumber = $value['mnum']; //member number
         $memberName = $value['membername']; //member name
-        $district = $value['district']; //district
+        $district = $value['ipcname']; //district
         $maid = $value['actID']; //actID
         
         //get number of trees planted
@@ -109,7 +109,7 @@ if(isset($_POST['SearchTPD'])){
         $memberID = $value['mid']; //member id
         $memberNumber = $value['mnum']; //member number
         $memberName = $value['membername']; //member name
-        $district = $value['district']; //district
+        $district = $value['ipcname']; //district
         $maid = $value['actID']; //actID
         
         //get number of trees planted

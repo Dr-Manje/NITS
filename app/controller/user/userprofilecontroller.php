@@ -22,8 +22,8 @@ if(isset($_SESSION['nasfam_userid'])){
     if($districtID == NULL){
         $districtName = 'HQ';
     }else{ //get district name
-        $getuserdistrict = $users->getdistrict($districtID);
-        $districtName = $getuserdistrict[0][2];
+        $getuserdistrict = $users->getUserIpc($districtID);
+        $districtName = $getuserdistrict[0][1];
     }
     
     $password = $getuserprofile[0][2]; //password

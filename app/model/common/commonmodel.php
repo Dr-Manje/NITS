@@ -18,6 +18,13 @@ class usersmodel{
         return $result;
     }
     
+    
+    function getUserIpc($userID){
+        $query = $this->link->query("select * from IPC where IPCid = '$userID' ");
+        $result = $query->fetchAll();
+        return $result;
+    }
+    
     //get user details
     function getuserprofile($userID){
         $query = $this->link->query("select * from users where userID = '$userID' ");
@@ -159,7 +166,7 @@ class usersmodel{
     }
     
     function GetUserInfo($email){
-        $query1 = $this->link->query("select firstname, lastname, userID, usertype, district, email, status, password
+        $query1 = $this->link->query("select firstname, lastname, userID, usertype, IPC, email, status, password
                                     from users 
                                     WHERE email = '$email'");
         $result = $query1->fetchAll();
@@ -188,7 +195,7 @@ class usersmodel{
     function listUsersExceptLoggedInUser($userid){
         $query = $this->link->query("select U.userID as userID, U.email as email, U.password as password
                                     , U.firstname as firstname, U.lastname as lastname, U.status as status
-                                    ,UT.usertype as usertype, U.district as district
+                                    ,UT.usertype as usertype, U.IPC as IPC
                                     from users U
                                     JOIN usertypes UT ON UT.usertypesid = U.usertype where userID <> '$userid' ");
         $result = $query->fetchAll();
@@ -199,7 +206,7 @@ class usersmodel{
     function listUsers(){
         $query = $this->link->query("select U.userID as userID, U.email as email, U.password as password
                                     , U.firstname as firstname, U.lastname as lastname, U.status as status
-                                    ,UT.usertype as usertype, U.district as district
+                                    ,UT.usertype as usertype, U.IPC as IPC
                                     from users U
                                     JOIN usertypes UT ON UT.usertypesid = U.usertype ");
         $result = $query->fetchAll();
@@ -207,9 +214,9 @@ class usersmodel{
     }
     
     function getUserDistrict($districtid){
-        $query = $this->link->query("select D.fieldname as dname, D.districtID as did, D.fieldcode as prfx
-                                    from districts D
-                                    join users U ON U.district = D.districtID
+        $query = $this->link->query("select I.fieldname as dname, I.IPCid as did, I.fieldcode as prfx
+                                    from IPC I
+                                    join users U ON U.IPC = I.IPCid
                                     where U.userID =  '$districtid' ");
         $result = $query->fetchAll();
         return $result;
@@ -226,10 +233,10 @@ class usersmodel{
     }
     
     //add Regular user
-    function addRegularUser($names,$surname,$email,$password,$usertype,$district){
+    function addRegularUser($names,$surname,$email,$password,$usertype,$ipc){
         $status = 'ACTIVE';
-        $query = $this->link->prepare("INSERT INTO users (firstname,lastname,email,password,usertype,district,status) VALUES (?,?,?,?,?,?,?) ");
-        $values = array($names,$surname,$email,$password,$usertype,$district,$status);
+        $query = $this->link->prepare("INSERT INTO users (firstname,lastname,email,password,usertype,IPC,status) VALUES (?,?,?,?,?,?,?) ");
+        $values = array($names,$surname,$email,$password,$usertype,$ipc,$status);
         $query -> execute($values);
         $counts = $query->rowCount();
         return $counts;
@@ -279,11 +286,11 @@ class usersmodel{
     }
     
     function createDefaultActivityTypes(){
-        $query = $this->link->prepare("INSERT INTO activitytype (activitytypename,code) VALUES "
-                . "('TRAINING UNIT','1'),"
-                . "('COMMUNITY DEVELOPMENT PROGRAMS','2'),"
-                . "('POLICY ACTIVITIES','3'),"
-                . "('FARM SERVICES UNIT','4')");        
+        $query = $this->link->prepare("INSERT INTO activitytype (activitytypeID,activitytypename,code) VALUES "
+                . "(1,'TRAINING UNIT','1'),"
+                . "(2,'COMMUNITY DEVELOPMENT PROGRAMS','2'),"
+                . "(3,'POLICY ACTIVITIES','3'),"
+                . "(4,'FARM SERVICES UNIT','4')");        
         if($query -> execute()){
             return 1;
         }else {
@@ -329,10 +336,10 @@ class usersmodel{
     
     //create activities for type 1
     function createActivities1($type){
-        $query = $this->link->prepare("INSERT INTO activities (activitiesname,code,activitytypeID) VALUES "
-                . "('FARMING BUSINESS TRAINING','1','$type'),"
-                . "('LEADERSHIP TRAINING','2','$type'),"
-                . "('ADULT LITERACY','3','$type')");        
+        $query = $this->link->prepare("INSERT INTO activities (activitiesID,activitiesname,code,activitytypeID) VALUES "
+                . "(1,'FARMING BUSINESS TRAINING','1','$type'),"
+                . "(2,'LEADERSHIP TRAINING','2','$type'),"
+                . "(3,'ADULT LITERACY','3','$type')");        
         if($query -> execute()){
             return 1;
         }else {
@@ -342,16 +349,16 @@ class usersmodel{
     
     //create activities for type 2
     function createActivities2($type){
-        $query = $this->link->prepare("INSERT INTO activities (activitiesname,code,activitytypeID) VALUES "
-                . "('SOYA UTILIZATION TRAINING','4','$type'),"
-                . "('FOOD PRESERVATION AND PREPARATION','5','$type'),"
-                . "('NUTRITION TRAINING','6','$type'),"
-                . "('LEADERSHIP ROLES','7','$type'),"
-                . "('GENDER AND HIV/AIDS PROGRAMS','8','$type'),"
-                . "('COOKSTOVE MAKING TRAINING','9','$type'),"
-                . "('OCCUPATIONAL SAFETY AND HEALTH TRAINING','10','$type'),"
-                . "('CHILD LABOUR TRAINING','11','$type'),"
-                . "('FIELD AND LIFE SKILLS TRAINING','12','$type')");        
+        $query = $this->link->prepare("INSERT INTO activities (activitiesID,activitiesname,code,activitytypeID) VALUES "
+                . "(4,'SOYA UTILIZATION TRAINING','4','$type'),"
+                . "(5,'FOOD PRESERVATION AND PREPARATION','5','$type'),"
+                . "(6,'NUTRITION TRAINING','6','$type'),"
+                . "(7,'LEADERSHIP ROLES','7','$type'),"
+                . "(8,'GENDER AND HIV/AIDS PROGRAMS','8','$type'),"
+                . "(9,'COOKSTOVE MAKING TRAINING','9','$type'),"
+                . "(10,'OCCUPATIONAL SAFETY AND HEALTH TRAINING','10','$type'),"
+                . "(11,'CHILD LABOUR TRAINING','11','$type'),"
+                . "(12,'FIELD AND LIFE SKILLS TRAINING','12','$type')");        
         if($query -> execute()){
             return 1;
         }else {
@@ -361,10 +368,10 @@ class usersmodel{
     
     //create activities for type 3
     function createActivities3($type){
-        $query = $this->link->prepare("INSERT INTO activities (activitiesname,code,activitytypeID) VALUES "
-                . "('PARTICIPATE IN POLICY DIALOGUE MEETINGS','13','$type'),"
-                . "('PARTICIPATE IN EXTENSION ADVOCACY','14','$type'),"
-                . "('PARTICIPATE IN CA ADVOCACY CAMPAIGNS','15','$type')");        
+        $query = $this->link->prepare("INSERT INTO activities (activitiesID,activitiesname,code,activitytypeID) VALUES "
+                . "(13,'PARTICIPATE IN POLICY DIALOGUE MEETINGS','13','$type'),"
+                . "(14,'PARTICIPATE IN EXTENSION ADVOCACY','14','$type'),"
+                . "(15,'PARTICIPATE IN CA ADVOCACY CAMPAIGNS','15','$type')");        
         if($query -> execute()){
             return 1;
         }else {
@@ -374,16 +381,17 @@ class usersmodel{
     
     //create activities for type 4
     function createActivities4($type){
-        $query = $this->link->prepare("INSERT INTO activities (activitiesname,code,activitytypeID) VALUES "
-                    . "('CSA PARTICIPANT','16','$type'),"
-                    . "('ATTENDED FIELD DAY','17','$type'),"
-                    . "('AFO TRAINING','18','$type'),"
-                    . "('FT TRAINING','19','$type'),"
-                    . "('GOAT BENEFICIARY','20','$type'),"
-                    . "('WINTER CROPPING/IRRIGATION FARMING','21','$type'),"
-                    . "('UTILISING CHITETEZO MBAULA','22','$type'),"
-                    . "('TREE PLANTING','23','$type'),"
-                    . "('NO OF TREES PLANTED','24','$type')");    
+        $query = $this->link->prepare("INSERT INTO activities (activitiesID,activitiesname,code,activitytypeID) VALUES "
+                    . "(16,'CSA PARTICIPANT','16','$type'),"
+                    . "(17,'ATTENDED FIELD DAY','17','$type'),"
+                    . "(18,'AFO TRAINING','18','$type'),"
+                    . "(19,'FT TRAINING','19','$type'),"
+                    . "(20,'GOAT BENEFICIARY','20','$type'),"
+                    . "(21,'WINTER CROPPING/IRRIGATION FARMING','21','$type'),"
+                    . "(22,'UTILISING CHITETEZO MBAULA','22','$type'),"
+                    . "(23,'TREE PLANTING','23','$type'),"
+                    . "(24,'NO OF TREES PLANTED','24','$type'),"
+                    . "(25,'RABBIT BENEFICIARY','25','$type') ");    
         if($query -> execute()){
             return 1;
         }else {
@@ -392,22 +400,22 @@ class usersmodel{
     }
     
     //create code ref
-    function addDistrictCodesToReg(){
+    function addIPCCodesToReg(){
         $query = $this->link->prepare("INSERT INTO coderegister (coderef,counter,code) VALUES "
-                    . "('1','1','DST1'),"
-                    . "('1','2','DST2'),"
-                    . "('1','3','DST3'),"
-                    . "('1','4','DST4'),"
-                    . "('1','5','DST5'),"
-                    . "('1','6','DST6'),"
-                    . "('1','7','DST7'),"
-                    . "('1','8','DST8'),"
-                    . "('1','9','DST9'),"
-                    . "('1','10','DST10'),"
-                    . "('1','11','DST11'),"
-                    . "('1','12','DST12'),"
-                    . "('1','13','DST13'),"
-                    . "('1','14','DST14')");    
+                    . "('1','1','IPC1'),"
+                    . "('1','2','IPC2'),"
+                    . "('1','3','IPC3'),"
+                    . "('1','4','IPC4'),"
+                    . "('1','5','IPC5'),"
+                    . "('1','6','IPC6'),"
+                    . "('1','7','IPC7'),"
+                    . "('1','8','IPC8'),"
+                    . "('1','9','IPC9'),"
+                    . "('1','10','IPC10'),"
+                    . "('1','11','IPC11'),"
+                    . "('1','12','IPC12'),"
+                    . "('1','13','IPC13'),"
+                    . "('1','14','IPC14')");    
         if($query -> execute()){
             return 1;
         }else {
@@ -420,8 +428,8 @@ class usersmodel{
     //create code ref
     function createCodingRef(){
         $query = $this->link->prepare("INSERT INTO codereference (item,prefix) VALUES "
-                    . "('DISTRICT','DST'),"
                     . "('IPC','IPC'),"
+                    . "('DISTRICT','DST'),"
                     . "('ASSOCIATION','ASC'),"
                     . "('GAC','GAC'),"
                     . "('CLUB','CLB'),"
@@ -444,22 +452,22 @@ class usersmodel{
     }
     
     //create districts
-    function createDefaultDistricts(){
-        $query = $this->link->prepare("INSERT INTO districts (fieldname,fieldcode) VALUES "
-                    . "('BALAKA','DST1'),"
-                    . "('KARONGA','DST2'),"
-                    . "('KASUNGU','DST3'),"
-                    . "('LILONGWE NORTH','DST4'),"
-                    . "('LILONGWE SOUTH','DST5'),"
-                    . "('MCHINJI','DST6'),"
-                    . "('MULANJE','DST7'),"
-                    . "('NAMWERA','DST8'),"
-                    . "('NKHOTAKOTA','DST9'),"
-                    . "('NTCHEU','DST10'),"
-                    . "('NTCHISI','DST11'),"
-                    . "('RUMPHI','DST12'),"
-                    . "('SOUTH MZIMBA','DST13'),"
-                    . "('ZOMBA','DST14')");    
+    function createDefaultIPCs(){
+        $query = $this->link->prepare("INSERT INTO IPC (fieldname,fieldcode) VALUES "
+                    . "('BALAKA','IPC1'),"
+                    . "('KARONGA','IPC2'),"
+                    . "('KASUNGU','IPC3'),"
+                    . "('LILONGWE NORTH','IPC4'),"
+                    . "('LILONGWE SOUTH','IPC5'),"
+                    . "('MCHINJI','IPC6'),"
+                    . "('MULANJE','IPC7'),"
+                    . "('NAMWERA','IPC8'),"
+                    . "('NKHOTAKOTA','IPC9'),"
+                    . "('NTCHEU','IPC10'),"
+                    . "('NTCHISI','IPC11'),"
+                    . "('RUMPHI','IPC12'),"
+                    . "('SOUTH MZIMBA','IPC13'),"
+                    . "('ZOMBA','IPC14')");    
         if($query -> execute()){
             return 1;
         }else {
@@ -467,22 +475,22 @@ class usersmodel{
         }        
     }
     
-    function createRegyearDistricts($regyear){
-        $query = $this->link->prepare("INSERT INTO districtsregyear (regyear,district,target,fieldcode) VALUES "
-                    . "('$regyear','1','0','DST1'),"
-                    . "('$regyear','2','0','DST2'),"
-                    . "('$regyear','3','0','DST3'),"
-                    . "('$regyear','4','0','DST4'),"
-                    . "('$regyear','5','0','DST5'),"
-                    . "('$regyear','6','0','DST6'),"
-                    . "('$regyear','7','0','DST7'),"
-                    . "('$regyear','8','0','DST8'),"
-                    . "('$regyear','9','0','DST9'),"
-                    . "('$regyear','10','0','DST10'),"
-                    . "('$regyear','11','0','DST11'),"
-                    . "('$regyear','12','0','DST12'),"
-                    . "('$regyear','13','0','DST13'),"
-                    . "('$regyear','14','0','DST14')");    
+    function createRegyearIPCs($regyear){
+        $query = $this->link->prepare("INSERT INTO districtsregyear (regyear,IPC,target,fieldcode) VALUES "
+                    . "('$regyear','1','0','IPC1'),"
+                    . "('$regyear','2','0','IPC2'),"
+                    . "('$regyear','3','0','IPC3'),"
+                    . "('$regyear','4','0','IPC4'),"
+                    . "('$regyear','5','0','IPC5'),"
+                    . "('$regyear','6','0','IPC6'),"
+                    . "('$regyear','7','0','IPC7'),"
+                    . "('$regyear','8','0','IPC8'),"
+                    . "('$regyear','9','0','IPC9'),"
+                    . "('$regyear','10','0','IPC10'),"
+                    . "('$regyear','11','0','IPC11'),"
+                    . "('$regyear','12','0','IPC12'),"
+                    . "('$regyear','13','0','IPC13'),"
+                    . "('$regyear','14','0','IPC14')");    
         if($query -> execute()){
             return 1;
         }else {

@@ -93,7 +93,7 @@ class activitiesmodel{
                                     , M.memberNumber as mnum
                                     , concat(M.names,' ', M.surname) as membername
                                     , M.gender as gender
-                                    , D.fieldname as district
+                                    , I.fieldname as ipcname
                                     , MA.memberactivitiesID as actID
                                     from treeplantingitems TPI
                                     JOIN trees T ON T.treesid = TPI.treetype
@@ -102,10 +102,8 @@ class activitiesmodel{
                                     join clubs C on M.club = clubsID
                                     join gac G on G.GACid = C.fieldref
                                     join associations A on A.associationsID = G.fieldref
-                                    join ipc I on I.IPCid = A.fieldref
-                                    join districtsregyear DY on DY.districtsregyearID = I.fieldref
-                                    join districts D on D.districtID = DY.district
-                                    join registrationyear RY on RY.regyearID = DY.regyear
+                                    join districts D on D.districtID = A.fieldref
+                                    join ipc I on I.IPCid = D.fieldref
                                     WHERE M.yearRegistered = '$regyear' ");
         $result = $query->fetchAll();
         return $result;

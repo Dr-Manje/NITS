@@ -24,15 +24,44 @@
                         <label for="editenddate">End Date:</label>
                         <input type="text" class="form-control" id="editenddate" name="editenddate" placeholder="" value="<?php echo $seasonheader['endDate1']; ?>" />
                     </div>
-                    <div class="form-group">
+<!--                    <div class="form-group">
                         <label for="editprocurement">Procurement Amount:</label>
                         <input type="text" class="form-control" id="editprocurement" name="editprocurement" placeholder="" value="<?php echo $seasonheader['procurement']; ?>" />
-                    </div>
+                    </div>-->
                 </form>  
                 <?php } ?> 
             </div>                            
             <div class="modal-footer">                   
                 <button class="btn btn-success" onclick="updateSeason()">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+            </div>
+            </div>            
+        </div>
+    </div>
+
+<!-- insert advance -->
+<div id="InsertAdvanceModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-sm">
+        <!-- modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3>Upload Advance</h3>               
+            </div>
+            <div class="modal-body">  
+                <?php foreach($getSeasonHeader as $seasonheader){?>
+                <form role="form" id="InsertAdvanceform" enctype="multipart/form-data" onsubmit="return false">
+                <input type="hidden" id="InsertAdvance" name="InsertAdvance" >
+                <input type="hidden" id="seasonID" name="seasonID" value="<?php echo $id; ?>">                     
+                    <div class="form-group">
+                            <label for="editseason">Upload Advance CSV: *</label>
+                            <input class="form-group" type="file" name="file" />
+                    </div>
+                </form>  
+                <?php } ?> 
+            </div>                            
+            <div class="modal-footer">                   
+                <button class="btn btn-success" onclick="InsertAdvance()">Save</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
             </div>
             </div>            
@@ -88,10 +117,10 @@
                             <label for="marketcentername">Market Center: *</label>
                             <input type="text" class="form-control" id="marketcentername" name="marketcentername" placeholder="Enter Market Center" />
                         </div>
-                        <div class="form-group">
+<!--                        <div class="form-group">
                             <label for="mpa">MPA: *</label>
                             <input type="text" class="form-control" id="mpa" name="mpa" placeholder="Enter Market Procurement Amount" />
-                        </div> 
+                        </div> -->
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
@@ -149,7 +178,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h3>Add Sorting Data</h3>               
+                <h3>Add Shelling Data</h3>               
             </div>
             <div class="modal-body">  
                 <form role="form" id="addSortingform" enctype="multipart/form-data" onsubmit="return false">
@@ -158,7 +187,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="editseason">Upload Sorting Data CSV:</label>
+                            <label for="editseason">Upload Shelling Data CSV:</label>
                             <input class="form-group" type="file" name="file" />
                         </div> 
                     </div>
@@ -621,7 +650,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h3>Add Grading</h3>               
+            <h3>Add Sorting and Grading</h3>               
         </div>
         <div class="modal-body">  
             <form role="form" id="addnewGradingDataform" enctype="multipart/form-data" onsubmit="return false">
@@ -630,7 +659,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="editseason">Upload Grading Data:</label>
+                        <label for="editseason">Upload Sorting and Grading Data:</label>
                         <input class="form-group" type="file" name="file" />
                     </div> 
                 </div>

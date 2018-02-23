@@ -127,13 +127,13 @@ class cropsmodel{
                                     , CP.cropmarketingID AS CPID
                                     , CP.membershipStatus as mStatus 
                                     , CP.nonemembername as nonemember
-                                    , D.fieldname as district
-                                    , D.districtID as dID
+                                    , I.fieldname as IPCname
+                                    , I.IPCid as IPCid
                                     FROM cropmarketing CP
                                     JOIN crops C ON C.cropID = CP.cropID
                                     JOIN users U ON U.userID = CP.createdby
-                                    JOIN districts D ON D.districtID = U.district
-                                    WHERE CP.regYearID = '$regYear' ");
+                                    JOIN IPC I ON I.IPCid = U.IPC
+                                    WHERE CP.regYearID =  '$regYear' ");
         $result = $query->fetchAll();
         return $result;
     }

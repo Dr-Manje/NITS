@@ -128,14 +128,12 @@ if(isset($_POST['SearchTPHQ'])){ //display button clicked
             $GetFruit = $getTPSumForTreeType4[0][1];
         }
         
-        
         $tp = array();
         array_push($tp,$districtName);
         array_push($tp,$Get1);
         array_push($tp,$GetIndigenous);
         array_push($tp,$GetExotics);
         array_push($tp,$GetFruit);
-        //array_push($tp,$getAgroforestry);
         
         array_push($TPs,$tp);
         $i++;

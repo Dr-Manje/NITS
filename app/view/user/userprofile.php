@@ -118,7 +118,7 @@ include_once ('../../controller/user/userprofilecontroller.php'); ?>
                     <strong>First Name:</strong> <?php echo $fname; ?><br>
                     <strong>Last Name:</strong> <?php echo $lname; ?><br>
                     <strong>Email:</strong> <?php echo $email; ?><br>
-                    <strong>District:</strong> <?php echo $districtName; ?><br>
+                    <strong>IPC:</strong> <?php echo $districtName; ?><br>
                     <strong>Status:</strong> <?php echo $status; ?><br>
                 </div><!-- /.box-body -->
               </div>
